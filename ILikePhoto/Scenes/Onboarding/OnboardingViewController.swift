@@ -31,6 +31,9 @@ final class OnboardingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = Design.Color.black
+        navigationItem.backButtonDisplayMode = .minimal
+        view.backgroundColor = Design.Color.white
         addSubviews()
         configureLayout()
     }

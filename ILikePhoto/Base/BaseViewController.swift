@@ -29,12 +29,15 @@ class BaseViewController<View: BaseView, ViewModel: BaseViewModel>: UIViewContro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Design.Color.white
+        navigationController?.navigationBar.tintColor = Design.Color.black
         navigationItem.backButtonDisplayMode = .minimal
+        view.backgroundColor = Design.Color.white
+        configureNavigationBar()
         configureView()
         bindData()
     }
     
+    func configureNavigationBar() {}
     func configureView() {}
     func bindData() {}
 }

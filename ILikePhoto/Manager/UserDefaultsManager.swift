@@ -37,8 +37,8 @@ enum UserDefaultsManager {
     @UserDefault(key: Key.profileImageIndex.rawValue, defaultValue: 0)
     static var profileImageIndex: Int
     
-    @UserDefault(key: Key.mbti.rawValue, defaultValue: "")
-    static var mbti: String
+    @UserDefault(key: Key.mbti.rawValue, defaultValue: [nil, nil, nil, nil])
+    static var mbti: [Bool?]
     
     @UserDefault(key: Key.signUpDate.rawValue, defaultValue: nil)
     static var signUpDate: Date?

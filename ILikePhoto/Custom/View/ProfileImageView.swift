@@ -23,7 +23,7 @@ final class ProfileImageView: UIImageView {
         layer.cornerRadius = frame.width / 2
     }
     
-    func toggleImageView(isSelect: Bool) {
+    func setImageView(isSelect: Bool) {
         if isSelect {
             layer.borderWidth = 3
             layer.borderColor = Design.Color.blue.cgColor

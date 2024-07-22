@@ -21,7 +21,6 @@ class BaseView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureNavigationBar(_ vc: UIViewController) {}
     func addSubviews() {}
     func configureLayout() {}
     func configureView() {}

@@ -26,7 +26,12 @@
 		24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */; };
 		24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */; };
 		24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F02C4E3E4F008F403D /* CameraImageView.swift */; };
-		24EC73F32C4E3FF8008F403D /* MBTIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F22C4E3FF8008F403D /* MBTIButton.swift */; };
+		24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F42C4E4B1E008F403D /* UICollectionView+.swift */; };
+		24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */; };
+		24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FB2C4E51F9008F403D /* Observable.swift */; };
+		24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */; };
+		24EC74002C4E593F008F403D /* MBTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FF2C4E593F008F403D /* MBTI.swift */; };
+		24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74032C4E6469008F403D /* MBTIButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +54,12 @@
 		24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		24EC73F02C4E3E4F008F403D /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
-		24EC73F22C4E3FF8008F403D /* MBTIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIButton.swift; sourceTree = "<group>"; };
+		24EC73F42C4E4B1E008F403D /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
+		24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC73FB2C4E51F9008F403D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		24EC73FF2C4E593F008F403D /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
+		24EC74032C4E6469008F403D /* MBTIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,10 +97,12 @@
 			children = (
 				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
 				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
+				24EC74022C4E5963008F403D /* Manager */,
+				24EC74012C4E5945008F403D /* Enum */,
 				24EC73DB2C4E37BE008F403D /* Extension */,
+				24EC73FA2C4E4D57008F403D /* Base */,
 				24EC73DC2C4E37ED008F403D /* Custom */,
 				24EC73DA2C4E37B3008F403D /* Scenes */,
-				24EC73D62C4E302F008F403D /* Design.swift */,
 				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
 				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
 				24BB36C12C4E25D900B40E9C /* Info.plist */,
@@ -111,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC73D82C4E3636008F403D /* UIColor+.swift */,
+				24EC73F42C4E4B1E008F403D /* UICollectionView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -118,9 +131,7 @@
 		24EC73DC2C4E37ED008F403D /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				24EC73DD2C4E387B008F403D /* BaseViewController.swift */,
-				24EC73DF2C4E388B008F403D /* BaseView.swift */,
-				24EC73E12C4E389A008F403D /* BaseViewModel.swift */,
+				24EC73FB2C4E51F9008F403D /* Observable.swift */,
 				24EC73E32C4E394A008F403D /* View */,
 			);
 			path = Custom;
@@ -132,7 +143,7 @@
 				24EC73E42C4E398D008F403D /* BlueButton.swift */,
 				24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */,
 				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
-				24EC73F22C4E3FF8008F403D /* MBTIButton.swift */,
+				24EC74032C4E6469008F403D /* MBTIButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -153,6 +164,34 @@
 				24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		24EC73FA2C4E4D57008F403D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73DD2C4E387B008F403D /* BaseViewController.swift */,
+				24EC73DF2C4E388B008F403D /* BaseView.swift */,
+				24EC73E12C4E389A008F403D /* BaseViewModel.swift */,
+				24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		24EC74012C4E5945008F403D /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73D62C4E302F008F403D /* Design.swift */,
+				24EC73FF2C4E593F008F403D /* MBTI.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		24EC74022C4E5963008F403D /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,16 +273,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */,
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
 				24EC73D72C4E302F008F403D /* Design.swift in Sources */,
+				24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */,
+				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
+				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
 				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
-				24EC73F32C4E3FF8008F403D /* MBTIButton.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
 				24EC73E82C4E3B43008F403D /* ProfileViewController.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */,
+				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
+				24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */,
 				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,
 				24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */,
 				24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */,
