@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B32C4E25D700B40E9C /* AppDelegate.swift */; };
 		24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */; };
-		24BB36B82C4E25D700B40E9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* ViewController.swift */; };
+		24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */; };
 		24BB36BD2C4E25D900B40E9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36BC2C4E25D900B40E9C /* Assets.xcassets */; };
 		24BB36C02C4E25D900B40E9C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36BF2C4E25D900B40E9C /* Base */; };
 		24BB36C82C4E261D00B40E9C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36C72C4E261D00B40E9C /* .gitignore */; };
+		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
+		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
+		24EC73D72C4E302F008F403D /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D62C4E302F008F403D /* Design.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		24BB36B02C4E25D700B40E9C /* ILikePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILikePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BB36B32C4E25D700B40E9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		24BB36B72C4E25D700B40E9C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		24BB36BC2C4E25D900B40E9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24BB36BF2C4E25D900B40E9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24BB36C12C4E25D900B40E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		24EC73D62C4E302F008F403D /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24EC73D22C4E3011008F403D /* Then in Frameworks */,
+				24EC73D52C4E301C008F403D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +65,8 @@
 			children = (
 				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
 				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
-				24BB36B72C4E25D700B40E9C /* ViewController.swift */,
+				24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */,
+				24EC73D62C4E302F008F403D /* Design.swift */,
 				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
 				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
 				24BB36C12C4E25D900B40E9C /* Info.plist */,
@@ -83,6 +90,10 @@
 			dependencies = (
 			);
 			name = ILikePhoto;
+			packageProductDependencies = (
+				24EC73D12C4E3011008F403D /* Then */,
+				24EC73D42C4E301C008F403D /* SnapKit */,
+			);
 			productName = ILikePhoto;
 			productReference = 24BB36B02C4E25D700B40E9C /* ILikePhoto.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +122,10 @@
 				Base,
 			);
 			mainGroup = 24BB36A72C4E25D700B40E9C;
+			packageReferences = (
+				24EC73D02C4E3011008F403D /* XCRemoteSwiftPackageReference "Then" */,
+				24EC73D32C4E301C008F403D /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 24BB36B12C4E25D700B40E9C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,7 +153,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24BB36B82C4E25D700B40E9C /* ViewController.swift in Sources */,
+				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
+				24EC73D72C4E302F008F403D /* Design.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
 			);
@@ -365,6 +381,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		24EC73D02C4E3011008F403D /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		24EC73D32C4E301C008F403D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		24EC73D12C4E3011008F403D /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24EC73D02C4E3011008F403D /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		24EC73D42C4E301C008F403D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24EC73D32C4E301C008F403D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 24BB36A82C4E25D700B40E9C /* Project object */;
 }
