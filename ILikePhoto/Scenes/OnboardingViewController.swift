@@ -22,14 +22,16 @@ class OnboardingViewController: UIViewController {
     
     let nameLabel = UILabel().then {
         $0.text = "김성민"
-        $0.font = .boldSystemFont(ofSize: 30)
+        $0.font = Design.Font.title
     }
     
-    let startButton = UIButton().then {
+    lazy var startButton = UIButton().then {
         $0.setTitle("시작하기", for: .normal)
         $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = Design.Font.bold16
         $0.backgroundColor = .systemBlue
         $0.layer.cornerRadius = 20
+        $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
@@ -62,6 +64,10 @@ class OnboardingViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.height.equalTo(50)
         }
+    }
+    
+    @objc func startButtonTapped() {
+        print(#function)
     }
 
 }
