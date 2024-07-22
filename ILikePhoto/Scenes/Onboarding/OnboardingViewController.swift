@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class OnboardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
     
     let titleImageView = UIImageView().then {
         $0.image = Design.Image.launch
@@ -25,23 +25,24 @@ class OnboardingViewController: UIViewController {
         $0.font = Design.Font.title
     }
     
-    lazy var startButton = UIButton().then {
-        $0.setTitle("시작하기", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = Design.Font.bold16
-        $0.backgroundColor = .systemBlue
-        $0.layer.cornerRadius = 20
+    lazy var startButton = BlueButton(title: "시작하기").then {
         $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addSubviews()
+        configureLayout()
+    }
+    
+    func addSubviews() {
         view.addSubview(titleImageView)
         view.addSubview(logoImageView)
         view.addSubview(nameLabel)
         view.addSubview(startButton)
-        
+    }
+    
+    func configureLayout() {
         titleImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.horizontalEdges.equalToSuperview().inset(20)
@@ -67,7 +68,7 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
-        print(#function)
+        let vc = ProfileViewController(view: ProfileView(), viewModel: ProfileViewModel())
+        navigationController?.pushViewController(vc, animated: true)
     }
-
 }

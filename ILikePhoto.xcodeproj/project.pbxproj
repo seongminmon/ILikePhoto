@@ -16,6 +16,17 @@
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
 		24EC73D72C4E302F008F403D /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D62C4E302F008F403D /* Design.swift */; };
+		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
+		24EC73DE2C4E387B008F403D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73DD2C4E387B008F403D /* BaseViewController.swift */; };
+		24EC73E02C4E388B008F403D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73DF2C4E388B008F403D /* BaseView.swift */; };
+		24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E12C4E389A008F403D /* BaseViewModel.swift */; };
+		24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E42C4E398D008F403D /* BlueButton.swift */; };
+		24EC73E82C4E3B43008F403D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E72C4E3B43008F403D /* ProfileViewController.swift */; };
+		24EC73EB2C4E3B7B008F403D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EA2C4E3B7B008F403D /* ProfileView.swift */; };
+		24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */; };
+		24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */; };
+		24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F02C4E3E4F008F403D /* CameraImageView.swift */; };
+		24EC73F32C4E3FF8008F403D /* MBTIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F22C4E3FF8008F403D /* MBTIButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +39,17 @@
 		24BB36C12C4E25D900B40E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		24EC73D62C4E302F008F403D /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
+		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		24EC73E12C4E389A008F403D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		24EC73E42C4E398D008F403D /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		24EC73E72C4E3B43008F403D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		24EC73EA2C4E3B7B008F403D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		24EC73F02C4E3E4F008F403D /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
+		24EC73F22C4E3FF8008F403D /* MBTIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +87,72 @@
 			children = (
 				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
 				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
-				24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */,
+				24EC73DB2C4E37BE008F403D /* Extension */,
+				24EC73DC2C4E37ED008F403D /* Custom */,
+				24EC73DA2C4E37B3008F403D /* Scenes */,
 				24EC73D62C4E302F008F403D /* Design.swift */,
 				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
 				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
 				24BB36C12C4E25D900B40E9C /* Info.plist */,
 			);
 			path = ILikePhoto;
+			sourceTree = "<group>";
+		};
+		24EC73DA2C4E37B3008F403D /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73E62C4E3AFE008F403D /* Onboarding */,
+				24EC73E92C4E3B47008F403D /* Profile */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		24EC73DB2C4E37BE008F403D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73D82C4E3636008F403D /* UIColor+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		24EC73DC2C4E37ED008F403D /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73DD2C4E387B008F403D /* BaseViewController.swift */,
+				24EC73DF2C4E388B008F403D /* BaseView.swift */,
+				24EC73E12C4E389A008F403D /* BaseViewModel.swift */,
+				24EC73E32C4E394A008F403D /* View */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		24EC73E32C4E394A008F403D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73E42C4E398D008F403D /* BlueButton.swift */,
+				24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */,
+				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
+				24EC73F22C4E3FF8008F403D /* MBTIButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		24EC73E62C4E3AFE008F403D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		24EC73E92C4E3B47008F403D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				24EC73E72C4E3B43008F403D /* ProfileViewController.swift */,
+				24EC73EA2C4E3B7B008F403D /* ProfileView.swift */,
+				24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,7 +237,18 @@
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
 				24EC73D72C4E302F008F403D /* Design.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
+				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
+				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
+				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
+				24EC73F32C4E3FF8008F403D /* MBTIButton.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
+				24EC73E82C4E3B43008F403D /* ProfileViewController.swift in Sources */,
+				24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */,
+				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,
+				24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */,
+				24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */,
+				24EC73EB2C4E3B7B008F403D /* ProfileView.swift in Sources */,
+				24EC73DE2C4E387B008F403D /* BaseViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,37 @@
+//
+//  ProfileImageView.swift
+//  ILikePhoto
+//
+//  Created by 김성민 on 7/22/24.
+//
+
+import UIKit
+
+final class ProfileImageView: UIImageView {
+    
+    override init(image: UIImage?) {
+        super.init(image: image)
+        contentMode = .scaleAspectFit
+        clipsToBounds = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        layer.cornerRadius = frame.width / 2
+    }
+    
+    func toggleImageView(isSelect: Bool) {
+        if isSelect {
+            layer.borderWidth = 3
+            layer.borderColor = Design.Color.blue.cgColor
+            alpha = 1
+        } else {
+            layer.borderWidth = 1
+            layer.borderColor = Design.Color.lightgray.cgColor
+            alpha = 0.5
+        }
+    }
+}

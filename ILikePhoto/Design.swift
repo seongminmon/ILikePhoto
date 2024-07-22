@@ -48,6 +48,7 @@ enum Design {
     enum Font {
         static let title = UIFont.boldSystemFont(ofSize: 30)
         
+        static let bold20 = UIFont.boldSystemFont(ofSize: 20)
         static let bold16 = UIFont.boldSystemFont(ofSize: 16)
         static let bold15 = UIFont.boldSystemFont(ofSize: 15)
         static let bold14 = UIFont.boldSystemFont(ofSize: 14)
