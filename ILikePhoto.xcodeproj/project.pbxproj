@@ -40,6 +40,8 @@
 		24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74182C4F374E008F403D /* StatisticsResponse.swift */; };
 		24EC744B2C4F9EB6008F403D /* SelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC744A2C4F9EB6008F403D /* SelectImageViewController.swift */; };
 		24EC74512C4FD0F7008F403D /* SelectImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */; };
+		24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74522C500AB0008F403D /* BaseTabBarController.swift */; };
+		24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74552C500B4E008F403D /* TopicViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		24EC74182C4F374E008F403D /* StatisticsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsResponse.swift; sourceTree = "<group>"; };
 		24EC744A2C4F9EB6008F403D /* SelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageViewController.swift; sourceTree = "<group>"; };
 		24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC74522C500AB0008F403D /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
+		24EC74552C500B4E008F403D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,7 @@
 		24EC73DA2C4E37B3008F403D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				24EC74542C500B3E008F403D /* Topic */,
 				24EC73E62C4E3AFE008F403D /* Onboarding */,
 				24EC73E92C4E3B47008F403D /* Profile */,
 			);
@@ -188,6 +193,7 @@
 		24EC73FA2C4E4D57008F403D /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				24EC74522C500AB0008F403D /* BaseTabBarController.swift */,
 				24EC73DD2C4E387B008F403D /* BaseViewController.swift */,
 				24EC73E12C4E389A008F403D /* BaseViewModel.swift */,
 				24EC73DF2C4E388B008F403D /* BaseView.swift */,
@@ -238,6 +244,14 @@
 				24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */,
 			);
 			path = SelectImage;
+			sourceTree = "<group>";
+		};
+		24EC74542C500B3E008F403D /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				24EC74552C500B4E008F403D /* TopicViewController.swift */,
+			);
+			path = Topic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,11 +343,13 @@
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
 				24EC73D72C4E302F008F403D /* Design.swift in Sources */,
 				24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */,
+				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
+				24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */,
 				24EC74082C4E8453008F403D /* NetworkRequest.swift in Sources */,
 				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,

@@ -14,10 +14,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let vc = OnboardingViewController()
-        let nav = UINavigationController(rootViewController: vc)
-        window?.rootViewController = nav
-        window?.backgroundColor = .white
+        
+        if UserDefaultsManager.signUpDate == nil {
+            let vc = OnboardingViewController()
+            let nav = UINavigationController(rootViewController: vc)
+            window?.rootViewController = nav
+        } else {
+            let tab = BaseTabBarController()
+            window?.rootViewController = tab
+        }
+        window?.backgroundColor = Design.Color.white
         window?.makeKeyAndVisible()
     }
 }

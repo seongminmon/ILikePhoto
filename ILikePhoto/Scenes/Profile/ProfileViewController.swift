@@ -213,7 +213,12 @@ final class ProfileViewController: BaseViewController {
     
     @objc func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
-        // TODO: - 메인 화면으로 window 전환
+        // window 전환
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let tab = BaseTabBarController()
+        sceneDelegate?.window?.rootViewController = tab
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
