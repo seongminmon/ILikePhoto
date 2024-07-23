@@ -67,6 +67,6 @@ enum Design {
         static let black = UIColor.hexStringToUIColor("000000")
         static let lightgray = UIColor.hexStringToUIColor("F2F2F2")
         static let white = UIColor.hexStringToUIColor("FFFFFF")
-        static let pink = UIColor.hexStringToUIColor("F04452")
+        static let red = UIColor.hexStringToUIColor("F04452")
     }
 }

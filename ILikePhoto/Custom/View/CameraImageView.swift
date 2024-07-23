@@ -21,7 +21,7 @@ final class CameraImageView: BaseView {
         layer.cornerRadius = frame.width / 2
     }
     
-    override func addSubviews() {
+    override func configureHierarchy() {
         addSubview(camera)
     }
     

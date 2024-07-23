@@ -11,7 +11,7 @@ class BaseView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubviews()
+        configureHierarchy()
         configureLayout()
         configureView()
     }
@@ -21,7 +21,7 @@ class BaseView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addSubviews() {}
+    func configureHierarchy() {}
     func configureLayout() {}
     func configureView() {}
 }

@@ -8,18 +8,14 @@
 import UIKit
 
 extension UICollectionView {
-//    static func mbtiLayout() -> UICollectionViewLayout {
-//        let layout = UICollectionViewFlowLayout()
-//        let sectionSpacing: CGFloat = 10
-//        let cellSpacing: CGFloat = 10
-//        let width: CGFloat = 40
-//        let height: CGFloat = 40
-//        
-//        layout.itemSize = CGSize(width: width, height: height)
-//        layout.scrollDirection = .horizontal
-//        layout.minimumInteritemSpacing = cellSpacing
-//        layout.minimumLineSpacing = cellSpacing
-//        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: sectionSpacing)
-//        return layout
-//    }
+    static func collectionViewLayout(spacing: CGFloat, cellCount: CGFloat, aspectRatio: CGFloat) -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - (2 * spacing) - ((cellCount-1) * spacing)
+        layout.itemSize = CGSize(width: width / cellCount, height: width / cellCount * aspectRatio)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        return layout
+    }
 }

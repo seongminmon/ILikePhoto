@@ -9,8 +9,8 @@ import UIKit
 
 final class ProfileImageView: UIImageView {
     
-    override init(image: UIImage?) {
-        super.init(image: image)
+    init() {
+        super.init(frame: .zero)
         contentMode = .scaleAspectFit
         clipsToBounds = true
     }
