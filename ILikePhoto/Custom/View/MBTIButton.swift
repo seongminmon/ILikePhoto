@@ -14,10 +14,7 @@ final class MBTIButton: UIButton {
         titleLabel?.font = Design.Font.regular16
         layer.borderWidth = 1
         layer.cornerRadius = 20
-        
-        setTitleColor(Design.Color.darkgray, for: .normal)
-        backgroundColor = .clear
-        layer.borderColor = Design.Color.darkgray.cgColor
+        setButton(isSelect: false)
     }
     
     required init?(coder: NSCoder) {

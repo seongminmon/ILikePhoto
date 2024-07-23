@@ -14,7 +14,7 @@ final class BlueButton: UIButton {
         setTitle(title, for: .normal)
         setTitleColor(Design.Color.white, for: .normal)
         titleLabel?.font = Design.Font.bold16
-        backgroundColor = .systemBlue
+        backgroundColor = Design.Color.blue
         layer.cornerRadius = 20
     }
     

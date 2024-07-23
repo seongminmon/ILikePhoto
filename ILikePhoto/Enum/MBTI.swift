@@ -7,6 +7,7 @@
 
 import Foundation
 
-enum MBTI: String, CaseIterable {
-    case E, S, T, J, I, N, F, P
+enum MBTI {
+    static let list = ["E", "S", "T", "J", "I", "N", "F", "P"]
+//    case E, S, T, J, I, N, F, P
 }
