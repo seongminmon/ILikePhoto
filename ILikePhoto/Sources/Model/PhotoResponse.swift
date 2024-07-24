@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Topic, Search, Random 모델
-struct PhotoResponse: Decodable {
+struct PhotoResponse: Decodable, Hashable {
     let id, createdAt: String
     let width, height, likes: Int
     let urls: Urls
@@ -20,12 +20,12 @@ struct PhotoResponse: Decodable {
     }
 }
 
-struct Urls: Decodable {
+struct Urls: Decodable, Hashable {
     let raw: String
     let small: String
 }
 
-struct User: Decodable {
+struct User: Decodable, Hashable {
     let name: String
     let profileImage: ProfileImage
     
@@ -35,6 +35,6 @@ struct User: Decodable {
     }
 }
 
-struct ProfileImage: Decodable {
+struct ProfileImage: Decodable, Hashable {
     let medium: String
 }

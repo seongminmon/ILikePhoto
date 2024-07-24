@@ -44,6 +44,7 @@
 		24EC745B2C5082CB008F403D /* MyFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745A2C5082CB008F403D /* MyFont.swift */; };
 		24EC745D2C508337008F403D /* MyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745C2C508337008F403D /* MyColor.swift */; };
 		24EC745F2C508365008F403D /* MyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745E2C508365008F403D /* MyImage.swift */; };
+		24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		24EC745A2C5082CB008F403D /* MyFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFont.swift; sourceTree = "<group>"; };
 		24EC745C2C508337008F403D /* MyColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColor.swift; sourceTree = "<group>"; };
 		24EC745E2C508365008F403D /* MyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImage.swift; sourceTree = "<group>"; };
+		24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74552C500B4E008F403D /* TopicViewController.swift */,
+				24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */,
+				24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */,
 				24EC74082C4E8453008F403D /* NetworkRequest.swift in Sources */,
 				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,

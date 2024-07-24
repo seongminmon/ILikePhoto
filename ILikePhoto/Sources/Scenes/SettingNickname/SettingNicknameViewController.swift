@@ -79,6 +79,7 @@ final class SettingNicknameViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         if option == .edit {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴", style: .plain, target: self, action: #selector(deleteButtonTapped))
