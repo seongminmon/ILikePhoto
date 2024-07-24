@@ -18,6 +18,10 @@ final class BaseTabBarController: UITabBarController {
         let nav1 = UINavigationController(rootViewController: topic)
         nav1.tabBarItem = UITabBarItem(title: nil, image: MyImage.tapTrendInactive, selectedImage: MyImage.tabTrend)
         
-        setViewControllers([nav1], animated: true)
+        let search = SearchViewController()
+        let nav2 = UINavigationController(rootViewController: search)
+        nav2.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabSearchInactive, selectedImage: MyImage.tabSearch)
+        
+        setViewControllers([nav1, nav2], animated: true)
     }
 }
