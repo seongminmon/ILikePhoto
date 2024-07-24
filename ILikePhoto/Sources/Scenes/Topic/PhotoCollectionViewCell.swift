@@ -1,5 +1,5 @@
 //
-//  TopicCollectionViewCell.swift
+//  PhotoCollectionViewCell.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/24/24.
@@ -10,7 +10,7 @@ import Kingfisher
 import SnapKit
 import Then
 
-final class TopicCollectionViewCell: BaseCollectionViewCell {
+final class PhotoCollectionViewCell: BaseCollectionViewCell {
     // TODO: - 버튼 디자인 완성하기
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true

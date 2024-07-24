@@ -97,21 +97,25 @@ final class TopicViewController: BaseViewController {
         return layout
     }
     
-    private func cellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {
+    private func cellRegistration() -> UICollectionView.CellRegistration<PhotoCollectionViewCell, PhotoResponse> {
         return UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
             cell.configureCell(data: itemIdentifier)
         }
     }
     
     private func supplementaryCellRegistration() -> UICollectionView.SupplementaryRegistration<TopicCollectionHeaderView> {
-        return UICollectionView.SupplementaryRegistration(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, elementKind, indexPath in
+        return UICollectionView.SupplementaryRegistration(
+            elementKind: UICollectionView.elementKindSectionHeader
+        ) { supplementaryView, elementKind, indexPath in
             supplementaryView.configureLabel(self.headerTitles[indexPath.section])
         }
     }
     
     private func configureDataSource() {
         let cellRegistration = cellRegistration()
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
                 for: indexPath,
@@ -121,8 +125,12 @@ final class TopicViewController: BaseViewController {
         })
         
         let supplementaryRegistration = supplementaryCellRegistration()
-        dataSource.supplementaryViewProvider = { view, kind, index in
-            return self.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: index)
+        dataSource.supplementaryViewProvider = { [weak self] view, kind, index in
+            guard let self else { return UICollectionReusableView() }
+            return collectionView.dequeueConfiguredReusableSupplementary(
+                using: supplementaryRegistration,
+                for: index
+            )
         }
     }
     
@@ -148,13 +156,16 @@ final class TopicViewController: BaseViewController {
         // 3번 통신하기
         for i in 0..<Section.allCases.count {
             let topicID = topicIDList[i]
-            NetworkManager.shared.request(api: .topic(topicID: topicID), model: [PhotoResponse].self) { response in
+            NetworkManager.shared.request(
+                api: .topic(topicID: topicID), model: [PhotoResponse].self
+            ) { [weak self] response in
+                guard let self else { return }
                 switch response {
                 case .success(let data):
                     print("SUCCESS", topicID, data.count)
-                    self.headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
-                    self.list[i] = data
-                    self.updateSnapshot()
+                    headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
+                    list[i] = data
+                    updateSnapshot()
                 case .failure(let error):
                     print(error)
                 }

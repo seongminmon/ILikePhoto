@@ -82,7 +82,12 @@ final class SettingNicknameViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         if option == .edit {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴", style: .plain, target: self, action: #selector(deleteButtonTapped))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "탈퇴", 
+                style: .plain,
+                target: self,
+                action: #selector(deleteButtonTapped)
+            )
         }
     }
     
