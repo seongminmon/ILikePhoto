@@ -47,7 +47,7 @@ final class ProfileViewModel: BaseViewModel {
             guard let self, let option else { return }
             switch option {
             case .create:
-                outputImageIndex.value = Int.random(in: 0..<Design.Image.profileImageList.count)
+                outputImageIndex.value = Int.random(in: 0..<MyImage.profileImageList.count)
                 outputMbtiList.value = [Bool](repeating: false, count: MBTI.list.count)
                 
             case .edit:

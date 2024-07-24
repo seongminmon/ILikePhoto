@@ -25,19 +25,19 @@ final class ProfileViewController: BaseViewController {
     private let cameraView = CameraImageView()
     private lazy var nicknameTextField = UITextField().then {
         $0.placeholder = "닉네임을 입력해주세요 :)"
-        $0.font = Design.Font.regular14
+        $0.font = MyFont.regular14
         $0.clearButtonMode = .whileEditing
         $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     private let separator = UIView().then {
-        $0.backgroundColor = Design.Color.gray
+        $0.backgroundColor = MyColor.gray
     }
     private let descriptionLabel = UILabel().then {
-        $0.font = Design.Font.regular13
+        $0.font = MyFont.regular13
     }
     private let mbtiLabel = UILabel().then {
         $0.text = "MBTI"
-        $0.font = Design.Font.bold20
+        $0.font = MyFont.bold20
     }
     private let eButton = MBTIButton()
     private let sButton = MBTIButton()
@@ -81,7 +81,7 @@ final class ProfileViewController: BaseViewController {
     override func bindData() {
         viewModel.outputImageIndex.bind { [weak self] index in
             guard let self, let index else { return }
-            profileImageView.image = Design.Image.profileImageList[index]
+            profileImageView.image = MyImage.profileImageList[index]
         }
         
         viewModel.outputMbtiList.bind { [weak self] list in
@@ -95,16 +95,16 @@ final class ProfileViewController: BaseViewController {
             guard let self else { return }
             descriptionLabel.text = text
             if viewModel.nicknameValid == nil {
-                descriptionLabel.textColor = Design.Color.blue
+                descriptionLabel.textColor = MyColor.blue
             } else {
-                descriptionLabel.textColor = Design.Color.red
+                descriptionLabel.textColor = MyColor.red
             }
         }
         
         viewModel.outputConfirmButtonEnabled.bind { [weak self] flag in
             guard let self else { return }
             confirmButton.isEnabled = flag
-            confirmButton.backgroundColor = flag ? Design.Color.blue : Design.Color.gray
+            confirmButton.backgroundColor = flag ? MyColor.blue : MyColor.gray
         }
         
         viewModel.outputPushSelectImageVC.bind { [weak self] _ in
@@ -114,7 +114,7 @@ final class ProfileViewController: BaseViewController {
             vc.selectedIndex = viewModel.outputImageIndex.value
             vc.sendSelectedIndex = { [weak self] index in
                 guard let self else { return }
-                profileImageView.image = Design.Image.profileImageList[index]
+                profileImageView.image = MyImage.profileImageList[index]
             }
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -213,12 +213,7 @@ final class ProfileViewController: BaseViewController {
     
     @objc func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
-        // window 전환
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        let tab = BaseTabBarController()
-        sceneDelegate?.window?.rootViewController = tab
-        sceneDelegate?.window?.makeKeyAndVisible()
+        changeWindowToTabBarController()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

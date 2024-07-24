@@ -13,16 +13,16 @@ import Then
 final class OnboardingViewController: BaseViewController {
     
     let titleImageView = UIImageView().then {
-        $0.image = Design.Image.launch
+        $0.image = MyImage.launch
     }
     
     let logoImageView = UIImageView().then {
-        $0.image = Design.Image.launchLogoImage
+        $0.image = MyImage.launchLogoImage
     }
     
     let nameLabel = UILabel().then {
         $0.text = "김성민"
-        $0.font = Design.Font.title
+        $0.font = MyFont.title
     }
     
     lazy var startButton = BlueButton(title: "시작하기").then {

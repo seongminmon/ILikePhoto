@@ -7,8 +7,8 @@
 
 import UIKit
 
-extension UICollectionView {
-    static func collectionViewLayout(spacing: CGFloat, cellCount: CGFloat, aspectRatio: CGFloat) -> UICollectionViewLayout {
+extension UICollectionViewLayout {
+    static func createLayout(spacing: CGFloat, cellCount: CGFloat, aspectRatio: CGFloat) -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width - (2 * spacing) - ((cellCount-1) * spacing)
         layout.itemSize = CGSize(width: width / cellCount, height: width / cellCount * aspectRatio)

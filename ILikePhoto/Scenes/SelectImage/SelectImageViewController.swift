@@ -12,13 +12,13 @@ import Then
 final class SelectImageViewController: BaseViewController {
     
     private lazy var selectedImageView = ProfileImageView().then {
-        $0.image = Design.Image.profileImageList[selectedIndex ?? 0]
+        $0.image = MyImage.profileImageList[selectedIndex ?? 0]
         $0.setImageView(isSelect: true)
     }
     private let cameraImageView = CameraImageView(frame: .zero)
     private lazy var collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: UICollectionView.collectionViewLayout(spacing: 10, cellCount: 4, aspectRatio: 1)
+        collectionViewLayout: .createLayout(spacing: 10, cellCount: 4, aspectRatio: 1)
     ).then {
         $0.delegate = self
         $0.dataSource = self
@@ -70,7 +70,7 @@ final class SelectImageViewController: BaseViewController {
 
 extension SelectImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Design.Image.profileImageList.count
+        return MyImage.profileImageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,7 +86,7 @@ extension SelectImageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndex = indexPath.item
-        selectedImageView.image = Design.Image.profileImageList[indexPath.item]
+        selectedImageView.image = MyImage.profileImageList[indexPath.item]
         collectionView.reloadData()
     }
 }

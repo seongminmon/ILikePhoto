@@ -13,8 +13,8 @@ final class CameraImageView: BaseView {
     
     let camera = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = Design.Image.camera
-        $0.tintColor = Design.Color.white
+        $0.image = MyImage.camera
+        $0.tintColor = MyColor.white
     }
     
     override func draw(_ rect: CGRect) {
@@ -32,7 +32,7 @@ final class CameraImageView: BaseView {
     }
     
     override func configureView() {
-        backgroundColor = Design.Color.blue
+        backgroundColor = MyColor.blue
         clipsToBounds = true
     }
 }

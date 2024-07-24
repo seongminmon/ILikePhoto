@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tab = BaseTabBarController()
             window?.rootViewController = tab
         }
-        window?.backgroundColor = Design.Color.white
+        window?.backgroundColor = MyColor.white
         window?.makeKeyAndVisible()
     }
 }

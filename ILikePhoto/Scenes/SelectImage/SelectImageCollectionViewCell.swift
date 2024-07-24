@@ -23,7 +23,7 @@ final class SelectImageCollectionViewCell: BaseCollectionViewCell {
     }
     
     func configureCell(index: Int, selectedIndex: Int) {
-        profileImageView.image = Design.Image.profileImageList[index]
+        profileImageView.image = MyImage.profileImageList[index]
         profileImageView.setImageView(isSelect: index == selectedIndex)
     }
 }

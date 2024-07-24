@@ -12,9 +12,9 @@ final class BlueButton: UIButton {
     init(title: String) {
         super.init(frame: .zero)
         setTitle(title, for: .normal)
-        setTitleColor(Design.Color.white, for: .normal)
-        titleLabel?.font = Design.Font.bold16
-        backgroundColor = Design.Color.blue
+        setTitleColor(MyColor.white, for: .normal)
+        titleLabel?.font = MyFont.bold16
+        backgroundColor = MyColor.blue
         layer.cornerRadius = 20
     }
     

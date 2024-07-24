@@ -15,7 +15,6 @@
 		24BB36C82C4E261D00B40E9C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36C72C4E261D00B40E9C /* .gitignore */; };
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
-		24EC73D72C4E302F008F403D /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D62C4E302F008F403D /* Design.swift */; };
 		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
 		24EC73DE2C4E387B008F403D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73DD2C4E387B008F403D /* BaseViewController.swift */; };
 		24EC73E02C4E388B008F403D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73DF2C4E388B008F403D /* BaseView.swift */; };
@@ -42,6 +41,9 @@
 		24EC74512C4FD0F7008F403D /* SelectImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */; };
 		24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74522C500AB0008F403D /* BaseTabBarController.swift */; };
 		24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74552C500B4E008F403D /* TopicViewController.swift */; };
+		24EC745B2C5082CB008F403D /* MyFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745A2C5082CB008F403D /* MyFont.swift */; };
+		24EC745D2C508337008F403D /* MyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745C2C508337008F403D /* MyColor.swift */; };
+		24EC745F2C508365008F403D /* MyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745E2C508365008F403D /* MyImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +55,6 @@
 		24BB36BF2C4E25D900B40E9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24BB36C12C4E25D900B40E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		24EC73D62C4E302F008F403D /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -78,6 +79,9 @@
 		24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC74522C500AB0008F403D /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		24EC74552C500B4E008F403D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
+		24EC745A2C5082CB008F403D /* MyFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFont.swift; sourceTree = "<group>"; };
+		24EC745C2C508337008F403D /* MyColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColor.swift; sourceTree = "<group>"; };
+		24EC745E2C508365008F403D /* MyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,19 +119,12 @@
 		24BB36B22C4E25D700B40E9C /* ILikePhoto */ = {
 			isa = PBXGroup;
 			children = (
-				24EC740F2C4E847F008F403D /* APIKey.swift */,
-				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
-				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
-				24EC74152C4E8908008F403D /* Model */,
-				24EC74062C4E844D008F403D /* Network */,
-				24EC74022C4E5963008F403D /* Manager */,
-				24EC74012C4E5945008F403D /* Enum */,
-				24EC73DB2C4E37BE008F403D /* Extension */,
+				24EC74592C50166C008F403D /* Resources */,
+				24EC74582C501663008F403D /* Sources */,
+				24EC73E32C4E394A008F403D /* CustomView */,
 				24EC73FA2C4E4D57008F403D /* Base */,
 				24EC73DC2C4E37ED008F403D /* Custom */,
 				24EC73DA2C4E37B3008F403D /* Scenes */,
-				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
-				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
 				24BB36C12C4E25D900B40E9C /* Info.plist */,
 			);
 			path = ILikePhoto;
@@ -136,9 +133,10 @@
 		24EC73DA2C4E37B3008F403D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				24EC74542C500B3E008F403D /* Topic */,
 				24EC73E62C4E3AFE008F403D /* Onboarding */,
 				24EC73E92C4E3B47008F403D /* Profile */,
+				24EC74492C4F9EA4008F403D /* SelectImage */,
+				24EC74542C500B3E008F403D /* Topic */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -156,12 +154,11 @@
 			isa = PBXGroup;
 			children = (
 				24EC73FB2C4E51F9008F403D /* Observable.swift */,
-				24EC73E32C4E394A008F403D /* View */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
 		};
-		24EC73E32C4E394A008F403D /* View */ = {
+		24EC73E32C4E394A008F403D /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
 				24EC73E42C4E398D008F403D /* BlueButton.swift */,
@@ -169,7 +166,7 @@
 				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
 				24EC74032C4E6469008F403D /* MBTIButton.swift */,
 			);
-			path = View;
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		24EC73E62C4E3AFE008F403D /* Onboarding */ = {
@@ -185,7 +182,6 @@
 			children = (
 				24EC73E72C4E3B43008F403D /* ProfileViewController.swift */,
 				24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */,
-				24EC74492C4F9EA4008F403D /* SelectImage */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -205,7 +201,6 @@
 		24EC74012C4E5945008F403D /* Enum */ = {
 			isa = PBXGroup;
 			children = (
-				24EC73D62C4E302F008F403D /* Design.swift */,
 				24EC73FF2C4E593F008F403D /* MBTI.swift */,
 			);
 			path = Enum;
@@ -252,6 +247,41 @@
 				24EC74552C500B4E008F403D /* TopicViewController.swift */,
 			);
 			path = Topic;
+			sourceTree = "<group>";
+		};
+		24EC74582C501663008F403D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				24EC74152C4E8908008F403D /* Model */,
+				24EC74062C4E844D008F403D /* Network */,
+				24EC74022C4E5963008F403D /* Manager */,
+				24EC74012C4E5945008F403D /* Enum */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		24EC74592C50166C008F403D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				24EC740F2C4E847F008F403D /* APIKey.swift */,
+				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
+				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
+				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
+				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
+				24EC747B2C50866C008F403D /* Design */,
+				24EC73DB2C4E37BE008F403D /* Extension */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		24EC747B2C50866C008F403D /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				24EC745A2C5082CB008F403D /* MyFont.swift */,
+				24EC745C2C508337008F403D /* MyColor.swift */,
+				24EC745E2C508365008F403D /* MyImage.swift */,
+			);
+			path = Design;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,13 +369,14 @@
 			files = (
 				24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */,
 				24EC74512C4FD0F7008F403D /* SelectImageCollectionViewCell.swift in Sources */,
+				24EC745F2C508365008F403D /* MyImage.swift in Sources */,
 				24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */,
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
-				24EC73D72C4E302F008F403D /* Design.swift in Sources */,
 				24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */,
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
+				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
@@ -359,6 +390,7 @@
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
+				24EC745D2C508337008F403D /* MyColor.swift in Sources */,
 				24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */,
 				24EC744B2C4F9EB6008F403D /* SelectImageViewController.swift in Sources */,
 				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,

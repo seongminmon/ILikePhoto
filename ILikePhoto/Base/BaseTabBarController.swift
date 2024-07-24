@@ -12,11 +12,11 @@ final class BaseTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.tintColor = Design.Color.darkgray
+        tabBar.tintColor = MyColor.darkgray
         
         let topic = TopicViewController()
         let nav1 = UINavigationController(rootViewController: topic)
-        nav1.tabBarItem = UITabBarItem(title: nil, image: Design.Image.tapTrendInactive, selectedImage: Design.Image.tabTrend)
+        nav1.tabBarItem = UITabBarItem(title: nil, image: MyImage.tapTrendInactive, selectedImage: MyImage.tabTrend)
         
         setViewControllers([nav1], animated: true)
     }

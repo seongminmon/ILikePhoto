@@ -11,9 +11,9 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = Design.Color.black
+        navigationController?.navigationBar.tintColor = MyColor.black
         navigationItem.backButtonDisplayMode = .minimal
-        view.backgroundColor = Design.Color.white
+        view.backgroundColor = MyColor.white
         
         configureNavigationBar()
         configureHierarchy()
@@ -30,12 +30,12 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-//    func changeWindow() {
-//        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//        
-//        let tab = BaseTabBarController()
-//        sceneDelegate?.window?.rootViewController = tab
-//        sceneDelegate?.window?.makeKeyAndVisible()
-//    }
+    func changeWindowToTabBarController() {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        
+        let tab = BaseTabBarController()
+        sceneDelegate?.window?.rootViewController = tab
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }

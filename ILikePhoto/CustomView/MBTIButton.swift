@@ -11,7 +11,7 @@ final class MBTIButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        titleLabel?.font = Design.Font.regular16
+        titleLabel?.font = MyFont.regular16
         layer.borderWidth = 1
         layer.cornerRadius = 20
         setButton(isSelect: false)
@@ -23,13 +23,13 @@ final class MBTIButton: UIButton {
     
     func setButton(isSelect: Bool) {
         if isSelect {
-            setTitleColor(Design.Color.white, for: .normal)
-            backgroundColor = Design.Color.blue
-            layer.borderColor = Design.Color.blue.cgColor
+            setTitleColor(MyColor.white, for: .normal)
+            backgroundColor = MyColor.blue
+            layer.borderColor = MyColor.blue.cgColor
         } else {
-            setTitleColor(Design.Color.darkgray, for: .normal)
+            setTitleColor(MyColor.darkgray, for: .normal)
             backgroundColor = .clear
-            layer.borderColor = Design.Color.darkgray.cgColor
+            layer.borderColor = MyColor.darkgray.cgColor
         }
     }
 }
