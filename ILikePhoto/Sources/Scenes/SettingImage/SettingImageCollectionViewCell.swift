@@ -10,7 +10,7 @@ import SnapKit
 
 final class SettingImageCollectionViewCell: BaseCollectionViewCell {
     
-    let profileImageView = ProfileImageView()
+    private let profileImageView = ProfileImageView()
     
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)

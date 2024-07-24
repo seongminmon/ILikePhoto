@@ -46,6 +46,7 @@
 		24EC745F2C508365008F403D /* MyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745E2C508365008F403D /* MyImage.swift */; };
 		24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */; };
 		24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */; };
+		24EC74892C512F61008F403D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74882C512F61008F403D /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +87,7 @@
 		24EC745E2C508365008F403D /* MyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImage.swift; sourceTree = "<group>"; };
 		24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionHeaderView.swift; sourceTree = "<group>"; };
+		24EC74882C512F61008F403D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				24EC73E92C4E3B47008F403D /* SettingNickname */,
 				24EC74492C4F9EA4008F403D /* SettingImage */,
 				24EC74542C500B3E008F403D /* Topic */,
+				24EC74872C512F22008F403D /* Search */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -290,6 +293,14 @@
 			path = Design;
 			sourceTree = "<group>";
 		};
+		24EC74872C512F22008F403D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				24EC74882C512F61008F403D /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -385,6 +396,7 @@
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
+				24EC74892C512F61008F403D /* SearchViewController.swift in Sources */,
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */,

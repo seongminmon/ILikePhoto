@@ -26,14 +26,14 @@ final class TopicViewController: BaseViewController {
         )
     }
     
-    enum Section: String, CaseIterable {
+    private enum Section: String, CaseIterable {
         case first, second, third
     }
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, PhotoResponse>!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, PhotoResponse>!
     
-    var headerTitles = [String](repeating: "", count: Section.allCases.count)
-    var list = [[PhotoResponse]](repeating: [], count: Section.allCases.count)
+    private var headerTitles = [String](repeating: "", count: Section.allCases.count)
+    private var list = [[PhotoResponse]](repeating: [], count: Section.allCases.count)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +65,7 @@ final class TopicViewController: BaseViewController {
         }
     }
     
-    @objc func settingButtonTapped() {
+    @objc private func settingButtonTapped() {
         let vc = SettingNicknameViewController()
         vc.option = .edit
         vc.hidesBottomBarWhenPushed = true

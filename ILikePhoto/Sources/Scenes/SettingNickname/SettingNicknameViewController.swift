@@ -217,19 +217,19 @@ final class SettingNicknameViewController: BaseViewController {
         }
     }
     
-    @objc func profileImageViewTapped() {
+    @objc private func profileImageViewTapped() {
         viewModel.inputProfileImageTap.value = ()
     }
     
-    @objc func textFieldDidChange() {
+    @objc private func textFieldDidChange() {
         viewModel.inputTextChange.value = nicknameTextField.text ?? ""
     }
     
-    @objc func mbtiButtonTapped(sender: UIButton) {
+    @objc private func mbtiButtonTapped(sender: UIButton) {
         viewModel.inputMBTIButtonTap.value = sender.tag
     }
     
-    @objc func confirmButtonTapped() {
+    @objc private func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
         if option == .create {
             changeWindowToTabBarController()
@@ -238,7 +238,7 @@ final class SettingNicknameViewController: BaseViewController {
         }
     }
     
-    @objc func deleteButtonTapped() {
+    @objc private func deleteButtonTapped() {
         showDeleteAlert { [weak self] _ in
             guard let self else { return }
             viewModel.inputDeleteButtonTap.value = ()
