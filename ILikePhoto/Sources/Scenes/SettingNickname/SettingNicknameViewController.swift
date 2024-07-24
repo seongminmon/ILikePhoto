@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  SettingNicknameViewController.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/22/24.
@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 import Then
 
-enum ProfileOption: String {
+enum SettingOption: String {
     case create = "PROFILE SETTING"
     case edit = "EDIT PROFILE"
 }
 
-final class ProfileViewController: BaseViewController {
+final class SettingNicknameViewController: BaseViewController {
     
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
@@ -69,19 +69,31 @@ final class ProfileViewController: BaseViewController {
     ]
     
     // 이전 화면에서 전달
-    var option: ProfileOption?
+    var option: SettingOption?
     
-    private let viewModel = ProfileViewModel()
+    private let viewModel = SettingNicknameViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.inputViewDidLoad.value = option ?? .create
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        if option == .edit {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "탈퇴", style: .plain, target: self, action: #selector(deleteButtonTapped))
+        }
+    }
+    
     override func bindData() {
         viewModel.outputImageIndex.bind { [weak self] index in
             guard let self, let index else { return }
             profileImageView.image = MyImage.profileImageList[index]
+        }
+        
+        viewModel.outputNickname.bind { [weak self] nickname in
+            guard let self else { return }
+            nicknameTextField.text = nickname
         }
         
         viewModel.outputMbtiList.bind { [weak self] list in
@@ -109,14 +121,19 @@ final class ProfileViewController: BaseViewController {
         
         viewModel.outputPushSelectImageVC.bind { [weak self] _ in
             guard let self else { return }
-            let vc = SelectImageViewController()
+            let vc = SettingImageViewController()
             vc.option = option
             vc.selectedIndex = viewModel.outputImageIndex.value
             vc.sendSelectedIndex = { [weak self] index in
                 guard let self else { return }
-                profileImageView.image = MyImage.profileImageList[index]
+                viewModel.outputImageIndex.value = index
             }
             navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        viewModel.outputDeleteAll.bind { [weak self] _ in
+            guard let self else { return }
+            changeWindowToOnboarding()
         }
     }
     
@@ -214,6 +231,13 @@ final class ProfileViewController: BaseViewController {
     @objc func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
         changeWindowToTabBarController()
+    }
+    
+    @objc func deleteButtonTapped() {
+        showDeleteAlert { [weak self] _ in
+            guard let self else { return }
+            viewModel.inputDeleteButtonTap.value = ()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

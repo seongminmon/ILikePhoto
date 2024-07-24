@@ -20,8 +20,8 @@
 		24EC73E02C4E388B008F403D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73DF2C4E388B008F403D /* BaseView.swift */; };
 		24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E12C4E389A008F403D /* BaseViewModel.swift */; };
 		24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E42C4E398D008F403D /* BlueButton.swift */; };
-		24EC73E82C4E3B43008F403D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E72C4E3B43008F403D /* ProfileViewController.swift */; };
-		24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */; };
+		24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73E72C4E3B43008F403D /* SettingNicknameViewController.swift */; };
+		24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EC2C4E3B80008F403D /* SettingNicknameViewModel.swift */; };
 		24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */; };
 		24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F02C4E3E4F008F403D /* CameraImageView.swift */; };
 		24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F42C4E4B1E008F403D /* UICollectionView+.swift */; };
@@ -37,8 +37,8 @@
 		24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74112C4E860F008F403D /* NetworkManager.swift */; };
 		24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74162C4E8C0F008F403D /* PhotoResponse.swift */; };
 		24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74182C4F374E008F403D /* StatisticsResponse.swift */; };
-		24EC744B2C4F9EB6008F403D /* SelectImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC744A2C4F9EB6008F403D /* SelectImageViewController.swift */; };
-		24EC74512C4FD0F7008F403D /* SelectImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */; };
+		24EC744B2C4F9EB6008F403D /* SettingImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC744A2C4F9EB6008F403D /* SettingImageViewController.swift */; };
+		24EC74512C4FD0F7008F403D /* SettingImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74502C4FD0F7008F403D /* SettingImageCollectionViewCell.swift */; };
 		24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74522C500AB0008F403D /* BaseTabBarController.swift */; };
 		24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74552C500B4E008F403D /* TopicViewController.swift */; };
 		24EC745B2C5082CB008F403D /* MyFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745A2C5082CB008F403D /* MyFont.swift */; };
@@ -60,8 +60,8 @@
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		24EC73E12C4E389A008F403D /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		24EC73E42C4E398D008F403D /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
-		24EC73E72C4E3B43008F403D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		24EC73E72C4E3B43008F403D /* SettingNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNicknameViewController.swift; sourceTree = "<group>"; };
+		24EC73EC2C4E3B80008F403D /* SettingNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNicknameViewModel.swift; sourceTree = "<group>"; };
 		24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		24EC73F02C4E3E4F008F403D /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
 		24EC73F42C4E4B1E008F403D /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
@@ -75,8 +75,8 @@
 		24EC74112C4E860F008F403D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		24EC74162C4E8C0F008F403D /* PhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResponse.swift; sourceTree = "<group>"; };
 		24EC74182C4F374E008F403D /* StatisticsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsResponse.swift; sourceTree = "<group>"; };
-		24EC744A2C4F9EB6008F403D /* SelectImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageViewController.swift; sourceTree = "<group>"; };
-		24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC744A2C4F9EB6008F403D /* SettingImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingImageViewController.swift; sourceTree = "<group>"; };
+		24EC74502C4FD0F7008F403D /* SettingImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC74522C500AB0008F403D /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		24EC74552C500B4E008F403D /* TopicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewController.swift; sourceTree = "<group>"; };
 		24EC745A2C5082CB008F403D /* MyFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFont.swift; sourceTree = "<group>"; };
@@ -121,10 +121,6 @@
 			children = (
 				24EC74592C50166C008F403D /* Resources */,
 				24EC74582C501663008F403D /* Sources */,
-				24EC73E32C4E394A008F403D /* CustomView */,
-				24EC73FA2C4E4D57008F403D /* Base */,
-				24EC73DC2C4E37ED008F403D /* Custom */,
-				24EC73DA2C4E37B3008F403D /* Scenes */,
 				24BB36C12C4E25D900B40E9C /* Info.plist */,
 			);
 			path = ILikePhoto;
@@ -134,8 +130,8 @@
 			isa = PBXGroup;
 			children = (
 				24EC73E62C4E3AFE008F403D /* Onboarding */,
-				24EC73E92C4E3B47008F403D /* Profile */,
-				24EC74492C4F9EA4008F403D /* SelectImage */,
+				24EC73E92C4E3B47008F403D /* SettingNickname */,
+				24EC74492C4F9EA4008F403D /* SettingImage */,
 				24EC74542C500B3E008F403D /* Topic */,
 			);
 			path = Scenes;
@@ -177,13 +173,13 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		24EC73E92C4E3B47008F403D /* Profile */ = {
+		24EC73E92C4E3B47008F403D /* SettingNickname */ = {
 			isa = PBXGroup;
 			children = (
-				24EC73E72C4E3B43008F403D /* ProfileViewController.swift */,
-				24EC73EC2C4E3B80008F403D /* ProfileViewModel.swift */,
+				24EC73E72C4E3B43008F403D /* SettingNicknameViewController.swift */,
+				24EC73EC2C4E3B80008F403D /* SettingNicknameViewModel.swift */,
 			);
-			path = Profile;
+			path = SettingNickname;
 			sourceTree = "<group>";
 		};
 		24EC73FA2C4E4D57008F403D /* Base */ = {
@@ -232,13 +228,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		24EC74492C4F9EA4008F403D /* SelectImage */ = {
+		24EC74492C4F9EA4008F403D /* SettingImage */ = {
 			isa = PBXGroup;
 			children = (
-				24EC744A2C4F9EB6008F403D /* SelectImageViewController.swift */,
-				24EC74502C4FD0F7008F403D /* SelectImageCollectionViewCell.swift */,
+				24EC744A2C4F9EB6008F403D /* SettingImageViewController.swift */,
+				24EC74502C4FD0F7008F403D /* SettingImageCollectionViewCell.swift */,
 			);
-			path = SelectImage;
+			path = SettingImage;
 			sourceTree = "<group>";
 		};
 		24EC74542C500B3E008F403D /* Topic */ = {
@@ -256,6 +252,10 @@
 				24EC74062C4E844D008F403D /* Network */,
 				24EC74022C4E5963008F403D /* Manager */,
 				24EC74012C4E5945008F403D /* Enum */,
+				24EC73E32C4E394A008F403D /* CustomView */,
+				24EC73FA2C4E4D57008F403D /* Base */,
+				24EC73DC2C4E37ED008F403D /* Custom */,
+				24EC73DA2C4E37B3008F403D /* Scenes */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -368,7 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */,
-				24EC74512C4FD0F7008F403D /* SelectImageCollectionViewCell.swift in Sources */,
+				24EC74512C4FD0F7008F403D /* SettingImageCollectionViewCell.swift in Sources */,
 				24EC745F2C508365008F403D /* MyImage.swift in Sources */,
 				24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */,
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
@@ -386,13 +386,13 @@
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
 				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
-				24EC73E82C4E3B43008F403D /* ProfileViewController.swift in Sources */,
+				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
-				24EC73ED2C4E3B80008F403D /* ProfileViewModel.swift in Sources */,
+				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
 				24EC745D2C508337008F403D /* MyColor.swift in Sources */,
 				24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */,
-				24EC744B2C4F9EB6008F403D /* SelectImageViewController.swift in Sources */,
+				24EC744B2C4F9EB6008F403D /* SettingImageViewController.swift in Sources */,
 				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,
 				24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */,
 				24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */,

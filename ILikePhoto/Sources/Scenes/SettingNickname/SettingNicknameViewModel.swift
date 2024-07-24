@@ -1,5 +1,5 @@
 //
-//  ProfileViewModel.swift
+//  SettingNicknameViewModel.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/22/24.
@@ -23,16 +23,17 @@ enum NicknameValidationError: Error, LocalizedError {
     }
 }
 
-final class ProfileViewModel: BaseViewModel {
+final class SettingNicknameViewModel: BaseViewModel {
     
     var nicknameValid: NicknameValidationError?
     
     // Input
-    var inputViewDidLoad = Observable<ProfileOption?>(nil)
+    var inputViewDidLoad = Observable<SettingOption?>(nil)
     var inputProfileImageTap = Observable<Void?>(nil)
     var inputTextChange = Observable("")
     var inputMBTIButtonTap = Observable(0)
     var inputConfirmButtonTap = Observable<String>("")
+    var inputDeleteButtonTap = Observable<Void?>(nil)
     
     // Output
     var outputImageIndex = Observable<Int?>(nil)
@@ -41,6 +42,7 @@ final class ProfileViewModel: BaseViewModel {
     var outputDescriptionText = Observable("")
     var outputConfirmButtonEnabled = Observable(false)
     var outputPushSelectImageVC = Observable<Void?>(nil)
+    var outputDeleteAll = Observable<Void?>(nil)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] option in
@@ -49,13 +51,12 @@ final class ProfileViewModel: BaseViewModel {
             case .create:
                 outputImageIndex.value = Int.random(in: 0..<MyImage.profileImageList.count)
                 outputMbtiList.value = [Bool](repeating: false, count: MBTI.list.count)
-                
             case .edit:
                 outputImageIndex.value = UserDefaultsManager.profileImageIndex
                 outputMbtiList.value = UserDefaultsManager.mbti
                 outputNickname.value = UserDefaultsManager.nickname
-                nicknameValidationResult(outputNickname.value)
             }
+            nicknameValidationResult(outputNickname.value)
             outputConfirmButtonEnabled.value = checkConfirmEnabled()
         }
         
@@ -89,6 +90,12 @@ final class ProfileViewModel: BaseViewModel {
             if UserDefaultsManager.signUpDate == nil {
                 UserDefaultsManager.signUpDate = Date()
             }
+        }
+        
+        inputDeleteButtonTap.bind { [weak self] _ in
+            guard let self else { return }
+            UserDefaultsManager.removeAll()
+            outputDeleteAll.value = ()
         }
     }
     

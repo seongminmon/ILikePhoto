@@ -1,5 +1,5 @@
 //
-//  SelectImageCollectionViewCell.swift
+//  SettingImageCollectionViewCell.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/23/24.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SelectImageCollectionViewCell: BaseCollectionViewCell {
+final class SettingImageCollectionViewCell: BaseCollectionViewCell {
     
     let profileImageView = ProfileImageView()
     
