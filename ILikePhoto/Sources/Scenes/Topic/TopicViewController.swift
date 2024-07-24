@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
+    // TODO: - 헤더 타이틀이 통신 후 즉시 적용되지 않는 문제
     
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
@@ -17,8 +18,13 @@ final class TopicViewController: BaseViewController {
         $0.addGestureRecognizer(tapGesture)
         $0.isUserInteractionEnabled = true
     }
-    
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout()).then {
+        $0.register(
+            TopicCollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: TopicCollectionHeaderView.description()
+        )
+    }
     
     enum Section: String, CaseIterable {
         case first, second, third
@@ -26,14 +32,12 @@ final class TopicViewController: BaseViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, PhotoResponse>!
     
+    var headerTitles = [String](repeating: "", count: Section.allCases.count)
     var list = [[PhotoResponse]](repeating: [], count: Section.allCases.count)
-    
-    let naviTitle = "OUR TOPIC"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
-        updateSnapshot()
         fetchTopic()
     }
     
@@ -44,7 +48,7 @@ final class TopicViewController: BaseViewController {
     }
     
     override func configureNavigationBar() {
-        navigationItem.title = naviTitle
+        navigationItem.title = "OUR TOPIC"
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileImageView)
     }
     
@@ -61,10 +65,6 @@ final class TopicViewController: BaseViewController {
         }
     }
     
-    override func configureView() {
-        collectionView.backgroundColor = MyColor.blue
-    }
-    
     @objc func settingButtonTapped() {
         let vc = SettingNicknameViewController()
         vc.option = .edit
@@ -73,26 +73,44 @@ final class TopicViewController: BaseViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(200))
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(200), heightDimension: .absolute(250))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 20
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
+        // 수평 스크롤
+        section.orthogonalScrollingBehavior = .continuous
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
+        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerSupplementary]
+        
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
     
-    private func topicCellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {
+    private func cellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {
         return UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
-            cell.configureCell(itemIdentifier.urls.small)
-            cell.backgroundColor = MyColor.gray
+            cell.configureCell(data: itemIdentifier)
+        }
+    }
+    
+    private func supplementaryCellRegistration() -> UICollectionView.SupplementaryRegistration<TopicCollectionHeaderView> {
+        return UICollectionView.SupplementaryRegistration(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, elementKind, indexPath in
+            supplementaryView.configureLabel(self.headerTitles[indexPath.section])
         }
     }
     
     private func configureDataSource() {
-        let cellRegistration = topicCellRegistration()
+        let cellRegistration = cellRegistration()
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration,
@@ -101,6 +119,11 @@ final class TopicViewController: BaseViewController {
             )
             return cell
         })
+        
+        let supplementaryRegistration = supplementaryCellRegistration()
+        dataSource.supplementaryViewProvider = { view, kind, index in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: index)
+        }
     }
     
     private func updateSnapshot() {
@@ -113,12 +136,23 @@ final class TopicViewController: BaseViewController {
     }
     
     private func fetchTopic() {
-        for i in 0..<Section.allCases.count {
+        // 토픽 3개 뽑기 (랜덤, 중복 X)
+        var topicIDList = [String]()
+        while topicIDList.count < Section.allCases.count {
             let topicID = TopicIDQuery.list.keys.randomElement() ?? "golden-hour"
+            if !topicIDList.contains(topicID) {
+                topicIDList.append(topicID)
+            }
+        }
+        
+        // 3번 통신하기
+        for i in 0..<Section.allCases.count {
+            let topicID = topicIDList[i]
             NetworkManager.shared.request(api: .topic(topicID: topicID), model: [PhotoResponse].self) { response in
                 switch response {
                 case .success(let data):
                     print("SUCCESS", topicID, data.count)
+                    self.headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
                     self.list[i] = data
                     self.updateSnapshot()
                 case .failure(let error):

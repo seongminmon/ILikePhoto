@@ -11,22 +11,37 @@ import SnapKit
 import Then
 
 final class TopicCollectionViewCell: BaseCollectionViewCell {
-    
-    private let mainImageView = UIImageView()
+    // TODO: - 버튼 디자인 완성하기
+    private let mainImageView = UIImageView().then {
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 20
+    }
+    private let starButton = UIButton().then {
+        $0.setImage(MyImage.star.withTintColor(.systemYellow), for: .normal)
+        $0.setTitleColor(MyColor.white, for: .normal)
+        $0.backgroundColor = MyColor.darkgray
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+    }
     
     override func configureHierarchy() {
-        contentView.addSubview(mainImageView)
+        [mainImageView, starButton].forEach {
+            contentView.addSubview($0)
+        }
     }
     
     override func configureLayout() {
         mainImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        starButton.snp.makeConstraints {
+            $0.leading.bottom.equalTo(mainImageView).inset(8)
+        }
     }
     
-    func configureCell(_ urlString: String) {
-        let url = URL(string: urlString)
+    func configureCell(data: PhotoResponse) {
+        let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
+        starButton.setTitle(data.likes.formatted(), for: .normal)
     }
 }
-

@@ -231,7 +231,11 @@ final class SettingNicknameViewController: BaseViewController {
     
     @objc func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
-        changeWindowToTabBarController()
+        if option == .create {
+            changeWindowToTabBarController()
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func deleteButtonTapped() {

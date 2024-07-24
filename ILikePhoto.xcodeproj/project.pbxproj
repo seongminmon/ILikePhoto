@@ -45,6 +45,7 @@
 		24EC745D2C508337008F403D /* MyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745C2C508337008F403D /* MyColor.swift */; };
 		24EC745F2C508365008F403D /* MyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745E2C508365008F403D /* MyImage.swift */; };
 		24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */; };
+		24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		24EC745C2C508337008F403D /* MyColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColor.swift; sourceTree = "<group>"; };
 		24EC745E2C508365008F403D /* MyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImage.swift; sourceTree = "<group>"; };
 		24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74552C500B4E008F403D /* TopicViewController.swift */,
+				24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */,
 				24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */,
 			);
 			path = Topic;
@@ -379,6 +382,7 @@
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
+				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
