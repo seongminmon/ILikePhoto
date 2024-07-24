@@ -39,7 +39,8 @@ final class PhotoCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    func configureCell(data: PhotoResponse) {
+    func configureCell(data: PhotoResponse?) {
+        guard let data else { return }
         let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
         starButton.setTitle(data.likes.formatted(), for: .normal)

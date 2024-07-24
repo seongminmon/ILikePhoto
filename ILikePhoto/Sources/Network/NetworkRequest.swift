@@ -31,7 +31,7 @@ enum NetworkRequest {
         case .topic(let topicID):
             return URL(string: baseURL + "topics/" + topicID + "/photos")!
         case .search:
-            return URL(string: baseURL + "photos")!
+            return URL(string: baseURL + "search/photos")!
         case .statistics(let imageID):
             return URL(string: baseURL + "photos/" + imageID + "/statistics")!
         case .random:

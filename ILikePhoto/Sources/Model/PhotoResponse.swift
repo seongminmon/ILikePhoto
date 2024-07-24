@@ -7,7 +7,20 @@
 
 import Foundation
 
-// MARK: - Topic, Search, Random 모델
+// MARK: - Search 모델
+struct SearchResponse: Decodable {
+    let total: Int
+    let totalPages: Int
+    var photoResponse: [PhotoResponse]
+    
+    enum CodingKeys: String, CodingKey {
+        case total
+        case totalPages = "total_pages"
+        case photoResponse = "results"
+    }
+}
+
+// MARK: - Topic, Random 모델
 struct PhotoResponse: Decodable, Hashable {
     let id, createdAt: String
     let width, height, likes: Int
