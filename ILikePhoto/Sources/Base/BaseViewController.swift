@@ -63,4 +63,22 @@ extension BaseViewController {
         alert.addAction(cancel)
         present(alert, animated: true)
     }
+    
+//    func showActionSheet(
+//        firstTitle: String,
+//        secondTitle: String,
+//        firstHandler: @escaping (UIAlertAction) -> Void,
+//        secondHandler: @escaping (UIAlertAction) -> Void,
+//    ) {
+//        let alert = UIAlertController(
+//            title: nil,
+//            message: nil,
+//            preferredStyle: .actionSheet
+//        )
+//        let first = UIAlertAction(title: firstTitle, style: .default, handler: firstHandler)
+//        let second = UIAlertAction(title: secondTitle, style: .default, handler: secondHandler)
+//        alert.addAction(first)
+//        alert.addAction(second)
+//        present(alert, animated: true)
+//    }
 }

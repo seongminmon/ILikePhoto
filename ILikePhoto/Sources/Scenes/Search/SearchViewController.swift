@@ -9,6 +9,24 @@ import UIKit
 import SnapKit
 import Then
 
+enum SearchOrder: String {
+    case relevant, latest
+    
+    var title: String {
+        switch self {
+        case .relevant:
+            return "관련순"
+        case .latest:
+            return "최신순"
+        }
+    }
+}
+
+// TODO: - 더 적절한 데이터 구조로 바꾸기
+enum SearchColor: String {
+    case black, white, yellow, red, purple, green, blue
+}
+
 final class SearchViewController: BaseViewController {
     
     private lazy var searchBar = UISearchBar().then {
@@ -16,7 +34,7 @@ final class SearchViewController: BaseViewController {
         $0.delegate = self
     }
     private lazy var sortButton = UIButton().then {
-        $0.setTitle("최신순", for: .normal)
+        $0.setTitle(searchOrder.title, for: .normal)
         $0.setTitleColor(MyColor.black, for: .normal)
         $0.titleLabel?.font = MyFont.bold14
         $0.tintColor = MyColor.black
@@ -31,6 +49,7 @@ final class SearchViewController: BaseViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)).then {
         $0.delegate = self
         $0.dataSource = self
+        $0.prefetchDataSource = self
         $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.description())
         $0.keyboardDismissMode = .onDrag
     }
@@ -40,6 +59,11 @@ final class SearchViewController: BaseViewController {
         $0.textColor = MyColor.black
     }
     
+    // TODO: - 페이지 네이션
+    // 통신하는 상황
+    // 1. 서치바 검색 -> 첫 검색
+    // 2. 정렬 버튼 -> 첫 검색
+    // 3. 스크롤 내리기 -> 페이지네이션
     var list: SearchResponse?
     var page = 1
     var searchOrder = SearchOrder.relevant
@@ -74,9 +98,9 @@ final class SearchViewController: BaseViewController {
             $0.top.equalTo(sortButton.snp.bottom)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    override func configureView() {
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func toggleHideView() {
@@ -90,11 +114,17 @@ final class SearchViewController: BaseViewController {
     }
     
     @objc private func sortButtonTapped() {
-        print(#function)
+        guard let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        searchOrder = searchOrder == .relevant ? .latest : .relevant
+        sortButton.setTitle(searchOrder.title, for: .normal)
+        fetchSearch(query)
     }
     
     private func fetchSearch(_ query: String) {
-        NetworkManager.shared.request(api: .search(query: query, page: 1, order: .relevant, color: nil), model: SearchResponse.self) { [weak self] response in
+        NetworkManager.shared.request(
+            api: .search(query: query, page: 1, order: searchOrder, color: nil),
+            model: SearchResponse.self
+        ) { [weak self] response in
             guard let self else { return }
             switch response {
             case .success(let data):
@@ -110,15 +140,13 @@ final class SearchViewController: BaseViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
-        // TODO: - query 유효성 검사
-        guard let query = searchBar.text else { return }
+        guard let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         fetchSearch(query)
         view.endEditing(true)
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list?.photoResponse.count ?? 0
     }
@@ -128,5 +156,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let data = list?.photoResponse[indexPath.item]
         cell.configureCell(data: data)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print(indexPaths)
     }
 }

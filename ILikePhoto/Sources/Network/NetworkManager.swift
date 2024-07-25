@@ -27,8 +27,10 @@ final class NetworkManager {
         .responseDecodable(of: T.self) { response in
             switch response.result {
             case .success(let value):
+                print("SUCCESS", api)
                 completionHandler(.success(value))
             case .failure(let error):
+                print("FAIL", error)
                 completionHandler(.failure(error))
             }
         }
