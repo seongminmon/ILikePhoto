@@ -46,11 +46,17 @@ final class SearchViewController: BaseViewController {
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)).then {
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)
+    ).then {
         $0.delegate = self
         $0.dataSource = self
         $0.prefetchDataSource = self
-        $0.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.description())
+        $0.register(
+            SearchCollectionViewCell.self,
+            forCellWithReuseIdentifier: SearchCollectionViewCell.description()
+        )
         $0.keyboardDismissMode = .onDrag
     }
     private let emptyLabel = UILabel().then {
@@ -90,12 +96,12 @@ final class SearchViewController: BaseViewController {
             $0.height.equalTo(44)
         }
         sortButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(4)
+            $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(30)
         }
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(sortButton.snp.bottom)
+            $0.top.equalTo(sortButton.snp.bottom).offset(8)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         emptyLabel.snp.makeConstraints {
@@ -177,7 +183,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.description(), for: indexPath) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SearchCollectionViewCell.description(),
+            for: indexPath
+        ) as? SearchCollectionViewCell else { return UICollectionViewCell() }
         let data = list?.photoResponse[indexPath.item]
         cell.configureCell(data: data)
         return cell

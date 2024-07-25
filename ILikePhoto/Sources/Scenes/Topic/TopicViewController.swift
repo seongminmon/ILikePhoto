@@ -80,8 +80,8 @@ final class TopicViewController: BaseViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.4),
-            heightDimension: .fractionalWidth(0.4 * 4 / 3)
+            widthDimension: .fractionalWidth(0.45),
+            heightDimension: .fractionalWidth(0.45 * 4 / 3)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
@@ -103,7 +103,7 @@ final class TopicViewController: BaseViewController {
         return layout
     }
     
-    private func cellRegistration() -> UICollectionView.CellRegistration<PhotoCollectionViewCell, PhotoResponse> {
+    private func cellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {
         return UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
             cell.configureCell(data: itemIdentifier)
         }
@@ -168,7 +168,6 @@ final class TopicViewController: BaseViewController {
                 guard let self else { return }
                 switch response {
                 case .success(let data):
-                    print("SUCCESS", topicID, data.count)
                     headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
                     list[i] = data
                     updateSnapshot()

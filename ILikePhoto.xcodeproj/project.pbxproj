@@ -44,13 +44,14 @@
 		24EC745B2C5082CB008F403D /* MyFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745A2C5082CB008F403D /* MyFont.swift */; };
 		24EC745D2C508337008F403D /* MyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745C2C508337008F403D /* MyColor.swift */; };
 		24EC745F2C508365008F403D /* MyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC745E2C508365008F403D /* MyImage.swift */; };
-		24EC74842C50E003008F403D /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* PhotoCollectionViewCell.swift */; };
+		24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */; };
 		24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */; };
 		24EC74892C512F61008F403D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74882C512F61008F403D /* SearchViewController.swift */; };
 		24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74A22C520CB7008F403D /* RealmRepository.swift */; };
 		24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC74A52C520DC0008F403D /* RealmSwift */; };
 		24EC74A72C520DE0008F403D /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 24EC74A52C520DC0008F403D /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		24EC74AA2C520E65008F403D /* LikedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74A92C520E65008F403D /* LikedPhoto.swift */; };
+		24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -103,11 +104,12 @@
 		24EC745A2C5082CB008F403D /* MyFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFont.swift; sourceTree = "<group>"; };
 		24EC745C2C508337008F403D /* MyColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColor.swift; sourceTree = "<group>"; };
 		24EC745E2C508365008F403D /* MyImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImage.swift; sourceTree = "<group>"; };
-		24EC74832C50E003008F403D /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionHeaderView.swift; sourceTree = "<group>"; };
 		24EC74882C512F61008F403D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24EC74A22C520CB7008F403D /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		24EC74A92C520E65008F403D /* LikedPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPhoto.swift; sourceTree = "<group>"; };
+		24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,7 +274,7 @@
 			children = (
 				24EC74552C500B4E008F403D /* TopicViewController.swift */,
 				24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */,
-				24EC74832C50E003008F403D /* PhotoCollectionViewCell.swift */,
+				24EC74832C50E003008F403D /* TopicCollectionViewCell.swift */,
 			);
 			path = Topic;
 			sourceTree = "<group>";
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74882C512F61008F403D /* SearchViewController.swift */,
+				24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -427,7 +430,7 @@
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* BaseTabBarController.swift in Sources */,
-				24EC74842C50E003008F403D /* PhotoCollectionViewCell.swift in Sources */,
+				24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */,
 				24EC74082C4E8453008F403D /* NetworkRequest.swift in Sources */,
 				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
@@ -436,6 +439,7 @@
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
+				24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
 				24EC745D2C508337008F403D /* MyColor.swift in Sources */,
