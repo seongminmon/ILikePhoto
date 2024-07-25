@@ -1,5 +1,5 @@
 //
-//  NetworkRequest.swift
+//  NetworkRouter.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/22/24.
@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkRequest {
+enum NetworkRouter {
     case topic(topicID: String)
     case search(query: String, page: Int, order: SearchOrder, color: SearchColor?)
     case statistics(imageID: String)

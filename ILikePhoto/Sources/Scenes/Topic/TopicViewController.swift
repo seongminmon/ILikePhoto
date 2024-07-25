@@ -10,8 +10,6 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
-    // TODO: - 헤더 타이틀이 통신 후 즉시 적용되지 않는 문제
-    
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(settingButtonTapped))
@@ -143,6 +141,7 @@ final class TopicViewController: BaseViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoResponse>()
         snapshot.appendSections(Section.allCases)
+        snapshot.reloadSections(Section.allCases)
         snapshot.appendItems(list[0], toSection: .first)
         snapshot.appendItems(list[1], toSection: .second)
         snapshot.appendItems(list[2], toSection: .third)

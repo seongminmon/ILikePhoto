@@ -1,5 +1,5 @@
 //
-//  BaseTabBarController.swift
+//  TabBarController.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/24/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BaseTabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
