@@ -114,23 +114,45 @@ final class SearchViewController: BaseViewController {
     }
     
     @objc private func sortButtonTapped() {
-        guard let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        guard let query = configureQuery(searchBar.text) else { return }
+        page = 1
         searchOrder = searchOrder == .relevant ? .latest : .relevant
         sortButton.setTitle(searchOrder.title, for: .normal)
         fetchSearch(query)
     }
     
+    private func configureQuery(_ query: String?) -> String? {
+        if let query = query, !query.trimmingCharacters(in: .whitespaces).isEmpty {
+            return query.trimmingCharacters(in: .whitespaces)
+        } else {
+            print("쿼리가 비었습니다!")
+            return nil
+        }
+    }
+    
     private func fetchSearch(_ query: String) {
         NetworkManager.shared.request(
-            api: .search(query: query, page: 1, order: searchOrder, color: nil),
+            api: .search(query: query, page: page, order: searchOrder, color: nil),
             model: SearchResponse.self
         ) { [weak self] response in
             guard let self else { return }
             switch response {
             case .success(let data):
-                list = data
+                if page == 1 {
+                    // 첫 검색
+                    list = data
+                } else {
+                    // 페이지 네이션
+                    list?.photoResponse.append(contentsOf: data.photoResponse)
+                }
+                
                 toggleHideView()
                 collectionView.reloadData()
+                
+                if page == 1, let list, !list.photoResponse.isEmpty {
+                    collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+                }
+                
             case .failure(let error):
                 print(error)
             }
@@ -139,8 +161,11 @@ final class SearchViewController: BaseViewController {
 }
 
 extension SearchViewController: UISearchBarDelegate {
+    // TODO: - query를 프로퍼티로 가지는 것이 좋을지 searchBar.text로 쓰는 것이 좋을지 선택하기
+    // 스크롤 중에 searchBar에 입력하면 바뀐 텍스트로 네트워킹하게 됨
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text, !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        guard let query = configureQuery(searchBar.text) else { return }
+        page = 1
         fetchSearch(query)
         view.endEditing(true)
     }
@@ -159,6 +184,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print(indexPaths)
+        guard let query = configureQuery(searchBar.text), let list else { return }
+        for indexPath in indexPaths {
+            if indexPath.item == list.photoResponse.count - 4 && page < list.totalPages {
+                page += 1
+                fetchSearch(query)
+            }
+        }
     }
 }
