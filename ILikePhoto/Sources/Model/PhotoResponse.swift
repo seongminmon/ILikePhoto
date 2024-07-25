@@ -22,13 +22,13 @@ struct SearchResponse: Decodable {
 
 // MARK: - Topic, Random 모델
 struct PhotoResponse: Decodable, Hashable {
-    let id, createdAt: String
+    let id, createdAt, color: String
     let width, height, likes: Int
     let urls: Urls
     let user: User
     
     enum CodingKeys: String, CodingKey {
-        case id, width, height, likes, urls, user
+        case id, width, height, likes, urls, user, color
         case createdAt = "created_at"
     }
 }

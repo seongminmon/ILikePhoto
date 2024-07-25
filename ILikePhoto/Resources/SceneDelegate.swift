@@ -15,6 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
+        let repository = RealmRepository()
+        print(repository.fileURL)
+        print(repository.schemaVersion)
+        
         if UserDefaultsManager.signUpDate == nil {
             let vc = OnboardingViewController()
             let nav = UINavigationController(rootViewController: vc)

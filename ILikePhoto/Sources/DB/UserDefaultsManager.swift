@@ -24,7 +24,7 @@ struct UserDefault<T> {
 
 enum UserDefaultsManager {
     
-    enum Key: String, CaseIterable {
+    private enum Key: String, CaseIterable {
         case nickname
         case profileImageIndex
         case mbti

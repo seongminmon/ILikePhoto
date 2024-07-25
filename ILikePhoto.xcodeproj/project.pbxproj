@@ -47,7 +47,25 @@
 		24EC74842C50E003008F403D /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74832C50E003008F403D /* PhotoCollectionViewCell.swift */; };
 		24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */; };
 		24EC74892C512F61008F403D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74882C512F61008F403D /* SearchViewController.swift */; };
+		24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74A22C520CB7008F403D /* RealmRepository.swift */; };
+		24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC74A52C520DC0008F403D /* RealmSwift */; };
+		24EC74A72C520DE0008F403D /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 24EC74A52C520DC0008F403D /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		24EC74AA2C520E65008F403D /* LikedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74A92C520E65008F403D /* LikedPhoto.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		24EC74A82C520DE0008F403D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				24EC74A72C520DE0008F403D /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		24BB36B02C4E25D700B40E9C /* ILikePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILikePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +106,8 @@
 		24EC74832C50E003008F403D /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC74852C51075D008F403D /* TopicCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicCollectionHeaderView.swift; sourceTree = "<group>"; };
 		24EC74882C512F61008F403D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		24EC74A22C520CB7008F403D /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		24EC74A92C520E65008F403D /* LikedPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPhoto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +118,7 @@
 				24EC740E2C4E8471008F403D /* Kingfisher in Frameworks */,
 				24EC740B2C4E8463008F403D /* Alamofire in Frameworks */,
 				24EC73D22C4E3011008F403D /* Then in Frameworks */,
+				24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */,
 				24EC73D52C4E301C008F403D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,12 +230,13 @@
 			path = Enum;
 			sourceTree = "<group>";
 		};
-		24EC74022C4E5963008F403D /* Manager */ = {
+		24EC74022C4E5963008F403D /* DB */ = {
 			isa = PBXGroup;
 			children = (
 				24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */,
+				24EC74A22C520CB7008F403D /* RealmRepository.swift */,
 			);
-			path = Manager;
+			path = DB;
 			sourceTree = "<group>";
 		};
 		24EC74062C4E844D008F403D /* Network */ = {
@@ -231,6 +253,7 @@
 			children = (
 				24EC74162C4E8C0F008F403D /* PhotoResponse.swift */,
 				24EC74182C4F374E008F403D /* StatisticsResponse.swift */,
+				24EC74A92C520E65008F403D /* LikedPhoto.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,7 +282,7 @@
 			children = (
 				24EC74152C4E8908008F403D /* Model */,
 				24EC74062C4E844D008F403D /* Network */,
-				24EC74022C4E5963008F403D /* Manager */,
+				24EC74022C4E5963008F403D /* DB */,
 				24EC74012C4E5945008F403D /* Enum */,
 				24EC73E32C4E394A008F403D /* CustomView */,
 				24EC73FA2C4E4D57008F403D /* Base */,
@@ -311,6 +334,7 @@
 				24BB36AC2C4E25D700B40E9C /* Sources */,
 				24BB36AD2C4E25D700B40E9C /* Frameworks */,
 				24BB36AE2C4E25D700B40E9C /* Resources */,
+				24EC74A82C520DE0008F403D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -322,6 +346,7 @@
 				24EC73D42C4E301C008F403D /* SnapKit */,
 				24EC740A2C4E8463008F403D /* Alamofire */,
 				24EC740D2C4E8471008F403D /* Kingfisher */,
+				24EC74A52C520DC0008F403D /* RealmSwift */,
 			);
 			productName = ILikePhoto;
 			productReference = 24BB36B02C4E25D700B40E9C /* ILikePhoto.app */;
@@ -356,6 +381,7 @@
 				24EC73D32C4E301C008F403D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				24EC74092C4E8463008F403D /* XCRemoteSwiftPackageReference "Alamofire" */,
 				24EC740C2C4E8471008F403D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				24EC74A42C520DC0008F403D /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 24BB36B12C4E25D700B40E9C /* Products */;
 			projectDirPath = "";
@@ -384,6 +410,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24EC74AA2C520E65008F403D /* LikedPhoto.swift in Sources */,
 				24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */,
 				24EC74512C4FD0F7008F403D /* SettingImageCollectionViewCell.swift in Sources */,
 				24EC745F2C508365008F403D /* MyImage.swift in Sources */,
@@ -407,6 +434,7 @@
 				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
+				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
@@ -675,6 +703,14 @@
 				minimumVersion = 7.12.0;
 			};
 		};
+		24EC74A42C520DC0008F403D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -697,6 +733,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 24EC740C2C4E8471008F403D /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		24EC74A52C520DC0008F403D /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 24EC74A42C520DC0008F403D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

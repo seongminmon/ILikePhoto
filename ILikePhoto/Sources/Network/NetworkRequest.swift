@@ -12,6 +12,7 @@ enum SearchOrder: String {
     case relevant, latest
 }
 
+// TODO: - 더 적절한 데이터 구조로 바꾸기
 enum SearchColor: String {
     case black, white, yellow, red, purple, green, blue
 }
