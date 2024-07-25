@@ -12,6 +12,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate = self
         tabBar.tintColor = MyColor.darkgray
         
         let topic = TopicViewController()
@@ -27,5 +28,14 @@ final class TabBarController: UITabBarController {
         nav3.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabLikeInactive, selectedImage: MyImage.tabLike)
         
         setViewControllers([nav1, nav2, nav3], animated: true)
+        
+        tabBar.items?.forEach { $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -20, right: 0) }
+    }
+}
+
+extension TabBarController: UITabBarControllerDelegate {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
     }
 }
