@@ -33,7 +33,10 @@ final class TopicCollectionViewCell: BaseCollectionViewCell {
     private lazy var starButton = UIButton(configuration: starButtonConfig())
     
     override func configureHierarchy() {
-        [mainImageView, starButton].forEach {
+        [
+            mainImageView,
+            starButton
+        ].forEach {
             contentView.addSubview($0)
         }
     }

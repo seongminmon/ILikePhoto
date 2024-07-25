@@ -148,12 +148,6 @@ final class SettingNicknameViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        view.addSubview(profileImageView)
-        view.addSubview(cameraView)
-        view.addSubview(nicknameTextField)
-        view.addSubview(separator)
-        view.addSubview(descriptionLabel)
-        view.addSubview(mbtiLabel)
         for i in 0..<buttons.count {
             if i < 4 {
                 buttonStackView1.addArrangedSubview(buttons[i])
@@ -161,9 +155,20 @@ final class SettingNicknameViewController: BaseViewController {
                 buttonStackView2.addArrangedSubview(buttons[i])
             }
         }
-        view.addSubview(buttonStackView1)
-        view.addSubview(buttonStackView2)
-        view.addSubview(confirmButton)
+        
+        [
+            profileImageView,
+            cameraView,
+            nicknameTextField,
+            separator,
+            descriptionLabel,
+            mbtiLabel,
+            buttonStackView1,
+            buttonStackView2,
+            confirmButton
+        ].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func configureLayout() {

@@ -44,9 +44,13 @@ final class SettingImageViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        view.addSubview(selectedImageView)
-        view.addSubview(cameraImageView)
-        view.addSubview(collectionView)
+        [
+            selectedImageView,
+            cameraImageView,
+            collectionView
+        ].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func configureLayout() {

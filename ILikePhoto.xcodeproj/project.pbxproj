@@ -52,6 +52,8 @@
 		24EC74A72C520DE0008F403D /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 24EC74A52C520DC0008F403D /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		24EC74AA2C520E65008F403D /* LikedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74A92C520E65008F403D /* LikedPhoto.swift */; };
 		24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */; };
+		24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74B12C52526B008F403D /* LikeViewController.swift */; };
+		24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74B32C526AAB008F403D /* LikeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +112,8 @@
 		24EC74A22C520CB7008F403D /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		24EC74A92C520E65008F403D /* LikedPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedPhoto.swift; sourceTree = "<group>"; };
 		24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		24EC74B12C52526B008F403D /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
+		24EC74B32C526AAB008F403D /* LikeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,7 @@
 				24EC74492C4F9EA4008F403D /* SettingImage */,
 				24EC74542C500B3E008F403D /* Topic */,
 				24EC74872C512F22008F403D /* Search */,
+				24EC74B02C525243008F403D /* Like */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -327,6 +332,15 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		24EC74B02C525243008F403D /* Like */ = {
+			isa = PBXGroup;
+			children = (
+				24EC74B12C52526B008F403D /* LikeViewController.swift */,
+				24EC74B32C526AAB008F403D /* LikeCollectionViewCell.swift */,
+			);
+			path = Like;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -423,6 +437,7 @@
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
+				24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */,
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
@@ -439,6 +454,7 @@
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
+				24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */,
 				24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,

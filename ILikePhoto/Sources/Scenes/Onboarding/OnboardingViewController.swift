@@ -30,10 +30,14 @@ final class OnboardingViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        view.addSubview(titleImageView)
-        view.addSubview(logoImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(startButton)
+        [
+            titleImageView,
+            logoImageView,
+            nameLabel,
+            startButton
+        ].forEach {
+            view.addSubview($0)
+        }
     }
     
     override func configureLayout() {

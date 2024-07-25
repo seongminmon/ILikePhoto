@@ -85,7 +85,12 @@ final class SearchViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        [searchBar, sortButton, collectionView, emptyLabel].forEach {
+        [
+            searchBar,
+            sortButton,
+            collectionView,
+            emptyLabel
+        ].forEach {
             view.addSubview($0)
         }
     }

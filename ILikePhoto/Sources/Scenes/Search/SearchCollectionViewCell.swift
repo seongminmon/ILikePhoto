@@ -36,7 +36,11 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func configureHierarchy() {
-        [mainImageView, starButton, likeButton].forEach {
+        [
+            mainImageView,
+            starButton,
+            likeButton
+        ].forEach {
             contentView.addSubview($0)
         }
     }
