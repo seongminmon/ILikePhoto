@@ -9,6 +9,9 @@ import Foundation
 import RealmSwift
 
 final class RealmRepository {
+    static let shared = RealmRepository()
+    private init() {}
+    
     private let realm = try! Realm()
     
     var fileURL: URL? {
