@@ -10,7 +10,8 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
-    // TODO: - refresh control이 애니메이션 중 깜박거리는 문제
+    // TODO: - refresh control이 애니메이션 중 깜박거리는 문제 해결하기
+    // TODO: - 새로 고침 후 1분이 지나지 않았으면 통신하지 않도록 만들기
     
     private lazy var refreshControl = UIRefreshControl().then {
         $0.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -201,10 +202,7 @@ final class TopicViewController: BaseViewController {
 
 extension TopicViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailViewController()
         let data = list[indexPath.section][indexPath.item]
-        vc.viewModel.outputPhoto.value = data
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc, animated: true)
+        pushDetailViewController(data)
     }
 }

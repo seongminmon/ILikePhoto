@@ -67,6 +67,13 @@ extension BaseViewController {
         )
     }
     
+    func pushDetailViewController(_ data: PhotoResponse?) {
+        let vc = DetailViewController()
+        vc.viewModel.outputPhoto.value = data
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func showDeleteAlert(
         completionHandler: @escaping (UIAlertAction) -> Void
     ) {

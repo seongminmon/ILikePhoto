@@ -18,6 +18,8 @@
 		24BB36BD2C4E25D900B40E9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36BC2C4E25D900B40E9C /* Assets.xcassets */; };
 		24BB36C02C4E25D900B40E9C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36BF2C4E25D900B40E9C /* Base */; };
 		24BB36C82C4E261D00B40E9C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36C72C4E261D00B40E9C /* .gitignore */; };
+		24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */; };
+		24DE0A6D2C53D9C10053FCF3 /* RandomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */; };
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
 		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
@@ -91,6 +93,8 @@
 		24BB36BF2C4E25D900B40E9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24BB36C12C4E25D900B40E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewController.swift; sourceTree = "<group>"; };
+		24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTableViewCell.swift; sourceTree = "<group>"; };
 		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -191,6 +195,15 @@
 			path = ILikePhoto;
 			sourceTree = "<group>";
 		};
+		24DE0A692C53D7AD0053FCF3 /* Random */ = {
+			isa = PBXGroup;
+			children = (
+				24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */,
+				24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */,
+			);
+			path = Random;
+			sourceTree = "<group>";
+		};
 		24EC73DA2C4E37B3008F403D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +212,7 @@
 				24EC73E92C4E3B47008F403D /* SettingNickname */,
 				24EC74492C4F9EA4008F403D /* SettingImage */,
 				24EC74542C500B3E008F403D /* Topic */,
+				24DE0A692C53D7AD0053FCF3 /* Random */,
 				24EC74872C512F22008F403D /* Search */,
 				24EC74B02C525243008F403D /* Like */,
 				24647B712C5361C800D9D9A4 /* Detail */,
@@ -489,8 +503,10 @@
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
+				24DE0A6D2C53D9C10053FCF3 /* RandomTableViewCell.swift in Sources */,
 				24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */,
 				24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */,
+				24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,
 				24EC74002C4E593F008F403D /* MBTI.swift in Sources */,
 				24EC745D2C508337008F403D /* MyColor.swift in Sources */,
