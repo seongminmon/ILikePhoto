@@ -47,7 +47,6 @@ final class LikeViewController: BaseViewController {
             LikeCollectionViewCell.self,
             forCellWithReuseIdentifier: LikeCollectionViewCell.description()
         )
-        $0.keyboardDismissMode = .onDrag
     }
     private let emptyLabel = UILabel().then {
         $0.text = "저장된 사진이 없어요."
@@ -56,8 +55,17 @@ final class LikeViewController: BaseViewController {
     }
     
     var list = [LikedPhoto]()
-    var searchOrder = LikeSearchOrder.ascending
+    var searchOrder = LikeSearchOrder.descending
 //    var searchColor: SearchColor?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureView()
+    }
     
     override func configureNavigationBar() {
         navigationItem.title = "MY POLAROID"
@@ -89,7 +97,12 @@ final class LikeViewController: BaseViewController {
     }
     
     override func configureView() {
-        
+        list = RealmRepository.shared.fetchAll(searchOrder == .ascending)
+        toggleHideView()
+        collectionView.reloadData()
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func toggleHideView() {
@@ -99,6 +112,7 @@ final class LikeViewController: BaseViewController {
     
     @objc private func sortButtonTapped() {
         searchOrder = searchOrder == .ascending ? .descending : .ascending
+        configureView()
     }
 }
 
@@ -114,6 +128,24 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         ) as? LikeCollectionViewCell else { return UICollectionViewCell() }
         let data = list[indexPath.item]
         cell.configureCell(data: data)
+        cell.toggleLikeButton(isLike: true)
+        cell.likeButton.tag = indexPath.item
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
+    }
+    
+    @objc private func likeButtonTapped(sender: UIButton) {
+//        guard let cell = collectionView.cellForItem(
+//            at: IndexPath(item: sender.tag, section: 0)
+//        ) as? SearchCollectionViewCell else {
+//            return
+//        }
+        let data = list[sender.tag]
+        // 1. 이미지 파일 삭제
+        ImageFileManager.shared.deleteImageFile(filename: data.id)
+        // 2. Realm 삭제
+        RealmRepository.shared.deleteItem(data.id)
+        // 뷰 업데이트
+        configureView()
     }
 }

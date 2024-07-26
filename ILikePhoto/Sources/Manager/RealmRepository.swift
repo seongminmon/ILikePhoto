@@ -32,9 +32,9 @@ final class RealmRepository {
     }
     
     // MARK: - Read
-    func fetchAll() -> [LikedPhoto] {
+    func fetchAll(_ ascending: Bool) -> [LikedPhoto] {
         let value = realm.objects(LikedPhoto.self)
-            .sorted(byKeyPath: "date", ascending: true)
+            .sorted(byKeyPath: "date", ascending: ascending)
         return Array(value)
     }
     
