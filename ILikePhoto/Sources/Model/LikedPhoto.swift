@@ -23,10 +23,14 @@ class LikedPhoto: Object {
     @Persisted var color: String
     // 사진 게시일
     @Persisted var createdAt: String
+    // 작가 이름
+    @Persisted var photographerName: String
+    // 작가 프로필
+    @Persisted var photographerImage: String
     // 좋아요한 날짜
     @Persisted var date: Date
     
-    convenience init(id: String, rawURL: String, smallURL: String, width: Int, height: Int, likes: Int, color: String, createdAt: String) {
+    convenience init(id: String, rawURL: String, smallURL: String, width: Int, height: Int, likes: Int, color: String, createdAt: String, photographerName: String, photographerImage: String) {
         self.init()
         self.id = id
         self.rawURL = rawURL
@@ -36,6 +40,8 @@ class LikedPhoto: Object {
         self.likes = likes
         self.color = color
         self.createdAt = createdAt
+        self.photographerName = photographerName
+        self.photographerImage = photographerImage
         self.date = Date()
     }
 }

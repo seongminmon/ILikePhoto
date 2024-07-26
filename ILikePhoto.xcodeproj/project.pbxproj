@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
 		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
+		24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */; };
+		24647B7A2C53637700D9D9A4 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B792C53637700D9D9A4 /* BaseTableViewCell.swift */; };
+		24647B7C2C53681B00D9D9A4 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B7B2C53681B00D9D9A4 /* LikeButton.swift */; };
 		24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B32C4E25D700B40E9C /* AppDelegate.swift */; };
 		24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */; };
 		24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */; };
@@ -77,6 +80,9 @@
 /* Begin PBXFileReference section */
 		24647B732C5361EF00D9D9A4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		24647B752C53620800D9D9A4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		24647B792C53637700D9D9A4 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		24647B7B2C53681B00D9D9A4 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		24BB36B02C4E25D700B40E9C /* ILikePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILikePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BB36B32C4E25D700B40E9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +151,7 @@
 			children = (
 				24647B732C5361EF00D9D9A4 /* DetailViewController.swift */,
 				24647B752C53620800D9D9A4 /* DetailViewModel.swift */,
+				24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -215,6 +222,7 @@
 				24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */,
 				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
 				24EC74032C4E6469008F403D /* MBTIButton.swift */,
+				24647B7B2C53681B00D9D9A4 /* LikeButton.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -243,6 +251,7 @@
 				24EC73E12C4E389A008F403D /* BaseViewModel.swift */,
 				24EC73DF2C4E388B008F403D /* BaseView.swift */,
 				24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */,
+				24647B792C53637700D9D9A4 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -458,10 +467,12 @@
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
 				24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */,
+				24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */,
 				24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */,
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,
+				24647B7A2C53637700D9D9A4 /* BaseTableViewCell.swift in Sources */,
 				24EC74892C512F61008F403D /* SearchViewController.swift in Sources */,
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
@@ -473,6 +484,7 @@
 				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
 				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
+				24647B7C2C53681B00D9D9A4 /* LikeButton.swift in Sources */,
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,

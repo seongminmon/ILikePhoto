@@ -191,7 +191,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return UICollectionViewCell()
         }
         cell.configureCell(data: data)
-        cell.toggleLikeButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
+        cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
         cell.likeButton.tag = indexPath.item
         cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
@@ -211,7 +211,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             // 2. Realm 삭제
             RealmRepository.shared.deleteItem(data.id)
             // 3. 버튼 업데이트
-            cell.toggleLikeButton(isLike: false)
+            cell.likeButton.toggleButton(isLike: false)
         } else {
             // 1. Realm 추가
             let item = photoResponseToLikedPhoto(data)
@@ -220,7 +220,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             let image = cell.mainImageView.image ?? MyImage.star
             ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
             // 3. 버튼 업데이트
-            cell.toggleLikeButton(isLike: true)
+            cell.likeButton.toggleButton(isLike: true)
         }
     }
     
@@ -233,8 +233,17 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             height: value.height,
             likes: value.likes,
             color: value.color,
-            createdAt: value.createdAt
+            createdAt: value.createdAt,
+            photographerName: value.user.name,
+            photographerImage: value.user.profileImage.medium
         )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        let data = list?.photoResponse[indexPath.item]
+        vc.photo = data
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

@@ -16,9 +16,7 @@ final class LikeCollectionViewCell: BaseCollectionViewCell {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
     }
-    let likeButton = UIButton().then {
-        $0.setImage(MyImage.likeCircleInactive, for: .normal)
-    }
+    let likeButton = LikeButton()
     
     override func configureHierarchy() {
         [
@@ -43,10 +41,5 @@ final class LikeCollectionViewCell: BaseCollectionViewCell {
         guard let data else { return }
         let url = URL(string: data.smallURL)
         mainImageView.kf.setImage(with: url)
-    }
-    
-    func toggleLikeButton(isLike: Bool) {
-        let image = isLike ? MyImage.likeCircle : MyImage.likeCircleInactive
-        likeButton.setImage(image, for: .normal)
     }
 }

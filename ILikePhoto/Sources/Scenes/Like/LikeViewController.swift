@@ -128,18 +128,13 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         ) as? LikeCollectionViewCell else { return UICollectionViewCell() }
         let data = list[indexPath.item]
         cell.configureCell(data: data)
-        cell.toggleLikeButton(isLike: true)
+        cell.likeButton.toggleButton(isLike: true)
         cell.likeButton.tag = indexPath.item
         cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
     }
     
     @objc private func likeButtonTapped(sender: UIButton) {
-//        guard let cell = collectionView.cellForItem(
-//            at: IndexPath(item: sender.tag, section: 0)
-//        ) as? SearchCollectionViewCell else {
-//            return
-//        }
         let data = list[sender.tag]
         // 1. 이미지 파일 삭제
         ImageFileManager.shared.deleteImageFile(filename: data.id)
@@ -147,5 +142,41 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         RealmRepository.shared.deleteItem(data.id)
         // 뷰 업데이트
         configureView()
+    }
+    
+    func photoResponseToLikedPhoto(_ value: PhotoResponse) -> LikedPhoto {
+        return LikedPhoto(
+            id: value.id,
+            rawURL: value.urls.raw,
+            smallURL: value.urls.small,
+            width: value.width,
+            height: value.height,
+            likes: value.likes,
+            color: value.color,
+            createdAt: value.createdAt,
+            photographerName: value.user.name,
+            photographerImage: value.user.profileImage.medium
+        )
+    }
+    
+    func likedPhotoToPhotoResponse(_ value: LikedPhoto) -> PhotoResponse {
+        return PhotoResponse(
+            id: value.id,
+            createdAt: value.createdAt,
+            color: value.color,
+            width: value.width,
+            height: value.height,
+            likes: value.likes,
+            urls: Urls(raw: value.rawURL, small: value.smallURL),
+            user: User(name: value.photographerName, profileImage: ProfileImage(medium: value.photographerImage))
+        )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        
+        let data = list[indexPath.item]
+        vc.photo = likedPhotoToPhotoResponse(data)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

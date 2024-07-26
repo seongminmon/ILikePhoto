@@ -17,6 +17,7 @@ final class TopicViewController: BaseViewController {
         $0.isUserInteractionEnabled = true
     }
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout()).then {
+        $0.delegate = self
         $0.register(
             TopicCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -177,4 +178,14 @@ final class TopicViewController: BaseViewController {
         }
     }
     
+}
+
+extension TopicViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = list[indexPath.section][indexPath.item]
+        let vc = DetailViewController()
+        vc.photo = data
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

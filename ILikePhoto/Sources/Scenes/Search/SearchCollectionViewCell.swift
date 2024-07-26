@@ -32,9 +32,7 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
         return config
     }
     private lazy var starButton = UIButton(configuration: starButtonConfig())
-    let likeButton = UIButton().then {
-        $0.setImage(MyImage.likeCircleInactive, for: .normal)
-    }
+    let likeButton = LikeButton()
     
     override func configureHierarchy() {
         [
@@ -64,10 +62,5 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
         let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
         starButton.configuration?.title = data.likes.formatted()
-    }
-    
-    func toggleLikeButton(isLike: Bool) {
-        let image = isLike ? MyImage.likeCircle : MyImage.likeCircleInactive
-        likeButton.setImage(image, for: .normal)
     }
 }
