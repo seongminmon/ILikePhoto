@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
+		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
 		24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B32C4E25D700B40E9C /* AppDelegate.swift */; };
 		24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */; };
 		24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */; };
@@ -73,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		24647B732C5361EF00D9D9A4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		24647B752C53620800D9D9A4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		24BB36B02C4E25D700B40E9C /* ILikePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILikePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BB36B32C4E25D700B40E9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +140,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24647B712C5361C800D9D9A4 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				24647B732C5361EF00D9D9A4 /* DetailViewController.swift */,
+				24647B752C53620800D9D9A4 /* DetailViewModel.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		24647B722C5361CB00D9D9A4 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				24EC74522C500AB0008F403D /* TabBarController.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 		24BB36A72C4E25D700B40E9C = {
 			isa = PBXGroup;
 			children = (
@@ -166,13 +187,14 @@
 		24EC73DA2C4E37B3008F403D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				24EC74522C500AB0008F403D /* TabBarController.swift */,
+				24647B722C5361CB00D9D9A4 /* Tab */,
 				24EC73E62C4E3AFE008F403D /* Onboarding */,
 				24EC73E92C4E3B47008F403D /* SettingNickname */,
 				24EC74492C4F9EA4008F403D /* SettingImage */,
 				24EC74542C500B3E008F403D /* Topic */,
 				24EC74872C512F22008F403D /* Search */,
 				24EC74B02C525243008F403D /* Like */,
+				24647B712C5361C800D9D9A4 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -435,6 +457,7 @@
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionView+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
+				24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */,
 				24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */,
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
@@ -461,6 +484,7 @@
 				24EC745D2C508337008F403D /* MyColor.swift in Sources */,
 				24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */,
 				24EC744B2C4F9EB6008F403D /* SettingImageViewController.swift in Sources */,
+				24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */,
 				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,
 				24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */,
 				24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */,
