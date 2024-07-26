@@ -142,42 +142,17 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         ImageFileManager.shared.deleteImageFile(filename: data.id)
         // 2. Realm 삭제
         RealmRepository.shared.deleteItem(data.id)
+        // 3. list 삭제
+        list.remove(at: sender.tag)
         // 뷰 업데이트
         updateView()
-    }
-    
-    func photoResponseToLikedPhoto(_ value: PhotoResponse) -> LikedPhoto {
-        return LikedPhoto(
-            id: value.id,
-            rawURL: value.urls.raw,
-            smallURL: value.urls.small,
-            width: value.width,
-            height: value.height,
-            likes: value.likes,
-            color: value.color,
-            createdAt: value.createdAt,
-            photographerName: value.user.name,
-            photographerImage: value.user.profileImage.medium
-        )
-    }
-    
-    func likedPhotoToPhotoResponse(_ value: LikedPhoto) -> PhotoResponse {
-        return PhotoResponse(
-            id: value.id,
-            createdAt: value.createdAt,
-            color: value.color,
-            width: value.width,
-            height: value.height,
-            likes: value.likes,
-            urls: Urls(raw: value.rawURL, small: value.smallURL),
-            user: User(name: value.photographerName, profileImage: ProfileImage(medium: value.photographerImage))
-        )
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
         let data = list[indexPath.item]
-        vc.photo = likedPhotoToPhotoResponse(data)
+        vc.photo = data.ToPhotoResponse()
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
 }

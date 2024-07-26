@@ -11,14 +11,13 @@ import SnapKit
 import Then
 
 final class DetailViewController: BaseViewController {
-    // TODO: - 디테일뷰 좋아요 기능 구현
     
     private let scrollView = UIScrollView().then {
         $0.showsHorizontalScrollIndicator = false
     }
     private let contentView = UIView()
     private let headerView = UIView().then {
-        $0.backgroundColor = MyColor.darkgray
+        $0.backgroundColor = MyColor.black.withAlphaComponent(0.3)
     }
     private let photographerImageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -30,8 +29,10 @@ final class DetailViewController: BaseViewController {
     private let createAtLabel = UILabel().then {
         $0.font = MyFont.bold14
     }
-    private let likeButton = LikeButton().then {
+    
+    private lazy var likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
+        $0.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -44,7 +45,10 @@ final class DetailViewController: BaseViewController {
     private lazy var tableView = UITableView().then {
         $0.delegate = self
         $0.dataSource = self
-        $0.register(DetailTableViewCell.self, forCellReuseIdentifier: DetailTableViewCell.description())
+        $0.register(
+            DetailTableViewCell.self,
+            forCellReuseIdentifier: DetailTableViewCell.description()
+        )
         $0.rowHeight = UITableView.automaticDimension
         $0.backgroundColor = .clear
     }
@@ -100,8 +104,8 @@ final class DetailViewController: BaseViewController {
             headerView.addSubview($0)
         }
         [
-            headerView,
             mainImageView,
+            headerView,
             infoLabel,
             tableView
         ].forEach {
@@ -130,11 +134,13 @@ final class DetailViewController: BaseViewController {
         photographerNameLabel.snp.makeConstraints {
             $0.top.equalTo(photographerImageView)
             $0.leading.equalTo(photographerImageView.snp.trailing).offset(4)
+            $0.trailing.equalTo(likeButton.snp.leading).offset(-8)
             $0.height.equalTo(20)
         }
         createAtLabel.snp.makeConstraints {
             $0.bottom.equalTo(photographerImageView)
             $0.leading.equalTo(photographerNameLabel)
+            $0.trailing.equalTo(likeButton.snp.leading).offset(-8)
             $0.height.equalTo(20)
         }
         likeButton.snp.makeConstraints {
@@ -156,6 +162,7 @@ final class DetailViewController: BaseViewController {
             $0.leading.equalTo(infoLabel.snp.trailing).offset(60)
             $0.trailing.equalToSuperview().inset(8)
             $0.height.equalTo(44 * 3)
+            $0.bottom.equalToSuperview()
         }
     }
     
@@ -168,6 +175,29 @@ final class DetailViewController: BaseViewController {
         likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(photo.id) != nil)
         let mainURL = URL(string: photo.urls.small)
         mainImageView.kf.setImage(with: mainURL)
+    }
+    
+    @objc private func likeButtonTapped() {
+        print(#function)
+        
+        guard let photo else { return }
+        if RealmRepository.shared.fetchItem(photo.id) != nil {
+            // 1. 이미지 파일 삭제
+            ImageFileManager.shared.deleteImageFile(filename: photo.id)
+            // 2. Realm 삭제
+            RealmRepository.shared.deleteItem(photo.id)
+            // 3. 버튼 업데이트
+            likeButton.toggleButton(isLike: false)
+        } else {
+            // 1. Realm 추가
+            let item = photo.toLikedPhoto()
+            RealmRepository.shared.addItem(item)
+            // 2. 이미지 파일 추가
+            let image = mainImageView.image ?? MyImage.star
+            ImageFileManager.shared.saveImageFile(image: image, filename: photo.id)
+            // 3. 버튼 업데이트
+            likeButton.toggleButton(isLike: true)
+        }
     }
 }
 

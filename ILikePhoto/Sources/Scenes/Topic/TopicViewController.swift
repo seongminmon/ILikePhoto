@@ -10,6 +10,7 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
+    
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(settingButtonTapped))

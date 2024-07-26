@@ -75,6 +75,11 @@ final class SearchViewController: BaseViewController {
         toggleHideView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
+    
     override func configureNavigationBar() {
         navigationItem.title = "SEARCH PHOTO"
     }
@@ -214,7 +219,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.likeButton.toggleButton(isLike: false)
         } else {
             // 1. Realm 추가
-            let item = photoResponseToLikedPhoto(data)
+            let item = data.toLikedPhoto()
             RealmRepository.shared.addItem(item)
             // 2. 이미지 파일 추가
             let image = cell.mainImageView.image ?? MyImage.star
@@ -224,25 +229,11 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func photoResponseToLikedPhoto(_ value: PhotoResponse) -> LikedPhoto {
-        return LikedPhoto(
-            id: value.id,
-            rawURL: value.urls.raw,
-            smallURL: value.urls.small,
-            width: value.width,
-            height: value.height,
-            likes: value.likes,
-            color: value.color,
-            createdAt: value.createdAt,
-            photographerName: value.user.name,
-            photographerImage: value.user.profileImage.medium
-        )
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
         let data = list?.photoResponse[indexPath.item]
         vc.photo = data
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -256,3 +247,4 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
 }
+
