@@ -10,7 +10,11 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
+    // TODO: - refresh control이 애니메이션 중 깜박거리는 문제
     
+    private lazy var refreshControl = UIRefreshControl().then {
+        $0.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(settingButtonTapped))
@@ -24,6 +28,7 @@ final class TopicViewController: BaseViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: TopicCollectionHeaderView.description()
         )
+        $0.refreshControl = refreshControl
     }
     
     private enum Section: String, CaseIterable {
@@ -160,9 +165,12 @@ final class TopicViewController: BaseViewController {
             }
         }
         
+        let dispatchGroup = DispatchGroup()
+        
         // 3번 통신하기
         for i in 0..<Section.allCases.count {
             let topicID = topicIDList[i]
+            dispatchGroup.enter()
             NetworkManager.shared.request(
                 api: .topic(topicID: topicID), model: [PhotoResponse].self
             ) { [weak self] response in
@@ -171,14 +179,24 @@ final class TopicViewController: BaseViewController {
                 case .success(let data):
                     headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
                     list[i] = data
-                    updateSnapshot()
                 case .failure(let error):
                     print(error)
                 }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.updateSnapshot()
+                self.refreshControl.endRefreshing()
             }
         }
     }
     
+    @objc private func refresh() {
+        fetchTopic()
+    }
 }
 
 extension TopicViewController: UICollectionViewDelegate {
