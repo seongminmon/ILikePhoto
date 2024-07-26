@@ -59,39 +59,38 @@ final class DetailViewController: BaseViewController {
         case downloadCount = "다운로드"
     }
     
-    // 이전 화면에서 전달
-    var photo: PhotoResponse?
-    
-    // 네트워크 통신
-    var statistics: StatisticsResponse?
-    
     let viewModel = DetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .never
-        guard let photo else { return }
-        NetworkManager.shared.request(
-            api: .statistics(imageID: photo.id),
-            model: StatisticsResponse.self
-        ) { [weak self] response in
-            guard let self else { return }
-            switch response {
-            case .success(let data):
-                statistics = data
-                tableView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        viewModel.inputViewDidLoad.value = ()
     }
     
     override func bindData() {
+        viewModel.outputPhoto.bindEarly { [weak self] photo in
+            guard let self, let photo else { return }
+            let photographerURL = URL(string: photo.user.profileImage.medium)
+            self.photographerImageView.kf.setImage(with: photographerURL)
+            self.photographerNameLabel.text = photo.user.name
+            self.createAtLabel.text = photo.createdAt
+            self.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(photo.id) != nil)
+            let mainURL = URL(string: photo.urls.small)
+            self.mainImageView.kf.setImage(with: mainURL)
+        }
         
+        viewModel.outputStatistics.bind { [weak self] _ in
+            guard let self else { return }
+            tableView.reloadData()
+        }
+        
+        viewModel.outputButtonToggle.bind {  [weak self] value in
+            guard let self else { return }
+            likeButton.toggleButton(isLike: value)
+        }
     }
     
     override func configureNavigationBar() {
-        //
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     override func configureHierarchy() {
@@ -166,38 +165,8 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    override func configureView() {
-        guard let photo else { return }
-        let photographerURL = URL(string: photo.user.profileImage.medium)
-        photographerImageView.kf.setImage(with: photographerURL)
-        photographerNameLabel.text = photo.user.name
-        createAtLabel.text = photo.createdAt
-        likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(photo.id) != nil)
-        let mainURL = URL(string: photo.urls.small)
-        mainImageView.kf.setImage(with: mainURL)
-    }
-    
     @objc private func likeButtonTapped() {
-        print(#function)
-        
-        guard let photo else { return }
-        if RealmRepository.shared.fetchItem(photo.id) != nil {
-            // 1. 이미지 파일 삭제
-            ImageFileManager.shared.deleteImageFile(filename: photo.id)
-            // 2. Realm 삭제
-            RealmRepository.shared.deleteItem(photo.id)
-            // 3. 버튼 업데이트
-            likeButton.toggleButton(isLike: false)
-        } else {
-            // 1. Realm 추가
-            let item = photo.toLikedPhoto()
-            RealmRepository.shared.addItem(item)
-            // 2. 이미지 파일 추가
-            let image = mainImageView.image ?? MyImage.star
-            ImageFileManager.shared.saveImageFile(image: image, filename: photo.id)
-            // 3. 버튼 업데이트
-            likeButton.toggleButton(isLike: true)
-        }
+        viewModel.inputLikeButtonTapped.value = mainImageView.image
     }
 }
 
@@ -210,7 +179,8 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: DetailTableViewCell.description(),
             for: indexPath
         ) as? DetailTableViewCell,
-              let photo else {
+              let photo = viewModel.outputPhoto.value,
+              let statistics = viewModel.outputStatistics.value else {
             return UITableViewCell()
         }
         
@@ -220,9 +190,9 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             description = "\(photo.width) x \(photo.height)"
         case 1:
-            description = statistics?.views.total.formatted() ?? ""
+            description = statistics.views.total.formatted()
         case 2:
-            description = statistics?.downloads.total.formatted() ?? ""
+            description = statistics.downloads.total.formatted()
         default:
             break
         }

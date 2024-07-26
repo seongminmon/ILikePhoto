@@ -183,9 +183,9 @@ final class TopicViewController: BaseViewController {
 
 extension TopicViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = list[indexPath.section][indexPath.item]
         let vc = DetailViewController()
-        vc.photo = data
+        let data = list[indexPath.section][indexPath.item]
+        vc.viewModel.outputPhoto.value = data
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

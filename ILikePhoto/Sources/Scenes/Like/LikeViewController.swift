@@ -150,8 +150,8 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        let data = list[indexPath.item]
-        vc.photo = data.ToPhotoResponse()
+        let data = list[indexPath.item].ToPhotoResponse()
+        vc.viewModel.outputPhoto.value = data
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
