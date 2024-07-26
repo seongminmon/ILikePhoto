@@ -142,6 +142,9 @@ final class SearchViewController: BaseViewController {
     }
     
     private func fetchSearch(_ query: String) {
+        // 통신 이후
+        emptyLabel.text = "검색 결과가 없습니다."
+        
         NetworkManager.shared.request(
             api: .search(query: query, page: page, order: searchOrder, color: nil),
             model: SearchResponse.self

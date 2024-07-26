@@ -28,6 +28,7 @@ final class SettingNicknameViewController: BaseViewController {
         $0.font = MyFont.regular14
         $0.clearButtonMode = .whileEditing
         $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        $0.addTarget(self, action: #selector(textFieldDidEndEditing), for: .editingDidEndOnExit)
     }
     private let separator = UIView().then {
         $0.backgroundColor = MyColor.gray
@@ -82,12 +83,14 @@ final class SettingNicknameViewController: BaseViewController {
         super.viewWillAppear(animated)
         navigationItem.largeTitleDisplayMode = .never
         if option == .edit {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "탈퇴", 
-                style: .plain,
+            let withdrawButton = UIBarButtonItem(
+                title: "탈퇴하기",
+                style: .done,
                 target: self,
                 action: #selector(deleteButtonTapped)
             )
+            withdrawButton.tintColor = MyColor.red
+            navigationItem.rightBarButtonItem = withdrawButton
         }
     }
     
@@ -155,7 +158,6 @@ final class SettingNicknameViewController: BaseViewController {
                 buttonStackView2.addArrangedSubview(buttons[i])
             }
         }
-        
         [
             profileImageView,
             cameraView,
@@ -253,6 +255,10 @@ final class SettingNicknameViewController: BaseViewController {
             guard let self else { return }
             viewModel.inputDeleteButtonTap.value = ()
         }
+    }
+    
+    @objc func textFieldDidEndEditing() {
+        view.endEditing(true)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

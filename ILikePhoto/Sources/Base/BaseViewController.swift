@@ -31,22 +31,40 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     func changeWindowToTabBarController() {
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
         
         let tab = TabBarController()
-        sceneDelegate?.window?.rootViewController = tab
-        sceneDelegate?.window?.makeKeyAndVisible()
+        window.rootViewController = tab
+        window.makeKeyAndVisible()
+        
+        UIView.transition(
+            with: window,
+            duration: 0.2,
+            options: [.transitionCrossDissolve],
+            animations: nil,
+            completion: nil
+        )
     }
     
     func changeWindowToOnboarding() {
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
         
         let vc = OnboardingViewController()
         let nav = UINavigationController(rootViewController: vc)
-        sceneDelegate?.window?.rootViewController = nav
-        sceneDelegate?.window?.makeKeyAndVisible()
+        window.rootViewController = nav
+        window.makeKeyAndVisible()
+        
+        UIView.transition(
+            with: window,
+            duration: 0.2,
+            options: [.transitionCrossDissolve],
+            animations: nil,
+            completion: nil
+        )
     }
     
     func showDeleteAlert(
