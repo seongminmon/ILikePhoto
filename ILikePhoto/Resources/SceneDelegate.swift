@@ -15,16 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let repository = RealmRepository()
-        print(repository.fileURL)
-        print(repository.schemaVersion)
+        print(RealmRepository.shared.fileURL)
+        print(RealmRepository.shared.schemaVersion)
         
         if UserDefaultsManager.signUpDate == nil {
             let vc = OnboardingViewController()
             let nav = UINavigationController(rootViewController: vc)
             window?.rootViewController = nav
         } else {
-            let tab = BaseTabBarController()
+            let tab = TabBarController()
             window?.rootViewController = tab
         }
         window?.backgroundColor = MyColor.white

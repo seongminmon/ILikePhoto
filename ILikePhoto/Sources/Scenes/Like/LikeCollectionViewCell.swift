@@ -11,11 +11,12 @@ import SnapKit
 import Then
 
 final class LikeCollectionViewCell: BaseCollectionViewCell {
+    
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
     }
-    private lazy var likeButton = UIButton().then {
+    let likeButton = UIButton().then {
         $0.setImage(MyImage.likeCircleInactive, for: .normal)
     }
     

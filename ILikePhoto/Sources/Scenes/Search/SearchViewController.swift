@@ -65,11 +65,6 @@ final class SearchViewController: BaseViewController {
         $0.textColor = MyColor.black
     }
     
-    // TODO: - 페이지 네이션
-    // 통신하는 상황
-    // 1. 서치바 검색 -> 첫 검색
-    // 2. 정렬 버튼 -> 첫 검색
-    // 3. 스크롤 내리기 -> 페이지네이션
     var list: SearchResponse?
     var page = 1
     var searchOrder = SearchOrder.relevant
@@ -191,10 +186,55 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: SearchCollectionViewCell.description(),
             for: indexPath
-        ) as? SearchCollectionViewCell else { return UICollectionViewCell() }
-        let data = list?.photoResponse[indexPath.item]
+        ) as? SearchCollectionViewCell,
+              let data = list?.photoResponse[indexPath.item] else {
+            return UICollectionViewCell()
+        }
         cell.configureCell(data: data)
+        cell.toggleLikeButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
+        cell.likeButton.tag = indexPath.item
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
+    }
+    
+    @objc private func likeButtonTapped(sender: UIButton) {
+        guard let cell = collectionView.cellForItem(
+            at: IndexPath(item: sender.tag, section: 0)
+        ) as? SearchCollectionViewCell,
+                let data = list?.photoResponse[sender.tag] else {
+            return
+        }
+        
+        if RealmRepository.shared.fetchItem(data.id) != nil {
+            // 1. 이미지 파일 삭제
+            ImageFileManager.shared.deleteImageFile(filename: data.id)
+            // 2. Realm 삭제
+            RealmRepository.shared.deleteItem(data.id)
+            // 3. 버튼 업데이트
+            cell.toggleLikeButton(isLike: false)
+        } else {
+            // 1. Realm 추가
+            let item = photoResponseToLikedPhoto(data)
+            RealmRepository.shared.addItem(item)
+            // 2. 이미지 파일 추가
+            let image = cell.mainImageView.image ?? MyImage.star
+            ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
+            // 3. 버튼 업데이트
+            cell.toggleLikeButton(isLike: true)
+        }
+    }
+    
+    func photoResponseToLikedPhoto(_ value: PhotoResponse) -> LikedPhoto {
+        return LikedPhoto(
+            id: value.id,
+            rawURL: value.urls.raw,
+            smallURL: value.urls.small,
+            width: value.width,
+            height: value.height,
+            likes: value.likes,
+            color: value.color,
+            createdAt: value.createdAt
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

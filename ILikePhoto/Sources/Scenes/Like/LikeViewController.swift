@@ -93,19 +93,13 @@ final class LikeViewController: BaseViewController {
     }
     
     private func toggleHideView() {
-        if list.isEmpty {
-            emptyLabel.isHidden = false
-            collectionView.isHidden = true
-        } else {
-            emptyLabel.isHidden = true
-            collectionView.isHidden = false
-        }
+        emptyLabel.isHidden = !list.isEmpty
+        collectionView.isHidden = list.isEmpty
     }
     
     @objc private func sortButtonTapped() {
-        
+        searchOrder = searchOrder == .ascending ? .descending : .ascending
     }
-    
 }
 
 extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSource {

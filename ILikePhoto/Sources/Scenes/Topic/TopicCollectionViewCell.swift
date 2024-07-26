@@ -11,6 +11,7 @@ import SnapKit
 import Then
 
 final class TopicCollectionViewCell: BaseCollectionViewCell {
+    
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20

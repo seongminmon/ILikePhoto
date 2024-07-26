@@ -34,7 +34,7 @@ extension BaseViewController {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         
-        let tab = BaseTabBarController()
+        let tab = TabBarController()
         sceneDelegate?.window?.rootViewController = tab
         sceneDelegate?.window?.makeKeyAndVisible()
     }
