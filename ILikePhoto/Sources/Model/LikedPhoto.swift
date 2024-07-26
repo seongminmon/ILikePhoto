@@ -45,3 +45,18 @@ class LikedPhoto: Object {
         self.date = Date()
     }
 }
+
+extension LikedPhoto {
+    func ToPhotoResponse() -> PhotoResponse {
+        return PhotoResponse(
+            id: self.id,
+            createdAt: self.createdAt,
+            color: self.color,
+            width: self.width,
+            height: self.height,
+            likes: self.likes,
+            urls: Urls(raw: self.rawURL, small: self.smallURL),
+            user: User(name: self.photographerName, profileImage: ProfileImage(medium: self.photographerImage))
+        )
+    }
+}

@@ -51,3 +51,20 @@ struct User: Decodable, Hashable {
 struct ProfileImage: Decodable, Hashable {
     let medium: String
 }
+
+extension PhotoResponse {
+    func toLikedPhoto() -> LikedPhoto {
+        return LikedPhoto(
+            id: self.id,
+            rawURL: self.urls.raw,
+            smallURL: self.urls.small,
+            width: self.width,
+            height: self.height,
+            likes: self.likes,
+            color: self.color,
+            createdAt: self.createdAt,
+            photographerName: self.user.name,
+            photographerImage: self.user.profileImage.medium
+        )
+    }
+}
