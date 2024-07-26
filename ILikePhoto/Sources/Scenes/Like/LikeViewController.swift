@@ -64,7 +64,8 @@ final class LikeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureView()
+        list = RealmRepository.shared.fetchAll(searchOrder == .ascending)
+        updateView()
     }
     
     override func configureNavigationBar() {
@@ -96,8 +97,7 @@ final class LikeViewController: BaseViewController {
         }
     }
     
-    override func configureView() {
-        list = RealmRepository.shared.fetchAll(searchOrder == .ascending)
+    func updateView() {
         toggleHideView()
         collectionView.reloadData()
         UIView.animate(withDuration: 0.3) {
@@ -112,7 +112,9 @@ final class LikeViewController: BaseViewController {
     
     @objc private func sortButtonTapped() {
         searchOrder = searchOrder == .ascending ? .descending : .ascending
-        configureView()
+        sortButton.setTitle(searchOrder.title, for: .normal)
+        list = RealmRepository.shared.fetchAll(searchOrder == .ascending)
+        updateView()
     }
 }
 
@@ -141,7 +143,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         // 2. Realm 삭제
         RealmRepository.shared.deleteItem(data.id)
         // 뷰 업데이트
-        configureView()
+        updateView()
     }
     
     func photoResponseToLikedPhoto(_ value: PhotoResponse) -> LikedPhoto {
@@ -174,7 +176,6 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        
         let data = list[indexPath.item]
         vc.photo = likedPhotoToPhotoResponse(data)
         navigationController?.pushViewController(vc, animated: true)

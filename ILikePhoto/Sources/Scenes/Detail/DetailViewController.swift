@@ -11,11 +11,15 @@ import SnapKit
 import Then
 
 final class DetailViewController: BaseViewController {
+    // TODO: - 디테일뷰 좋아요 기능 구현
     
     private let scrollView = UIScrollView().then {
         $0.showsHorizontalScrollIndicator = false
     }
     private let contentView = UIView()
+    private let headerView = UIView().then {
+        $0.backgroundColor = MyColor.darkgray
+    }
     private let photographerImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
@@ -26,14 +30,16 @@ final class DetailViewController: BaseViewController {
     private let createAtLabel = UILabel().then {
         $0.font = MyFont.bold14
     }
-    private let likeButton = LikeButton()
+    private let likeButton = LikeButton().then {
+        $0.toggleButton(isLike: false)
+    }
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
     }
     private let infoLabel = UILabel().then {
         $0.text = "정보"
-        $0.font = MyFont.bold15
+        $0.font = MyFont.bold16
     }
     private lazy var tableView = UITableView().then {
         $0.delegate = self
@@ -48,7 +54,6 @@ final class DetailViewController: BaseViewController {
         case viewCount = "조회수"
         case downloadCount = "다운로드"
     }
-    
     
     // 이전 화면에서 전달
     var photo: PhotoResponse?
@@ -91,6 +96,11 @@ final class DetailViewController: BaseViewController {
             photographerNameLabel,
             createAtLabel,
             likeButton,
+        ].forEach {
+            headerView.addSubview($0)
+        }
+        [
+            headerView,
             mainImageView,
             infoLabel,
             tableView
@@ -103,14 +113,17 @@ final class DetailViewController: BaseViewController {
     
     override func configureLayout() {
         scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-//            $0.edges.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         contentView.snp.makeConstraints {
             $0.width.verticalEdges.equalToSuperview()
         }
+        headerView.snp.makeConstraints {
+            $0.top.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(60)
+        }
         photographerImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(8)
             $0.size.equalTo(40)
         }
@@ -125,21 +138,21 @@ final class DetailViewController: BaseViewController {
             $0.height.equalTo(20)
         }
         likeButton.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(8)
             $0.size.equalTo(40)
         }
         mainImageView.snp.makeConstraints {
-            $0.top.equalTo(photographerImageView.snp.bottom).offset(16)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(200)
         }
         infoLabel.snp.makeConstraints {
-            $0.top.equalTo(mainImageView.snp.bottom).offset(16)
+            $0.top.equalTo(mainImageView.snp.bottom).offset(24)
             $0.leading.equalToSuperview().inset(8)
         }
         tableView.snp.makeConstraints {
-            $0.top.equalTo(infoLabel)
+            $0.top.equalTo(mainImageView.snp.bottom).offset(16)
             $0.leading.equalTo(infoLabel.snp.trailing).offset(60)
             $0.trailing.equalToSuperview().inset(8)
             $0.height.equalTo(44 * 3)
