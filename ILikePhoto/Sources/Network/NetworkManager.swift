@@ -13,7 +13,7 @@ final class NetworkManager {
     private init() {}
     
     func request<T: Decodable>(
-        api: NetworkRequest,
+        api: NetworkRouter,
         model: T.Type,
         completionHandler: @escaping (Result<T, AFError>) -> Void
     ) {
@@ -35,6 +35,7 @@ final class NetworkManager {
             }
         }
     }
+}
     
     // 토픽
 //    NetworkManager.shared.request(api: .topic(topicID: "wallpapers"), model: [PhotoResponse].self) { response in
@@ -80,4 +81,3 @@ final class NetworkManager {
 //            print(error)
 //        }
 //    }
-}

@@ -13,22 +13,28 @@ enum NetworkRouter {
     case search(query: String, page: Int, order: SearchOrder, color: SearchColor?)
     case statistics(imageID: String)
     case random
-    
+}
+
+extension NetworkRouter: TargetType {
     var baseURL: String {
         return APIURL.baseURL
     }
     
-    var endpoint: URL {
+    var path: String {
         switch self {
         case .topic(let topicID):
-            return URL(string: baseURL + "topics/" + topicID + "/photos")!
+            return "topics/\(topicID)/photos"
         case .search:
-            return URL(string: baseURL + "search/photos")!
+            return "search/photos"
         case .statistics(let imageID):
-            return URL(string: baseURL + "photos/" + imageID + "/statistics")!
+            return  "photos/\(imageID)/statistics"
         case .random:
-            return URL(string: baseURL + "photos/random")!
+            return "photos/random"
         }
+    }
+    
+    var endpoint: URL {
+        return URL(string: baseURL + path)!
     }
     
     var method: HTTPMethod {
