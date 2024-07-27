@@ -20,6 +20,7 @@
 		24BB36C82C4E261D00B40E9C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36C72C4E261D00B40E9C /* .gitignore */; };
 		24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */; };
 		24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */; };
+		24DE0A6F2C54F62D0053FCF3 /* RandomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6E2C54F62D0053FCF3 /* RandomViewModel.swift */; };
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
 		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
@@ -95,6 +96,7 @@
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewController.swift; sourceTree = "<group>"; };
 		24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCollectionViewCell.swift; sourceTree = "<group>"; };
+		24DE0A6E2C54F62D0053FCF3 /* RandomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewModel.swift; sourceTree = "<group>"; };
 		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */,
+				24DE0A6E2C54F62D0053FCF3 /* RandomViewModel.swift */,
 				24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */,
 			);
 			path = Random;
@@ -483,6 +486,7 @@
 				24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */,
 				24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */,
 				24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */,
+				24DE0A6F2C54F62D0053FCF3 /* RandomViewModel.swift in Sources */,
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
 				24EC745B2C5082CB008F403D /* MyFont.swift in Sources */,
 				24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */,

@@ -12,7 +12,7 @@ import Then
 
 final class RandomCollectionViewCell: BaseCollectionViewCell {
     
-    private let mainImageView = UIImageView().then {
+    let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
     }
@@ -38,7 +38,7 @@ final class RandomCollectionViewCell: BaseCollectionViewCell {
         $0.font = MyFont.bold14
         $0.textColor = MyColor.white
     }
-    private lazy var likeButton = LikeButton().then {
+    lazy var likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
     }
     

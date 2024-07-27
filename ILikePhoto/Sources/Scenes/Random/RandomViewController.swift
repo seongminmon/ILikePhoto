@@ -28,23 +28,25 @@ final class RandomViewController: BaseViewController {
         $0.showsVerticalScrollIndicator = false
         $0.isPagingEnabled = true
         $0.contentInsetAdjustmentBehavior = .never
-        // 스크롤이 빠르게 되도록 (페이징 애니메이션같이 보이게하기 위함)
-//        $0.decelerationRate = .fast
+        $0.decelerationRate = .fast
     }
     
-    var list = [PhotoResponse]()
+    private let viewModel = RandomViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.request(api: .random, model: [PhotoResponse].self) { [weak self] response in
+        viewModel.inputViewDidLoad.value = ()
+    }
+    
+    override func bindData() {
+        viewModel.outputList.bind { [weak self] list in
             guard let self else { return }
-            switch response {
-            case .success(let data):
-                list = data
-                collectionView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
+            collectionView.reloadData()
+        }
+        
+        viewModel.outputButtonToggle.bind { [weak self] value in
+            guard let self else { return }
+            collectionView.reloadData()
         }
     }
     
@@ -52,14 +54,12 @@ final class RandomViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        collectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
-    }
-    
-    override func configureNavigationBar() {
     }
     
     override func configureHierarchy() {
@@ -75,7 +75,7 @@ final class RandomViewController: BaseViewController {
 
 extension RandomViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return viewModel.outputList.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -85,27 +85,22 @@ extension RandomViewController: UICollectionViewDelegate, UICollectionViewDataSo
         ) as? RandomCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let data = list[indexPath.row]
+        let data = viewModel.outputList.value[indexPath.row]
         cell.configureCell(data, page: indexPath.row)
+        
+        cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
+        cell.likeButton.tag = indexPath.row
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        // 탭바 높이만큼 스크롤 내려주기
-        // 탭바 높이 가져오기
-        let tabBarHeight = tabBarController?.tabBar.frame.size.height ?? 0
-        
-        // 현재 콘텐츠 오프셋
-        var targetOffset = targetContentOffset.pointee
-        
-        // 새로운 오프셋 계산 (탭바 높이만큼 내리기)
-        targetOffset.y += tabBarHeight
-        
-        // 새로운 오프셋이 콘텐츠 높이를 넘지 않도록 조정
-        let maxOffsetY = scrollView.contentSize.height - scrollView.frame.size.height
-        targetOffset.y = min(targetOffset.y, maxOffsetY)
-        
-        // 타겟 오프셋 설정
-        targetContentOffset.pointee = targetOffset
+    @objc private func likeButtonTapped(sender: UIButton) {
+        guard let cell = collectionView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as? RandomCollectionViewCell else { return }
+        viewModel.inputLikeButtonTap.value = (sender.tag, cell.mainImageView.image)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = viewModel.outputList.value[indexPath.item]
+        pushDetailViewController(data)
     }
 }
