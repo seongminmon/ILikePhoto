@@ -19,7 +19,7 @@
 		24BB36C02C4E25D900B40E9C /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36BF2C4E25D900B40E9C /* Base */; };
 		24BB36C82C4E261D00B40E9C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 24BB36C72C4E261D00B40E9C /* .gitignore */; };
 		24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */; };
-		24DE0A6D2C53D9C10053FCF3 /* RandomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */; };
+		24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */; };
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
 		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
@@ -94,7 +94,7 @@
 		24BB36C12C4E25D900B40E9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24BB36C72C4E261D00B40E9C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewController.swift; sourceTree = "<group>"; };
-		24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTableViewCell.swift; sourceTree = "<group>"; };
+		24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */,
-				24DE0A6C2C53D9C10053FCF3 /* RandomTableViewCell.swift */,
+				24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */,
 			);
 			path = Random;
 			sourceTree = "<group>";
@@ -232,9 +232,9 @@
 		24EC73E32C4E394A008F403D /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
-				24EC73E42C4E398D008F403D /* BlueButton.swift */,
 				24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */,
 				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
+				24EC73E42C4E398D008F403D /* BlueButton.swift */,
 				24EC74032C4E6469008F403D /* MBTIButton.swift */,
 				24647B7B2C53681B00D9D9A4 /* LikeButton.swift */,
 			);
@@ -503,7 +503,7 @@
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
-				24DE0A6D2C53D9C10053FCF3 /* RandomTableViewCell.swift in Sources */,
+				24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */,
 				24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */,
 				24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */,
 				24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */,

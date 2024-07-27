@@ -29,7 +29,6 @@ final class DetailViewController: BaseViewController {
     private let createAtLabel = UILabel().then {
         $0.font = MyFont.bold14
     }
-    
     private lazy var likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
         $0.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)

@@ -18,4 +18,15 @@ extension UICollectionViewLayout {
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         return layout
     }
+    
+    static func createLayout(spacing: CGFloat, cellCount: CGFloat, height: CGFloat) -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = UIScreen.main.bounds.width - (2 * spacing) - ((cellCount-1) * spacing)
+        layout.itemSize = CGSize(width: width / cellCount, height: height)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = spacing
+        layout.minimumLineSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
+        return layout
+    }
 }
