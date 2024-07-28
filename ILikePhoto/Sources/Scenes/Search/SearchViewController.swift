@@ -160,7 +160,7 @@ final class SearchViewController: BaseViewController {
         }
         colorCollectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(8)
-            $0.leading.equalToSuperview()
+            $0.leading.equalTo(view.safeAreaLayoutGuide)
             $0.trailing.equalTo(sortButton.snp.leading)
             $0.height.equalTo(30)
         }
@@ -267,9 +267,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             ) as? ColorCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configureCell(color: SearchColor.allCases[indexPath.item])
-            cell.colorButton.tag = indexPath.item
-            cell.colorButton.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
+            let color = SearchColor.allCases[indexPath.item]
+            cell.configureCell(color: color)
+            cell.toggleSelected(isSelect: color == searchColor)
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(
@@ -285,11 +285,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
             return cell
         }
-    }
-    
-    @objc private func colorButtonTapped(sender: UIButton) {
-        print(#function, sender.tag)
-        // TODO: - 선택된 버튼 활성화, 비활성화 처리, 네트워킹
     }
     
     @objc private func likeButtonTapped(sender: UIButton) {
@@ -320,8 +315,20 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = list?.photoResponse[indexPath.item]
-        pushDetailViewController(data)
+        if collectionView == colorCollectionView {
+            if searchColor != SearchColor.allCases[indexPath.item] {
+                searchColor = SearchColor.allCases[indexPath.item]
+            } else {
+                searchColor = nil
+            }
+            colorCollectionView.reloadData()
+            guard let query = configureQuery(searchBar.text) else { return }
+            page = 1
+            fetchSearch(query)
+        } else {
+            let data = list?.photoResponse[indexPath.item]
+            pushDetailViewController(data)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
