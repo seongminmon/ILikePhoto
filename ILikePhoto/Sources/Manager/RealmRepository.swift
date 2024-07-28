@@ -32,11 +32,25 @@ final class RealmRepository {
     }
     
     // MARK: - Read
-    func fetchAll(_ ascending: Bool) -> [LikedPhoto] {
-        let value = realm.objects(LikedPhoto.self)
-            .sorted(byKeyPath: "date", ascending: ascending)
+    func fetchAll(order: LikeSearchOrder, color: Set<SearchColor>) -> [LikedPhoto] {
+        var value = realm.objects(LikedPhoto.self)
+            .sorted(byKeyPath: "date", ascending: order == .ascending)
+        for item in color {
+            value = value.where {
+                $0.color == item.colorValue
+            }
+        }
         return Array(value)
     }
+    
+//    func fetchFiltered(order: LikeSearchOrder, color: Set<SearchColor>) -> [LikedPhoto] {
+//        var value = realm.objects(LikedPhoto.self)
+//            .sorted(byKeyPath: "date", ascending: order == .ascending)
+//        for item in color {
+//            value = value
+//        }
+//        return Array(value)
+//    }
     
     func fetchItem(_ id: String) -> LikedPhoto? {
         return realm.object(ofType: LikedPhoto.self, forPrimaryKey: id)

@@ -10,7 +10,6 @@ import SnapKit
 import Then
 
 final class SearchViewController: BaseViewController {
-    // TODO: - 핀터레스트 UI 적용 후 페이지네이션 적용되지 않는 문제 (통신은 OK, reloadData()가 동작 X)
     
     private lazy var searchBar = UISearchBar().then {
         $0.placeholder = "키워드 검색"
@@ -194,7 +193,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching, UICollectionViewDelegateFlowLayout {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == colorCollectionView {
             return SearchColor.allCases.count
@@ -291,7 +290,7 @@ extension SearchViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         guard let data = list?.photoResponse[indexPath.item] else { return 0 }
         let ratio = CGFloat(data.height) / CGFloat(data.width)
-        let width = UIScreen.main.bounds.width / 2 - 30
+        let width = UIScreen.main.bounds.width / 2
         return width * ratio
     }
 }

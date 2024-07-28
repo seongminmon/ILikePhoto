@@ -52,7 +52,7 @@ class PinterestLayout: UICollectionViewFlowLayout {
     weak var delegate: PinterestLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 10
+    private let cellPadding: CGFloat = 4
     
     private var cache: [UICollectionViewLayoutAttributes] = []
     
@@ -75,11 +75,11 @@ class PinterestLayout: UICollectionViewFlowLayout {
 //        guard let collectionView = collectionView, cache.isEmpty else { return }
         guard let collectionView = collectionView else { return }
         
-        let columnWidth = contentWidth / CGFloat(numberOfColumns)
+        let width = contentWidth / CGFloat(numberOfColumns)
         // cell 의 x 위치를 나타내는 배열
         var xOffset: [CGFloat] = []
         for column in 0..<numberOfColumns {
-            xOffset.append(CGFloat(column) * columnWidth)
+            xOffset.append(CGFloat(column) * width)
         }
         // cell 의 y 위치를 나타내는 배열
         var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
@@ -98,7 +98,7 @@ class PinterestLayout: UICollectionViewFlowLayout {
             let frame = CGRect(
                 x: xOffset[column],
                 y: yOffset[column],
-                width: columnWidth,
+                width: width,
                 height: height
             )
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
@@ -113,13 +113,13 @@ class PinterestLayout: UICollectionViewFlowLayout {
             yOffset[column] = yOffset[column] + height
             
             // 다른 이미지 크기로 인해서, 한쪽 열에만 이미지가 추가되는 것을 방지합니다.
-            column = column < (numberOfColumns - 1) ? (column + 1) : 0
+            column = column < (numberOfColumns - 1) ? column + 1 : 0
         }
     }
     
     // 3. 모든 셀과 보충 뷰의 레이아웃 정보를 리턴합니다. 화면 표시 영역 기반(Rect)의 요청이 들어올 때 사용합니다.
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
+        var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         for attributes in cache {
             // 셀 frame 과 요청 Rect 가 교차한다면, 리턴 값에 추가합니다.
             if attributes.frame.intersects(rect) {
