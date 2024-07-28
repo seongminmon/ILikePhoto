@@ -173,25 +173,26 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Info.allCases.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: DetailTableViewCell.description(),
             for: indexPath
         ) as? DetailTableViewCell,
-              let photo = viewModel.outputPhoto.value,
-              let statistics = viewModel.outputStatistics.value else {
+              let photo = viewModel.outputPhoto.value else {
             return UITableViewCell()
         }
         
+        let statistics = viewModel.outputStatistics.value
         let title = Info.allCases[indexPath.row].rawValue
         var description = ""
         switch indexPath.row {
         case 0:
             description = "\(photo.width) x \(photo.height)"
         case 1:
-            description = statistics.views.total.formatted()
+            description = statistics?.views.total.formatted() ?? ""
         case 2:
-            description = statistics.downloads.total.formatted()
+            description = statistics?.downloads.total.formatted() ?? ""
         default:
             break
         }
