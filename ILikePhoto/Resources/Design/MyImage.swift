@@ -41,4 +41,5 @@ enum MyImage {
     
     static let camera = UIImage(systemName: "camera.fill")!
     static let star = UIImage(systemName: "star.fill")!
+    static let circle = UIImage(systemName: "circle.fill")!.withRenderingMode(.alwaysTemplate)
 }

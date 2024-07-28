@@ -22,9 +22,52 @@ enum SearchOrder: String {
     }
 }
 
-// TODO: - 더 적절한 데이터 구조로 바꾸기
-enum SearchColor: String {
-    case black, white, yellow, red, purple, green, blue
+enum SearchColor: String, CaseIterable {
+    case black
+    case white
+    case yellow
+    case red
+    case purple
+    case green
+    case blue
+    
+    var description: String {
+        switch self {
+        case .black:
+            return "블랙"
+        case .white:
+            return "화이트"
+        case .yellow:
+            return "옐로우"
+        case .red:
+            return "레드"
+        case .purple:
+            return "퍼플"
+        case .green:
+            return "그린"
+        case .blue:
+            return "블루"
+        }
+    }
+    
+    var colorValue: String {
+        switch self {
+        case .black:
+            return "#000000"
+        case .white:
+            return "#FFFFFF"
+        case .yellow:
+            return "#FFEF62"
+        case .red:
+            return "#F04452"
+        case .purple:
+            return "#9636E1"
+        case .green:
+            return "#02B946"
+        case .blue:
+            return "#3C59FF"
+        }
+    }
 }
 
 final class SearchViewController: BaseViewController {
@@ -33,11 +76,25 @@ final class SearchViewController: BaseViewController {
         $0.placeholder = "키워드 검색"
         $0.delegate = self
     }
+    private lazy var colorCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .createHorizontalLayout()
+    ).then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(
+            ColorCollectionViewCell.self,
+            forCellWithReuseIdentifier: ColorCollectionViewCell.description()
+        )
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+    }
     private lazy var sortButton = UIButton().then {
         $0.setTitle(searchOrder.title, for: .normal)
         $0.setTitleColor(MyColor.black, for: .normal)
         $0.titleLabel?.font = MyFont.bold14
         $0.tintColor = MyColor.black
+        $0.backgroundColor = MyColor.white
         $0.setImage(MyImage.sort, for: .normal)
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 15
@@ -46,7 +103,7 @@ final class SearchViewController: BaseViewController {
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
-    private lazy var collectionView = UICollectionView(
+    private lazy var mainCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)
     ).then {
@@ -68,7 +125,7 @@ final class SearchViewController: BaseViewController {
     var list: SearchResponse?
     var page = 1
     var searchOrder = SearchOrder.relevant
-//    var searchColor: SearchColor?
+    var searchColor: SearchColor?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +134,7 @@ final class SearchViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+        mainCollectionView.reloadData()
     }
     
     override func configureNavigationBar() {
@@ -87,8 +144,9 @@ final class SearchViewController: BaseViewController {
     override func configureHierarchy() {
         [
             searchBar,
+            colorCollectionView,
             sortButton,
-            collectionView,
+            mainCollectionView,
             emptyLabel
         ].forEach {
             view.addSubview($0)
@@ -100,12 +158,19 @@ final class SearchViewController: BaseViewController {
             $0.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(44)
         }
+        colorCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(8)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(sortButton.snp.leading)
+            $0.height.equalTo(30)
+        }
         sortButton.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.width.equalTo(80)
             $0.height.equalTo(30)
         }
-        collectionView.snp.makeConstraints {
+        mainCollectionView.snp.makeConstraints {
             $0.top.equalTo(sortButton.snp.bottom).offset(8)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -117,10 +182,10 @@ final class SearchViewController: BaseViewController {
     private func toggleHideView() {
         if let list, !list.photoResponse.isEmpty {
             emptyLabel.isHidden = true
-            collectionView.isHidden = false
+            mainCollectionView.isHidden = false
         } else {
             emptyLabel.isHidden = false
-            collectionView.isHidden = true
+            mainCollectionView.isHidden = true
         }
     }
     
@@ -146,7 +211,7 @@ final class SearchViewController: BaseViewController {
         emptyLabel.text = "검색 결과가 없습니다."
         
         NetworkManager.shared.request(
-            api: .search(query: query, page: page, order: searchOrder, color: nil),
+            api: .search(query: query, page: page, order: searchOrder, color: searchColor),
             model: SearchResponse.self
         ) { [weak self] response in
             guard let self else { return }
@@ -161,10 +226,10 @@ final class SearchViewController: BaseViewController {
                 }
                 
                 toggleHideView()
-                collectionView.reloadData()
+                mainCollectionView.reloadData()
                 
                 if page == 1, let list, !list.photoResponse.isEmpty {
-                    collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+                    mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
                 }
                 
             case .failure(let error):
@@ -176,7 +241,7 @@ final class SearchViewController: BaseViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     // TODO: - query를 프로퍼티로 가지는 것이 좋을지 searchBar.text로 쓰는 것이 좋을지 선택하기
-    // 스크롤 중에 searchBar에 입력하면 바뀐 텍스트로 네트워킹하게 됨
+    // >>> 스크롤 중에 searchBar에 입력하면 바뀐 텍스트로 네트워킹하게 됨
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = configureQuery(searchBar.text) else { return }
         page = 1
@@ -187,26 +252,48 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list?.photoResponse.count ?? 0
+        if collectionView == colorCollectionView {
+            return SearchColor.allCases.count
+        } else {
+            return list?.photoResponse.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SearchCollectionViewCell.description(),
-            for: indexPath
-        ) as? SearchCollectionViewCell,
-              let data = list?.photoResponse[indexPath.item] else {
-            return UICollectionViewCell()
+        if collectionView == colorCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ColorCollectionViewCell.description(),
+                for: indexPath
+            ) as? ColorCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configureCell(color: SearchColor.allCases[indexPath.item])
+            cell.colorButton.tag = indexPath.item
+            cell.colorButton.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SearchCollectionViewCell.description(),
+                for: indexPath
+            ) as? SearchCollectionViewCell,
+                  let data = list?.photoResponse[indexPath.item] else {
+                return UICollectionViewCell()
+            }
+            cell.configureCell(data: data)
+            cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
+            cell.likeButton.tag = indexPath.item
+            cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+            return cell
         }
-        cell.configureCell(data: data)
-        cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
-        cell.likeButton.tag = indexPath.item
-        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        return cell
+    }
+    
+    @objc private func colorButtonTapped(sender: UIButton) {
+        print(#function, sender.tag)
+        // TODO: - 선택된 버튼 활성화, 비활성화 처리, 네트워킹
     }
     
     @objc private func likeButtonTapped(sender: UIButton) {
-        guard let cell = collectionView.cellForItem(
+        guard let cell = mainCollectionView.cellForItem(
             at: IndexPath(item: sender.tag, section: 0)
         ) as? SearchCollectionViewCell,
                 let data = list?.photoResponse[sender.tag] else {
@@ -247,4 +334,3 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
 }
-

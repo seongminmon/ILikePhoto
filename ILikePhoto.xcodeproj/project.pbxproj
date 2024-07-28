@@ -21,6 +21,7 @@
 		24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */; };
 		24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */; };
 		24DE0A6F2C54F62D0053FCF3 /* RandomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A6E2C54F62D0053FCF3 /* RandomViewModel.swift */; };
+		24DE0A712C5538460053FCF3 /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE0A702C5538460053FCF3 /* ColorCollectionViewCell.swift */; };
 		24EC73D22C4E3011008F403D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D12C4E3011008F403D /* Then */; };
 		24EC73D52C4E301C008F403D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC73D42C4E301C008F403D /* SnapKit */; };
 		24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73D82C4E3636008F403D /* UIColor+.swift */; };
@@ -97,6 +98,7 @@
 		24DE0A6A2C53D7BE0053FCF3 /* RandomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewController.swift; sourceTree = "<group>"; };
 		24DE0A6C2C53D9C10053FCF3 /* RandomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCollectionViewCell.swift; sourceTree = "<group>"; };
 		24DE0A6E2C54F62D0053FCF3 /* RandomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomViewModel.swift; sourceTree = "<group>"; };
+		24DE0A702C5538460053FCF3 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC73D82C4E3636008F403D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		24EC73DD2C4E387B008F403D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		24EC73DF2C4E388B008F403D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74882C512F61008F403D /* SearchViewController.swift */,
+				24DE0A702C5538460053FCF3 /* ColorCollectionViewCell.swift */,
 				24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */,
 			);
 			path = Search;
@@ -495,6 +498,7 @@
 				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* TabBarController.swift in Sources */,
+				24DE0A712C5538460053FCF3 /* ColorCollectionViewCell.swift in Sources */,
 				24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */,
 				24EC74B62C526D22008F403D /* ImageFileManager.swift in Sources */,
 				24EC74B82C533E02008F403D /* TargetType.swift in Sources */,
