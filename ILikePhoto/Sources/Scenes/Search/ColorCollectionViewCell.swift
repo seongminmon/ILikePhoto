@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 final class ColorCollectionViewCell: BaseCollectionViewCell {
-    // TODO: - 버튼 선택될 때 3글자 버튼 title이 2줄로 바뀌는 문제
     
     private let containerView = UIView().then {
         $0.backgroundColor = MyColor.lightgray

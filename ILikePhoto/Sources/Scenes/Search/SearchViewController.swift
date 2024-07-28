@@ -9,68 +9,8 @@ import UIKit
 import SnapKit
 import Then
 
-enum SearchOrder: String {
-    case relevant, latest
-    
-    var title: String {
-        switch self {
-        case .relevant:
-            return "관련순"
-        case .latest:
-            return "최신순"
-        }
-    }
-}
-
-enum SearchColor: String, CaseIterable {
-    case black
-    case white
-    case yellow
-    case red
-    case purple
-    case green
-    case blue
-    
-    var description: String {
-        switch self {
-        case .black:
-            return "블랙"
-        case .white:
-            return "화이트"
-        case .yellow:
-            return "옐로우"
-        case .red:
-            return "레드"
-        case .purple:
-            return "퍼플"
-        case .green:
-            return "그린"
-        case .blue:
-            return "블루"
-        }
-    }
-    
-    var colorValue: String {
-        switch self {
-        case .black:
-            return "#000000"
-        case .white:
-            return "#FFFFFF"
-        case .yellow:
-            return "#FFEF62"
-        case .red:
-            return "#F04452"
-        case .purple:
-            return "#9636E1"
-        case .green:
-            return "#02B946"
-        case .blue:
-            return "#3C59FF"
-        }
-    }
-}
-
 final class SearchViewController: BaseViewController {
+    // TODO: - 핀터레스트 UI 적용 후 페이지네이션 적용되지 않는 문제 (통신은 OK, reloadData()가 동작 X)
     
     private lazy var searchBar = UISearchBar().then {
         $0.placeholder = "키워드 검색"
@@ -103,9 +43,13 @@ final class SearchViewController: BaseViewController {
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
+    
+    private lazy var pinterestLayout = PinterestLayout().then {
+        $0.delegate = self
+    }
     private lazy var mainCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)
+        collectionViewLayout: pinterestLayout
     ).then {
         $0.delegate = self
         $0.dataSource = self
@@ -250,7 +194,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching {
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == colorCollectionView {
             return SearchColor.allCases.count
@@ -332,6 +276,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        // 페이지네이션
         guard let query = configureQuery(searchBar.text), let list else { return }
         for indexPath in indexPaths {
             if indexPath.item == list.photoResponse.count - 4 && page < list.totalPages {
@@ -339,5 +284,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 fetchSearch(query)
             }
         }
+    }
+}
+
+extension SearchViewController: PinterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        guard let data = list?.photoResponse[indexPath.item] else { return 0 }
+        let ratio = CGFloat(data.height) / CGFloat(data.width)
+        let width = UIScreen.main.bounds.width / 2 - 30
+        return width * ratio
     }
 }
