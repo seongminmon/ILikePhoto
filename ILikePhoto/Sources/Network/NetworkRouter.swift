@@ -53,18 +53,18 @@ enum SearchColor: String, CaseIterable {
         switch self {
         case .black:
             return "#000000"
-        case .white:
-            return "#FFFFFF"
-        case .yellow:
-            return "#FFEF62"
-        case .red:
-            return "#F04452"
-        case .purple:
-            return "#9636E1"
         case .green:
             return "#02B946"
+        case .purple:
+            return "#9636E1"
         case .blue:
             return "#3C59FF"
+        case .red:
+            return "#F04452"
+        case .yellow:
+            return "#FFEF62"
+        case .white:
+            return "#FFFFFF"
         }
     }
 }

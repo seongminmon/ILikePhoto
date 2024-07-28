@@ -9,6 +9,8 @@ import UIKit
 import Kingfisher
 import SnapKit
 import Then
+import Charts
+import DGCharts
 
 final class DetailViewController: BaseViewController {
     
@@ -49,7 +51,29 @@ final class DetailViewController: BaseViewController {
             forCellReuseIdentifier: DetailTableViewCell.description()
         )
         $0.rowHeight = UITableView.automaticDimension
+        $0.isScrollEnabled = false
         $0.backgroundColor = .clear
+    }
+    // TODO: - 차트 기능 레이아웃, 데이터 다듬기
+    private let chartLabel = UILabel().then {
+        $0.text = "차트"
+        $0.font = MyFont.bold16
+    }
+    private lazy var segmentControl = UISegmentedControl(items: ["조회", "다운로드"]).then {
+        $0.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
+        $0.selectedSegmentIndex = 0
+    }
+    private lazy var chartView = LineChartView().then {
+        $0.noDataText = "출력 데이터가 없습니다."
+        $0.noDataFont = .systemFont(ofSize: 20)
+        $0.noDataTextColor = .lightGray
+        $0.backgroundColor = .yellow
+        // 값마다 구분하고 싶은 valueFormatter 예) 날짜, 이름
+//        guard let value = viewModel.outputStatistics.value else { return }
+//        let data = value.views.historical.values
+//        $0.xAxis.valueFormatter = IndexAxisValueFormatter(values: data.map { $0.date })
+//        // 값마다 구분하고 싶은 valueFormatter를 개수만큼 출력
+//        $0.xAxis.setLabelCount(data.count, force: false)
     }
     
     private enum Info: String, CaseIterable {
@@ -63,6 +87,7 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.inputViewDidLoad.value = ()
+        setChartData(index: segmentControl.selectedSegmentIndex)
     }
     
     override func bindData() {
@@ -105,7 +130,10 @@ final class DetailViewController: BaseViewController {
             mainImageView,
             headerView,
             infoLabel,
-            tableView
+            tableView,
+            chartLabel,
+            segmentControl,
+            chartView
         ].forEach {
             contentView.addSubview($0)
         }
@@ -149,7 +177,10 @@ final class DetailViewController: BaseViewController {
         mainImageView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(200)
+            // width height 비율에 맞게 조정
+            let data = viewModel.outputPhoto.value!
+            let ratio = CGFloat(data.height) / CGFloat(data.width)
+            $0.height.equalTo(mainImageView.snp.width ).multipliedBy(ratio)
         }
         infoLabel.snp.makeConstraints {
             $0.top.equalTo(mainImageView.snp.bottom).offset(24)
@@ -160,12 +191,59 @@ final class DetailViewController: BaseViewController {
             $0.leading.equalTo(infoLabel.snp.trailing).offset(60)
             $0.trailing.equalToSuperview().inset(8)
             $0.height.equalTo(44 * 3)
-            $0.bottom.equalToSuperview()
+        }
+        chartLabel.snp.makeConstraints {
+            $0.top.equalTo(tableView.snp.bottom).offset(8)
+            $0.leading.equalTo(infoLabel)
+        }
+        segmentControl.snp.makeConstraints {
+            $0.top.equalTo(chartLabel)
+            $0.leading.equalTo(tableView)
+        }
+        chartView.snp.makeConstraints {
+            $0.top.equalTo(segmentControl.snp.bottom).offset(8)
+            $0.leading.equalTo(segmentControl)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.height.equalTo(300)
+            $0.bottom.equalToSuperview().inset(16)
         }
     }
     
     @objc private func likeButtonTapped() {
         viewModel.inputLikeButtonTapped.value = mainImageView.image
+    }
+    
+    @objc private func segmentValueChanged() {
+        setChartData(index: segmentControl.selectedSegmentIndex)
+    }
+    
+    private func entryData(index: Int) -> [BarChartDataEntry] {
+        guard let value = viewModel.outputStatistics.value else { return [] }
+        var barDataEntries = [BarChartDataEntry]()
+        switch index {
+        case 0: // 조회
+            let data = value.views.historical.values
+            for i in 0..<data.count {
+                let barDataEntry = BarChartDataEntry(x: Double(i), y: Double(data[i].value))
+                barDataEntries.append(barDataEntry)
+            }
+        case 1: // 다운로드
+            let data = value.downloads.historical.values
+            for i in 0..<data.count {
+                let barDataEntry = BarChartDataEntry(x: Double(i), y: Double(data[i].value))
+                barDataEntries.append(barDataEntry)
+            }
+        default:
+            break
+        }
+        return barDataEntries
+    }
+    
+    private func setChartData(index: Int) {
+        let barChartDataEntries = entryData(index: index)
+        let barChartdataSet = LineChartDataSet(entries: barChartDataEntries)
+        let barChartData = LineChartData(dataSet: barChartdataSet)
+        chartView.data = barChartData
     }
 }
 
@@ -197,6 +275,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             break
         }
         cell.configureCell(title: title, description: description)
+        cell.selectionStyle = .none
         return cell
     }
 }

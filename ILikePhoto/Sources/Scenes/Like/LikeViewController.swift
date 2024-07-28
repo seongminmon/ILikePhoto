@@ -23,7 +23,9 @@ enum LikeSearchOrder: String {
 }
 
 final class LikeViewController: BaseViewController {
-    // TODO: - 통신에서 오는 hex가 enum값과 다른 문제 해결하기
+    // TODO: - 통신에서 오는 hex가 enum값과 다른 문제
+    // TODO: - 스크롤 위아래로 반복하면 레이아웃 겹치는 문제
+    // TODO: - 삭제시 스크롤이 남아있는 문제
     
     private lazy var colorCollectionView = UICollectionView(
         frame: .zero,
