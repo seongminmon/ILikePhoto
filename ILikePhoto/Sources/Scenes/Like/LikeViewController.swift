@@ -37,9 +37,12 @@ final class LikeViewController: BaseViewController {
         $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
-    private lazy var collectionView = UICollectionView(
+    private lazy var pinterestLayout = PinterestLayout().then {
+        $0.delegate = self
+    }
+    private lazy var mainCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: .createLayout(spacing: 10, cellCount: 2, aspectRatio: 4/3)
+        collectionViewLayout: pinterestLayout
     ).then {
         $0.delegate = self
         $0.dataSource = self
@@ -75,7 +78,7 @@ final class LikeViewController: BaseViewController {
     override func configureHierarchy() {
         [
             sortButton,
-            collectionView,
+            mainCollectionView,
             emptyLabel
         ].forEach {
             view.addSubview($0)
@@ -88,7 +91,7 @@ final class LikeViewController: BaseViewController {
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(30)
         }
-        collectionView.snp.makeConstraints {
+        mainCollectionView.snp.makeConstraints {
             $0.top.equalTo(sortButton.snp.bottom).offset(8)
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
@@ -99,7 +102,7 @@ final class LikeViewController: BaseViewController {
     
     func updateView() {
         toggleHideView()
-        collectionView.reloadData()
+        mainCollectionView.reloadData()
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -107,7 +110,7 @@ final class LikeViewController: BaseViewController {
     
     private func toggleHideView() {
         emptyLabel.isHidden = !list.isEmpty
-        collectionView.isHidden = list.isEmpty
+        mainCollectionView.isHidden = list.isEmpty
     }
     
     @objc private func sortButtonTapped() {
@@ -151,5 +154,14 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let data = list[indexPath.item].ToPhotoResponse()
         pushDetailViewController(data)
+    }
+}
+
+extension LikeViewController: PinterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let data = list[indexPath.item]
+        let ratio = CGFloat(data.height) / CGFloat(data.width)
+        let width = UIScreen.main.bounds.width / 2 - 30
+        return width * ratio
     }
 }
