@@ -87,8 +87,9 @@ final class TopicViewController: BaseViewController {
     private func supplementaryCellRegistration() -> UICollectionView.SupplementaryRegistration<TopicCollectionHeaderView> {
         return UICollectionView.SupplementaryRegistration(
             elementKind: UICollectionView.elementKindSectionHeader
-        ) { supplementaryView, elementKind, indexPath in
-            supplementaryView.configureLabel(self.headerTitles[indexPath.section])
+        ) { [weak self] supplementaryView, elementKind, indexPath in
+            guard let self else { return }
+            supplementaryView.configureLabel(headerTitles[indexPath.section])
         }
     }
     
@@ -132,8 +133,8 @@ final class TopicViewController: BaseViewController {
     
     private func fetchTopic() {
         // 1분이 안 지났으면 통신 X
-        if let recentNetworkTime, recentNetworkTime < .now() + 60 {
-            print("1분 후에 다시 시도해주세요!")
+        if let recentNetworkTime, recentNetworkTime + 60 > .now() {
+            view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
             refreshControl.endRefreshing()
             return
         }
