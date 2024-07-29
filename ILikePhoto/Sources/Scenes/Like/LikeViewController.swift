@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 enum LikeSearchOrder: String {
     case descending, ascending
@@ -189,6 +190,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         list.remove(at: sender.tag)
         // 뷰 업데이트
         updateView()
+        view.makeToast("삭제되었습니다.")
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

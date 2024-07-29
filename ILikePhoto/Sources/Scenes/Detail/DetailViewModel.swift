@@ -19,6 +19,7 @@ final class DetailViewModel: BaseViewModel {
     // 네트워크 통신
     var outputStatistics = Observable<StatisticsResponse?>(nil)
     var outputButtonToggle = Observable(false)
+    var outputToast = Observable(false)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] _ in
@@ -44,12 +45,14 @@ final class DetailViewModel: BaseViewModel {
                 ImageFileManager.shared.deleteImageFile(filename: photo.id)
                 RealmRepository.shared.deleteItem(photo.id)
                 outputButtonToggle.value = false
+                outputToast.value = false
             } else {
                 let item = photo.toLikedPhoto()
                 RealmRepository.shared.addItem(item)
                 let image = image ?? MyImage.star
                 ImageFileManager.shared.saveImageFile(image: image, filename: photo.id)
                 outputButtonToggle.value = true
+                outputToast.value = true
             }
         }
     }

@@ -13,6 +13,7 @@
 		24647B7A2C53637700D9D9A4 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B792C53637700D9D9A4 /* BaseTableViewCell.swift */; };
 		24647B7C2C53681B00D9D9A4 /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B7B2C53681B00D9D9A4 /* LikeButton.swift */; };
 		248B84012C568ACD004C9422 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 248B84002C568ACD004C9422 /* DGCharts */; };
+		248B84062C576C84004C9422 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 248B84052C576C84004C9422 /* Toast */; };
 		24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B32C4E25D700B40E9C /* AppDelegate.swift */; };
 		24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */; };
 		24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */; };
@@ -149,6 +150,7 @@
 				24EC73D22C4E3011008F403D /* Then in Frameworks */,
 				24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */,
 				248B84012C568ACD004C9422 /* DGCharts in Frameworks */,
+				248B84062C576C84004C9422 /* Toast in Frameworks */,
 				24EC73D52C4E301C008F403D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +418,7 @@
 				24EC740D2C4E8471008F403D /* Kingfisher */,
 				24EC74A52C520DC0008F403D /* RealmSwift */,
 				248B84002C568ACD004C9422 /* DGCharts */,
+				248B84052C576C84004C9422 /* Toast */,
 			);
 			productName = ILikePhoto;
 			productReference = 24BB36B02C4E25D700B40E9C /* ILikePhoto.app */;
@@ -452,6 +455,7 @@
 				24EC740C2C4E8471008F403D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				24EC74A42C520DC0008F403D /* XCRemoteSwiftPackageReference "realm-swift" */,
 				248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */,
+				248B84042C576C84004C9422 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 24BB36B12C4E25D700B40E9C /* Products */;
 			projectDirPath = "";
@@ -763,6 +767,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		248B84042C576C84004C9422 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 		24EC73D02C4E3011008F403D /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -810,6 +822,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		248B84052C576C84004C9422 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 248B84042C576C84004C9422 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		24EC73D12C4E3011008F403D /* Then */ = {
 			isa = XCSwiftPackageProductDependency;

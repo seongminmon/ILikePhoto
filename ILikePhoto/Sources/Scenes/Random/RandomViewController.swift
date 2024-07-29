@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 final class RandomViewController: BaseViewController {
     
@@ -46,6 +47,11 @@ final class RandomViewController: BaseViewController {
         
         viewModel.outputButtonToggle.bind { [weak self] value in
             guard let self else { return }
+            if value {
+                view.makeToast("저장되었습니다")
+            } else {
+                view.makeToast("삭제되었습니다")
+            }
             collectionView.reloadData()
         }
     }

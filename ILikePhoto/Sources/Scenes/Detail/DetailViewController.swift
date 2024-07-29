@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import DGCharts
 import Kingfisher
 import SnapKit
 import Then
-import Charts
-import DGCharts
+import Toast
 
 final class DetailViewController: BaseViewController {
     
@@ -110,9 +110,18 @@ final class DetailViewController: BaseViewController {
             tableView.reloadData()
         }
         
-        viewModel.outputButtonToggle.bind {  [weak self] value in
+        viewModel.outputButtonToggle.bind { [weak self] value in
             guard let self else { return }
             likeButton.toggleButton(isLike: value)
+        }
+        
+        viewModel.outputToast.bind { [weak self] value in
+            guard let self else { return }
+            if value {
+                view.makeToast("저장되었습니다")
+            } else {
+                view.makeToast("삭제되었습니다")
+            }
         }
     }
     

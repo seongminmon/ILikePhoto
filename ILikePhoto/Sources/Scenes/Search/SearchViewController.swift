@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Toast
 
 final class SearchViewController: BaseViewController {
     
@@ -245,6 +246,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             RealmRepository.shared.deleteItem(data.id)
             // 3. 버튼 업데이트
             cell.likeButton.toggleButton(isLike: false)
+            view.makeToast("삭제되었습니다")
         } else {
             // 1. Realm 추가
             let item = data.toLikedPhoto()
@@ -254,6 +256,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
             // 3. 버튼 업데이트
             cell.likeButton.toggleButton(isLike: true)
+            view.makeToast("저장되었습니다")
         }
     }
     
