@@ -39,7 +39,7 @@ final class LikeCollectionViewCell: BaseCollectionViewCell {
     
     func configureCell(data: LikedPhoto?) {
         guard let data else { return }
-        let url = URL(string: data.smallURL)
-        mainImageView.kf.setImage(with: url)
+        let image = ImageFileManager.shared.loadImageFile(filename: data.id) ?? MyImage.star
+        mainImageView.image = image
     }
 }
