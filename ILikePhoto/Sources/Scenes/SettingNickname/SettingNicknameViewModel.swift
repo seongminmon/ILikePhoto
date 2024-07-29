@@ -94,6 +94,7 @@ final class SettingNicknameViewModel: BaseViewModel {
         
         inputDeleteButtonTap.bind { [weak self] _ in
             guard let self else { return }
+            RealmRepository.shared.deleteAll()
             UserDefaultsManager.removeAll()
             outputDeleteAll.value = ()
         }
