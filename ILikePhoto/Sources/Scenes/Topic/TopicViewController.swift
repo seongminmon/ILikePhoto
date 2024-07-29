@@ -149,11 +149,16 @@ final class TopicViewController: BaseViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoResponse>()
         snapshot.appendSections(Section.allCases)
-        snapshot.reloadSections(Section.allCases)
         snapshot.appendItems(list[0], toSection: .first)
         snapshot.appendItems(list[1], toSection: .second)
         snapshot.appendItems(list[2], toSection: .third)
-        dataSource.apply(snapshot)
+        snapshot.reloadSections(Section.allCases)
+        
+        if #available(iOS 17.0, *) {
+            dataSource.apply(snapshot)
+        } else {
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
     }
     
     private func fetchTopic() {
