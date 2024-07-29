@@ -11,7 +11,6 @@ import Then
 
 final class TopicViewController: BaseViewController {
     // TODO: - refresh control이 애니메이션 중 깜박거리는 문제 해결하기
-    // TODO: - 새로 고침 후 1분이 지나지 않았으면 통신하지 않도록 만들기
     
     private lazy var refreshControl = UIRefreshControl().then {
         $0.addTarget(self, action: #selector(refresh), for: .valueChanged)
@@ -40,6 +39,7 @@ final class TopicViewController: BaseViewController {
     
     private var headerTitles = [String](repeating: "", count: Section.allCases.count)
     private var list = [[PhotoResponse]](repeating: [], count: Section.allCases.count)
+    private var recentNetworkTime: DispatchTime?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,6 +162,13 @@ final class TopicViewController: BaseViewController {
     }
     
     private func fetchTopic() {
+        // 1분이 안 지났으면 통신 X
+        if let recentNetworkTime, recentNetworkTime < .now() + 60 {
+            print("1분 후에 다시 시도해주세요!")
+            refreshControl.endRefreshing()
+            return
+        }
+        
         // 토픽 3개 뽑기 (랜덤, 중복 X)
         var topicIDList = [String]()
         while topicIDList.count < Section.allCases.count {
@@ -194,6 +201,7 @@ final class TopicViewController: BaseViewController {
         
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.recentNetworkTime = .now()
                 self.updateSnapshot()
                 self.refreshControl.endRefreshing()
             }
