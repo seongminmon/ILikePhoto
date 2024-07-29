@@ -48,6 +48,18 @@ final class SettingNicknameViewController: BaseViewController {
     private lazy var confirmButton = BlueButton(title: "완료").then {
         $0.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
+    private lazy var withdrawButton = UIButton().then {
+        $0.setTitle("회원탈퇴", for: .normal)
+        $0.setTitleColor(MyColor.blue, for: .normal)
+        $0.addTarget(self, action: #selector(withdrawButtonTapped), for: .touchUpInside)
+    }
+    
+    private let saveButton = UIBarButtonItem(
+        title: "저장",
+        style: .done,
+        target: self,
+        action: #selector(saveButtonTapped)
+    )
     
     // 이전 화면에서 전달
     var option: SettingOption?
@@ -62,16 +74,6 @@ final class SettingNicknameViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.largeTitleDisplayMode = .never
-        if option == .edit {
-            let withdrawButton = UIBarButtonItem(
-                title: "탈퇴하기",
-                style: .done,
-                target: self,
-                action: #selector(deleteButtonTapped)
-            )
-            withdrawButton.tintColor = MyColor.red
-            navigationItem.rightBarButtonItem = withdrawButton
-        }
     }
     
     override func bindData() {
@@ -102,6 +104,7 @@ final class SettingNicknameViewController: BaseViewController {
         
         viewModel.outputConfirmButtonEnabled.bind { [weak self] flag in
             guard let self else { return }
+            saveButton.isEnabled = flag
             confirmButton.isEnabled = flag
             confirmButton.backgroundColor = flag ? MyColor.blue : MyColor.gray
         }
@@ -126,6 +129,12 @@ final class SettingNicknameViewController: BaseViewController {
     
     override func configureNavigationBar() {
         navigationItem.title = option?.rawValue
+        if option == .edit {
+            navigationItem.rightBarButtonItem = saveButton
+            confirmButton.isHidden = true
+        } else {
+            withdrawButton.isHidden = true
+        }
     }
     
     override func configureHierarchy() {
@@ -137,7 +146,8 @@ final class SettingNicknameViewController: BaseViewController {
             descriptionLabel,
             mbtiLabel,
             collectionView,
-            confirmButton
+            confirmButton,
+            withdrawButton
         ].forEach {
             view.addSubview($0)
         }
@@ -183,6 +193,11 @@ final class SettingNicknameViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(50)
         }
+        withdrawButton.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.height.equalTo(50)
+        }
     }
     
     @objc private func profileImageViewTapped() {
@@ -195,14 +210,15 @@ final class SettingNicknameViewController: BaseViewController {
     
     @objc private func confirmButtonTapped() {
         viewModel.inputConfirmButtonTap.value = nicknameTextField.text ?? ""
-        if option == .create {
-            changeWindowToTabBarController()
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
+        changeWindowToTabBarController()
     }
     
-    @objc private func deleteButtonTapped() {
+    @objc private func saveButtonTapped() {
+        viewModel.inputConfirmButtonTap.value = nicknameTextField.text ?? ""
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func withdrawButtonTapped() {
         showDeleteAlert { [weak self] _ in
             guard let self else { return }
             viewModel.inputDeleteButtonTap.value = ()
