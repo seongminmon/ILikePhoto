@@ -31,7 +31,7 @@ final class SettingNicknameViewModel: BaseViewModel {
     var inputViewDidLoad = Observable<SettingOption?>(nil)
     var inputProfileImageTap = Observable<Void?>(nil)
     var inputTextChange = Observable("")
-    var inputMBTIButtonTap = Observable(0)
+    var inputCellSelected = Observable(0)
     var inputConfirmButtonTap = Observable<String>("")
     var inputDeleteButtonTap = Observable<Void?>(nil)
     
@@ -71,7 +71,7 @@ final class SettingNicknameViewModel: BaseViewModel {
             outputConfirmButtonEnabled.value = checkConfirmEnabled()
         }
         
-        inputMBTIButtonTap.bind { [weak self] index in
+        inputCellSelected.bind { [weak self] index in
             guard let self else { return }
             if outputMbtiList.value[index] {
                 outputMbtiList.value[index] = false

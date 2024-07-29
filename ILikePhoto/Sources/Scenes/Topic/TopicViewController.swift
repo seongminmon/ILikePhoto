@@ -21,7 +21,7 @@ final class TopicViewController: BaseViewController {
         $0.addGestureRecognizer(tapGesture)
         $0.isUserInteractionEnabled = true
     }
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout()).then {
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createTopicLayout()).then {
         $0.delegate = self
         $0.register(
             TopicCollectionHeaderView.self,
@@ -76,37 +76,6 @@ final class TopicViewController: BaseViewController {
         vc.option = .edit
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
-        )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.45),
-            heightDimension: .fractionalWidth(0.45 * 4 / 3)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
-        // 수평 스크롤
-        section.orthogonalScrollingBehavior = .continuous
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
-        let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        section.boundarySupplementaryItems = [headerSupplementary]
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
     }
     
     private func cellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {

@@ -18,7 +18,7 @@ final class SearchViewController: BaseViewController {
     }
     private lazy var colorCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: .createHorizontalLayout()
+        collectionViewLayout: .createColorButtonsLayout()
     ).then {
         $0.delegate = self
         $0.dataSource = self

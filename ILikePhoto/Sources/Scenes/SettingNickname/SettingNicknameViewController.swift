@@ -40,34 +40,14 @@ final class SettingNicknameViewController: BaseViewController {
         $0.text = "MBTI"
         $0.font = MyFont.bold20
     }
-    private let eButton = MBTIButton()
-    private let sButton = MBTIButton()
-    private let tButton = MBTIButton()
-    private let jButton = MBTIButton()
-    private let iButton = MBTIButton()
-    private let nButton = MBTIButton()
-    private let fButton = MBTIButton()
-    private let pButton = MBTIButton()
-    private let buttonStackView1 = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 10
-        $0.alignment = .fill
-        $0.distribution = .fillEqually
-    }
-    private let buttonStackView2 = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 10
-        $0.alignment = .fill
-        $0.distribution = .fillEqually
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createMBTILayout()).then {
+        $0.delegate = self
+        $0.dataSource = self
+        $0.register(MBTICollectionViewCell.self, forCellWithReuseIdentifier: MBTICollectionViewCell.description())
     }
     private lazy var confirmButton = BlueButton(title: "완료").then {
         $0.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
-    
-    private lazy var buttons = [
-        eButton, sButton, tButton, jButton,
-        iButton, nButton, fButton, pButton
-    ]
     
     // 이전 화면에서 전달
     var option: SettingOption?
@@ -107,9 +87,7 @@ final class SettingNicknameViewController: BaseViewController {
         
         viewModel.outputMbtiList.bind { [weak self] list in
             guard let self else { return }
-            for i in 0..<list.count {
-                buttons[i].setButton(isSelect: list[i])
-            }
+            collectionView.reloadData()
         }
         
         viewModel.outputDescriptionText.bind { [weak self] text in
@@ -151,13 +129,6 @@ final class SettingNicknameViewController: BaseViewController {
     }
     
     override func configureHierarchy() {
-        for i in 0..<buttons.count {
-            if i < 4 {
-                buttonStackView1.addArrangedSubview(buttons[i])
-            } else {
-                buttonStackView2.addArrangedSubview(buttons[i])
-            }
-        }
         [
             profileImageView,
             cameraView,
@@ -165,8 +136,7 @@ final class SettingNicknameViewController: BaseViewController {
             separator,
             descriptionLabel,
             mbtiLabel,
-            buttonStackView1,
-            buttonStackView2,
+            collectionView,
             confirmButton
         ].forEach {
             view.addSubview($0)
@@ -202,30 +172,16 @@ final class SettingNicknameViewController: BaseViewController {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview().inset(20)
         }
-        buttonStackView1.snp.makeConstraints {
+        collectionView.snp.makeConstraints {
             $0.top.equalTo(mbtiLabel)
             $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(190)
-            $0.height.equalTo(40)
-        }
-        buttonStackView2.snp.makeConstraints {
-            $0.top.equalTo(buttonStackView1.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.width.equalTo(190)
-            $0.height.equalTo(40)
+            $0.width.equalTo(160 + 50)
+            $0.height.equalTo(80 + 30)
         }
         confirmButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(50)
-        }
-    }
-    
-    override func configureView() {
-        for i in 0..<buttons.count {
-            buttons[i].setTitle(MBTI.list[i], for: .normal)
-            buttons[i].tag = i
-            buttons[i].addTarget(self, action: #selector(mbtiButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -237,12 +193,8 @@ final class SettingNicknameViewController: BaseViewController {
         viewModel.inputTextChange.value = nicknameTextField.text ?? ""
     }
     
-    @objc private func mbtiButtonTapped(sender: UIButton) {
-        viewModel.inputMBTIButtonTap.value = sender.tag
-    }
-    
     @objc private func confirmButtonTapped() {
-        viewModel.inputConfirmButtonTap.value = (nicknameTextField.text ?? "")
+        viewModel.inputConfirmButtonTap.value = nicknameTextField.text ?? ""
         if option == .create {
             changeWindowToTabBarController()
         } else {
@@ -263,5 +215,27 @@ final class SettingNicknameViewController: BaseViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
+    }
+}
+
+extension SettingNicknameViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return MBTI.list.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MBTICollectionViewCell.description(),
+            for: indexPath
+        ) as? MBTICollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configureCell(text: MBTI.list[indexPath.item])
+        cell.toggleSelected(isSelect: viewModel.outputMbtiList.value[indexPath.item])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.inputCellSelected.value = indexPath.item
     }
 }
