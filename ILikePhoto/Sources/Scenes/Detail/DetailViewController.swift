@@ -120,6 +120,11 @@ final class DetailViewController: BaseViewController {
             guard let self else { return }
             makeRealmToast(value)
         }
+        
+        viewModel.outputFailure.bind { [weak self] _ in
+            guard let self else { return }
+            makeNetworkFailureToast()
+        }
     }
     
     override func configureNavigationBar() {

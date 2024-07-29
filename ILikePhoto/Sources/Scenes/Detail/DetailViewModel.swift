@@ -20,6 +20,7 @@ final class DetailViewModel: BaseViewModel {
     var outputStatistics = Observable<StatisticsResponse?>(nil)
     var outputButtonToggle = Observable(false)
     var outputToast = Observable(false)
+    var outputFailure = Observable<Void?>(nil)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] _ in
@@ -33,8 +34,8 @@ final class DetailViewModel: BaseViewModel {
                 switch response {
                 case .success(let data):
                     outputStatistics.value = data
-                case .failure(let error):
-                    print(error)
+                case .failure(_):
+                    outputFailure.value = ()
                 }
             }
         }

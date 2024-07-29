@@ -93,27 +93,13 @@ extension BaseViewController {
     
     func makeRealmToast(_ flag: Bool) {
         if flag {
-            view.makeToast("저장되었습니다", duration: 1)
+            view.makeToast("저장되었습니다.", duration: 1)
         } else {
-            view.makeToast("삭제되었습니다", duration: 1)
+            view.makeToast("삭제되었습니다.", duration: 1)
         }
     }
     
-//    func showActionSheet(
-//        firstTitle: String,
-//        secondTitle: String,
-//        firstHandler: @escaping (UIAlertAction) -> Void,
-//        secondHandler: @escaping (UIAlertAction) -> Void,
-//    ) {
-//        let alert = UIAlertController(
-//            title: nil,
-//            message: nil,
-//            preferredStyle: .actionSheet
-//        )
-//        let first = UIAlertAction(title: firstTitle, style: .default, handler: firstHandler)
-//        let second = UIAlertAction(title: secondTitle, style: .default, handler: secondHandler)
-//        alert.addAction(first)
-//        alert.addAction(second)
-//        present(alert, animated: true)
-//    }
+    func makeNetworkFailureToast() {
+        view.makeToast("네트워크 통신에 실패하였습니다.", duration: 1, position: .center)
+    }
 }

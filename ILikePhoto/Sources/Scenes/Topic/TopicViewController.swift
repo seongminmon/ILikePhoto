@@ -162,8 +162,8 @@ final class TopicViewController: BaseViewController {
                 case .success(let data):
                     headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
                     list[i] = data
-                case .failure(let error):
-                    print(error)
+                case .failure(_):
+                    makeNetworkFailureToast()
                 }
                 dispatchGroup.leave()
             }

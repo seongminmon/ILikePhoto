@@ -15,6 +15,7 @@
 		248B84012C568ACD004C9422 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 248B84002C568ACD004C9422 /* DGCharts */; };
 		248B84062C576C84004C9422 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 248B84052C576C84004C9422 /* Toast */; };
 		248B84082C577384004C9422 /* MBTICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B84072C577384004C9422 /* MBTICollectionViewCell.swift */; };
+		248B840A2C578E2F004C9422 /* SearchOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248B84092C578E2F004C9422 /* SearchOption.swift */; };
 		24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B32C4E25D700B40E9C /* AppDelegate.swift */; };
 		24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */; };
 		24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB36B72C4E25D700B40E9C /* OnboardingViewController.swift */; };
@@ -90,6 +91,7 @@
 		24647B792C53637700D9D9A4 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		24647B7B2C53681B00D9D9A4 /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		248B84072C577384004C9422 /* MBTICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTICollectionViewCell.swift; sourceTree = "<group>"; };
+		248B84092C578E2F004C9422 /* SearchOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOption.swift; sourceTree = "<group>"; };
 		24BB36B02C4E25D700B40E9C /* ILikePhoto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILikePhoto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24BB36B32C4E25D700B40E9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74B72C533E02008F403D /* TargetType.swift */,
+				248B84092C578E2F004C9422 /* SearchOption.swift */,
 				24EC74072C4E8453008F403D /* NetworkRouter.swift */,
 				24EC74112C4E860F008F403D /* NetworkManager.swift */,
 			);
@@ -518,6 +521,7 @@
 				24BB36B62C4E25D700B40E9C /* SceneDelegate.swift in Sources */,
 				24EC73E82C4E3B43008F403D /* SettingNicknameViewController.swift in Sources */,
 				24EC74A32C520CB7008F403D /* RealmRepository.swift in Sources */,
+				248B840A2C578E2F004C9422 /* SearchOption.swift in Sources */,
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
 				24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */,
 				24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */,

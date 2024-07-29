@@ -43,10 +43,8 @@ final class SearchViewController: BaseViewController {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = MyColor.gray.cgColor
-//        $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
-    
     private lazy var pinterestLayout = PinterestLayout().then {
         $0.delegate = self
     }
@@ -70,6 +68,7 @@ final class SearchViewController: BaseViewController {
     }
     
     var list: SearchResponse?
+    var query: String?
     var page = 1
     var searchOrder = SearchOrder.relevant
     var searchColor: SearchColor?
@@ -136,18 +135,18 @@ final class SearchViewController: BaseViewController {
     }
     
     @objc private func sortButtonTapped() {
-        guard let query = configureQuery(searchBar.text) else { return }
+        guard let query = validateQuery(query) else { return }
         page = 1
         searchOrder = searchOrder == .relevant ? .latest : .relevant
         sortButton.setTitle(searchOrder.title, for: .normal)
         fetchSearch(query)
     }
     
-    private func configureQuery(_ query: String?) -> String? {
+    private func validateQuery(_ query: String?) -> String? {
         if let query = query, !query.trimmingCharacters(in: .whitespaces).isEmpty {
             return query.trimmingCharacters(in: .whitespaces)
         } else {
-            print("쿼리가 비었습니다!")
+            view.makeToast("쿼리가 비었습니다!", duration: 1, position: .center)
             return nil
         }
     }
@@ -178,18 +177,17 @@ final class SearchViewController: BaseViewController {
                     mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
                 }
                 
-            case .failure(let error):
-                print(error)
+            case .failure(_):
+                makeNetworkFailureToast()
             }
         }
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    // TODO: - query를 프로퍼티로 가지는 것이 좋을지 searchBar.text로 쓰는 것이 좋을지 선택하기
-    // >>> 스크롤 중에 searchBar에 입력하면 바뀐 텍스트로 네트워킹하게 됨
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let query = configureQuery(searchBar.text) else { return }
+        query = validateQuery(searchBar.text)
+        guard let query = query else { return }
         page = 1
         fetchSearch(query)
         view.endEditing(true)
@@ -237,7 +235,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = mainCollectionView.cellForItem(
             at: IndexPath(item: sender.tag, section: 0)
         ) as? SearchCollectionViewCell,
-                let data = list?.photoResponse[sender.tag] else {
+              let data = list?.photoResponse[sender.tag] else {
             return
         }
         
@@ -270,7 +268,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 searchColor = nil
             }
             colorCollectionView.reloadData()
-            guard let query = configureQuery(searchBar.text) else { return }
+            guard let query = validateQuery(query) else { return }
             page = 1
             fetchSearch(query)
         } else {
@@ -281,7 +279,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         // 페이지네이션
-        guard let query = configureQuery(searchBar.text), let list else { return }
+        guard let query = validateQuery(query), let list else { return }
         for indexPath in indexPaths {
             if indexPath.item == list.photoResponse.count - 4 && page < list.totalPages {
                 page += 1

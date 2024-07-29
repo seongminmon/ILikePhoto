@@ -16,6 +16,7 @@ final class RandomViewModel: BaseViewModel {
     // Output
     var outputList = Observable<[PhotoResponse]>([])
     var outputButtonToggle = Observable<Bool>(false)
+    var outputFailure = Observable<Void?>(nil)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] _ in
@@ -28,8 +29,8 @@ final class RandomViewModel: BaseViewModel {
                 switch response {
                 case .success(let data):
                     outputList.value = data
-                case .failure(let error):
-                    print(error)
+                case .failure(_):
+                    outputFailure.value = ()
                 }
             }
         }

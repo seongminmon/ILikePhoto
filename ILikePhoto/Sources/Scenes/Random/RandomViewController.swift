@@ -50,6 +50,11 @@ final class RandomViewController: BaseViewController {
             makeRealmToast(value)
             collectionView.reloadData()
         }
+        
+        viewModel.outputFailure.bind { [weak self] _ in
+            guard let self else { return }
+            makeNetworkFailureToast()
+        }
     }
     
     // 네비게이션바 숨기기

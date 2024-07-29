@@ -14,7 +14,7 @@ final class ImageFileManager {
     // 도큐먼트 폴더 위치
     private let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
-    // MARK: - Create, Update(이미 존재하는 파일명으로 저장하면 덮어씌워짐)
+    // MARK: - Create, Update(이미 존재하는 파일명으로 저장하면 덮어쓰기)
     func saveImageFile(image: UIImage, filename: String) {
         //이미지를 저장할 경로(파일명) 지정
         let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
