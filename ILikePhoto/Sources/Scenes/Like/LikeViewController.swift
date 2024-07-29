@@ -144,6 +144,9 @@ final class LikeViewController: BaseViewController {
         sortButton.setTitle(searchOrder.title, for: .normal)
         list = RealmRepository.shared.fetchAll(order: searchOrder, color: searchColor)
         updateView()
+        if !list.isEmpty {
+            mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+        }
     }
 }
 
