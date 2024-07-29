@@ -40,7 +40,10 @@ final class SettingNicknameViewController: BaseViewController {
         $0.text = "MBTI"
         $0.font = MyFont.bold20
     }
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createMBTILayout()).then {
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: .createMBTILayout()
+    ).then {
         $0.delegate = self
         $0.dataSource = self
         $0.register(MBTICollectionViewCell.self, forCellWithReuseIdentifier: MBTICollectionViewCell.description())
@@ -48,18 +51,17 @@ final class SettingNicknameViewController: BaseViewController {
     private lazy var confirmButton = BlueButton(title: "완료").then {
         $0.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
+    private lazy var saveButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(saveButtonTapped))
     private lazy var withdrawButton = UIButton().then {
-        $0.setTitle("회원탈퇴", for: .normal)
+        let attributeString = NSAttributedString(
+            string: "회원탈퇴",
+            attributes: [
+                NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue
+            ])
+        $0.setAttributedTitle(attributeString, for: .normal)
         $0.setTitleColor(MyColor.blue, for: .normal)
         $0.addTarget(self, action: #selector(withdrawButtonTapped), for: .touchUpInside)
     }
-    
-    private let saveButton = UIBarButtonItem(
-        title: "저장",
-        style: .done,
-        target: self,
-        action: #selector(saveButtonTapped)
-    )
     
     // 이전 화면에서 전달
     var option: SettingOption?
