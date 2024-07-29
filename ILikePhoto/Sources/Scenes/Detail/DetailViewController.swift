@@ -54,7 +54,6 @@ final class DetailViewController: BaseViewController {
         $0.isScrollEnabled = false
         $0.backgroundColor = .clear
     }
-    // TODO: - 차트 기능 레이아웃, 데이터 다듬기
     private let chartLabel = UILabel().then {
         $0.text = "차트"
         $0.font = MyFont.bold16
@@ -64,16 +63,20 @@ final class DetailViewController: BaseViewController {
         $0.selectedSegmentIndex = 0
     }
     private lazy var chartView = LineChartView().then {
+        // grediant fill
         $0.noDataText = "출력 데이터가 없습니다."
         $0.noDataFont = .systemFont(ofSize: 20)
         $0.noDataTextColor = .lightGray
-        $0.backgroundColor = .yellow
-        // 값마다 구분하고 싶은 valueFormatter 예) 날짜, 이름
-//        guard let value = viewModel.outputStatistics.value else { return }
-//        let data = value.views.historical.values
-//        $0.xAxis.valueFormatter = IndexAxisValueFormatter(values: data.map { $0.date })
-//        // 값마다 구분하고 싶은 valueFormatter를 개수만큼 출력
-//        $0.xAxis.setLabelCount(data.count, force: false)
+        $0.rightAxis.enabled = false
+        $0.leftAxis.enabled = false
+        $0.xAxis.enabled = false
+        $0.legend.enabled = false
+        $0.isUserInteractionEnabled = false
+        $0.dragEnabled = false
+        $0.pinchZoomEnabled = false
+        $0.doubleTapToZoomEnabled = false
+        $0.highlightPerTapEnabled = false
+        $0.highlightPerDragEnabled = false
     }
     
     private enum Info: String, CaseIterable {
@@ -87,7 +90,6 @@ final class DetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.inputViewDidLoad.value = ()
-        setChartData(index: segmentControl.selectedSegmentIndex)
     }
     
     override func bindData() {
@@ -104,6 +106,7 @@ final class DetailViewController: BaseViewController {
         
         viewModel.outputStatistics.bind { [weak self] _ in
             guard let self else { return }
+            setChartData(index: segmentControl.selectedSegmentIndex)
             tableView.reloadData()
         }
         
@@ -240,10 +243,27 @@ final class DetailViewController: BaseViewController {
     }
     
     private func setChartData(index: Int) {
-        let barChartDataEntries = entryData(index: index)
-        let barChartdataSet = LineChartDataSet(entries: barChartDataEntries)
-        let barChartData = LineChartData(dataSet: barChartdataSet)
-        chartView.data = barChartData
+        let dataEntries = entryData(index: index)
+        
+        let dataSet = LineChartDataSet(entries: dataEntries)
+        dataSet.drawValuesEnabled = false
+        dataSet.setCircleColor(MyColor.blue)
+        dataSet.drawCircleHoleEnabled = false
+        dataSet.circleRadius = 0
+        dataSet.colors = [MyColor.blue]
+        
+        let gradientColors = [MyColor.blue.cgColor] as CFArray
+        let colorLocations: [CGFloat] = [0.0]
+        guard let gradient = CGGradient(
+            colorsSpace: CGColorSpaceCreateDeviceRGB(),
+            colors: gradientColors,
+            locations: colorLocations
+        ) else { return }
+        dataSet.fill = LinearGradientFill(gradient: gradient, angle: 80.0)
+        dataSet.drawFilledEnabled = true
+        
+        let lineChartData = LineChartData(dataSet: dataSet)
+        chartView.data = lineChartData
     }
 }
 
