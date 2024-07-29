@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 class BaseViewController: UIViewController {
     
@@ -30,6 +31,7 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
+    
     func changeWindowToTabBarController() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
@@ -87,6 +89,14 @@ extension BaseViewController {
         alert.addAction(delete)
         alert.addAction(cancel)
         present(alert, animated: true)
+    }
+    
+    func makeRealmToast(_ flag: Bool) {
+        if flag {
+            view.makeToast("저장되었습니다", duration: 1)
+        } else {
+            view.makeToast("삭제되었습니다", duration: 1)
+        }
     }
     
 //    func showActionSheet(

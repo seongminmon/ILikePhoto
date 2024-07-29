@@ -42,6 +42,9 @@ final class LikeViewController: BaseViewController {
         $0.showsHorizontalScrollIndicator = false
     }
     private lazy var sortButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.imagePadding = 8
+        $0.configuration = config
         $0.setTitle(searchOrder.title, for: .normal)
         $0.setTitleColor(MyColor.black, for: .normal)
         $0.titleLabel?.font = MyFont.bold14
@@ -51,7 +54,6 @@ final class LikeViewController: BaseViewController {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = MyColor.gray.cgColor
-        $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     private lazy var pinterestLayout = PinterestLayout().then {
@@ -190,7 +192,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         list.remove(at: sender.tag)
         // 뷰 업데이트
         updateView()
-        view.makeToast("삭제되었습니다.")
+        makeRealmToast(false)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

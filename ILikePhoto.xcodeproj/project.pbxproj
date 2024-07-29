@@ -41,7 +41,6 @@
 		24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FB2C4E51F9008F403D /* Observable.swift */; };
 		24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */; };
 		24EC74002C4E593F008F403D /* MBTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FF2C4E593F008F403D /* MBTI.swift */; };
-		24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74032C4E6469008F403D /* MBTIButton.swift */; };
 		24EC74082C4E8453008F403D /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74072C4E8453008F403D /* NetworkRouter.swift */; };
 		24EC740B2C4E8463008F403D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC740A2C4E8463008F403D /* Alamofire */; };
 		24EC740E2C4E8471008F403D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC740D2C4E8471008F403D /* Kingfisher */; };
@@ -117,7 +116,6 @@
 		24EC73FB2C4E51F9008F403D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		24EC73FF2C4E593F008F403D /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
-		24EC74032C4E6469008F403D /* MBTIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTIButton.swift; sourceTree = "<group>"; };
 		24EC74072C4E8453008F403D /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		24EC740F2C4E847F008F403D /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		24EC74112C4E860F008F403D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 				24EC73EE2C4E3C25008F403D /* ProfileImageView.swift */,
 				24EC73F02C4E3E4F008F403D /* CameraImageView.swift */,
 				24EC73E42C4E398D008F403D /* BlueButton.swift */,
-				24EC74032C4E6469008F403D /* MBTIButton.swift */,
 				24647B7B2C53681B00D9D9A4 /* LikeButton.swift */,
 			);
 			path = CustomView;
@@ -493,7 +490,6 @@
 				24EC745F2C508365008F403D /* MyImage.swift in Sources */,
 				24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */,
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
-				24EC74042C4E6469008F403D /* MBTIButton.swift in Sources */,
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionViewLayout+.swift in Sources */,
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,

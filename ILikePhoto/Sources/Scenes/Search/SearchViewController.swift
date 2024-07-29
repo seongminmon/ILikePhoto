@@ -30,6 +30,9 @@ final class SearchViewController: BaseViewController {
         $0.showsHorizontalScrollIndicator = false
     }
     private lazy var sortButton = UIButton().then {
+        var config = UIButton.Configuration.plain()
+        config.imagePadding = 8
+        $0.configuration = config
         $0.setTitle(searchOrder.title, for: .normal)
         $0.setTitleColor(MyColor.black, for: .normal)
         $0.titleLabel?.font = MyFont.bold14
@@ -40,7 +43,7 @@ final class SearchViewController: BaseViewController {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = MyColor.gray.cgColor
-        $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+//        $0.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     
@@ -111,7 +114,6 @@ final class SearchViewController: BaseViewController {
         sortButton.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(8)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
-            $0.width.equalTo(80)
             $0.height.equalTo(30)
         }
         mainCollectionView.snp.makeConstraints {
@@ -246,7 +248,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             RealmRepository.shared.deleteItem(data.id)
             // 3. 버튼 업데이트
             cell.likeButton.toggleButton(isLike: false)
-            view.makeToast("삭제되었습니다")
+            makeRealmToast(false)
         } else {
             // 1. Realm 추가
             let item = data.toLikedPhoto()
@@ -256,7 +258,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
             // 3. 버튼 업데이트
             cell.likeButton.toggleButton(isLike: true)
-            view.makeToast("저장되었습니다")
+            makeRealmToast(true)
         }
     }
     

@@ -33,7 +33,6 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    // mbti
     static func createMBTILayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -45,7 +44,6 @@ extension UICollectionViewLayout {
         return layout
     }
     
-    // 가로
     static func createColorButtonsLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal

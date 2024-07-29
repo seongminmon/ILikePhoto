@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        print(RealmRepository.shared.fileURL)
-        print(RealmRepository.shared.schemaVersion)
+        print(RealmRepository.shared.fileURL ?? "")
+        print(RealmRepository.shared.schemaVersion ?? "")
         
         if UserDefaultsManager.signUpDate == nil {
             let vc = OnboardingViewController()

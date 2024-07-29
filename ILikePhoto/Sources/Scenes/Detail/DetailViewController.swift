@@ -22,6 +22,7 @@ final class DetailViewController: BaseViewController {
         $0.backgroundColor = MyColor.black.withAlphaComponent(0.3)
     }
     private let photographerImageView = UIImageView().then {
+        $0.backgroundColor = MyColor.gray
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
     }
@@ -117,11 +118,7 @@ final class DetailViewController: BaseViewController {
         
         viewModel.outputToast.bind { [weak self] value in
             guard let self else { return }
-            if value {
-                view.makeToast("저장되었습니다")
-            } else {
-                view.makeToast("삭제되었습니다")
-            }
+            makeRealmToast(value)
         }
     }
     
