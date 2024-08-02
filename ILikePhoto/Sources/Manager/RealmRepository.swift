@@ -67,6 +67,7 @@ final class RealmRepository {
             let photos = realm.objects(LikedPhoto.self)
             for item in photos {
                 ImageFileManager.shared.deleteImageFile(filename: item.id)
+                ImageFileManager.shared.deleteImageFile(filename: item.id + "user")
             }
             realm.delete(photos)
             print("Realm Delete All!")

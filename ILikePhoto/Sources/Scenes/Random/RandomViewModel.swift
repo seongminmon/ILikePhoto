@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class RandomViewModel: BaseViewModel {
     
@@ -40,6 +41,7 @@ final class RandomViewModel: BaseViewModel {
             let photo = outputList.value[index]
             if RealmRepository.shared.fetchItem(photo.id) != nil {
                 ImageFileManager.shared.deleteImageFile(filename: photo.id)
+                ImageFileManager.shared.deleteImageFile(filename: photo.id + "user")
                 RealmRepository.shared.deleteItem(photo.id)
                 outputButtonToggle.value = false
             } else {
@@ -47,6 +49,17 @@ final class RandomViewModel: BaseViewModel {
                 RealmRepository.shared.addItem(item)
                 let image = image ?? MyImage.star
                 ImageFileManager.shared.saveImageFile(image: image, filename: photo.id)
+                if let url = URL(string: item.photographerImage) {
+                    KingfisherManager.shared.retrieveImage(with: url) { result in
+                        switch result {
+                        case .success(let imageResult):
+                            let profileImage = imageResult.image
+                            ImageFileManager.shared.saveImageFile(image: profileImage, filename: photo.id + "user")
+                        case .failure(let error):
+                            print("작가 이미지 변환 실패")
+                        }
+                    }
+                }
                 outputButtonToggle.value = true
             }
         }

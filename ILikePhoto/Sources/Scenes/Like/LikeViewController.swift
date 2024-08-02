@@ -189,6 +189,7 @@ extension LikeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let data = list[sender.tag]
         // 1. 이미지 파일 삭제
         ImageFileManager.shared.deleteImageFile(filename: data.id)
+        ImageFileManager.shared.deleteImageFile(filename: data.id + "user")
         // 2. Realm 삭제
         RealmRepository.shared.deleteItem(data.id)
         // 3. list 삭제

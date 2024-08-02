@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 import SnapKit
 import Then
 import Toast
@@ -242,6 +243,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if RealmRepository.shared.fetchItem(data.id) != nil {
             // 1. 이미지 파일 삭제
             ImageFileManager.shared.deleteImageFile(filename: data.id)
+            ImageFileManager.shared.deleteImageFile(filename: data.id + "user")
             // 2. Realm 삭제
             RealmRepository.shared.deleteItem(data.id)
             // 3. 버튼 업데이트
@@ -254,6 +256,18 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             // 2. 이미지 파일 추가
             let image = cell.mainImageView.image ?? MyImage.star
             ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
+            
+            if let url = URL(string: item.photographerImage) {
+                KingfisherManager.shared.retrieveImage(with: url) { result in
+                    switch result {
+                    case .success(let imageResult):
+                        let profileImage = imageResult.image
+                        ImageFileManager.shared.saveImageFile(image: profileImage, filename: data.id + "user")
+                    case .failure(let error):
+                        print("작가 이미지 변환 실패")
+                    }
+                }
+            }
             // 3. 버튼 업데이트
             cell.likeButton.toggleButton(isLike: true)
             makeRealmToast(true)

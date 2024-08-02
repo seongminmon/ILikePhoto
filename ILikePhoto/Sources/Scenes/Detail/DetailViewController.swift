@@ -96,13 +96,22 @@ final class DetailViewController: BaseViewController {
     override func bindData() {
         viewModel.outputPhoto.bindEarly { [weak self] photo in
             guard let self, let photo else { return }
-            let photographerURL = URL(string: photo.user.profileImage.medium)
-            self.photographerImageView.kf.setImage(with: photographerURL)
+            
+            if RealmRepository.shared.fetchItem(photo.id) == nil {
+                // url로 불러오기
+                let photographerURL = URL(string: photo.user.profileImage.medium)
+                self.photographerImageView.kf.setImage(with: photographerURL)
+                let mainURL = URL(string: photo.urls.small)
+                self.mainImageView.kf.setImage(with: mainURL)
+            } else {
+                // 파일로 불러오기
+                self.photographerImageView.image = ImageFileManager.shared.loadImageFile(filename: photo.id + "user")
+                self.mainImageView.image = ImageFileManager.shared.loadImageFile(filename: photo.id)
+            }
+            
             self.photographerNameLabel.text = photo.user.name
             self.createAtLabel.text = photo.createdAt
             self.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(photo.id) != nil)
-            let mainURL = URL(string: photo.urls.small)
-            self.mainImageView.kf.setImage(with: mainURL)
         }
         
         viewModel.outputStatistics.bind { [weak self] _ in
