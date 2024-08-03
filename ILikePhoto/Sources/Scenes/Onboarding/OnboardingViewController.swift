@@ -12,8 +12,11 @@ import Then
 
 final class OnboardingViewController: BaseViewController {
     
-    let titleImageView = UIImageView().then {
-        $0.image = MyImage.launch
+    let titleLabel = UILabel().then {
+        $0.text = "I Like Photo"
+        $0.font = MyFont.title
+        $0.textColor = MyColor.blue
+        $0.textAlignment = .center
     }
     
     let logoImageView = UIImageView().then {
@@ -31,7 +34,7 @@ final class OnboardingViewController: BaseViewController {
     
     override func configureHierarchy() {
         [
-            titleImageView,
+            titleLabel,
             logoImageView,
             nameLabel,
             startButton
@@ -41,14 +44,14 @@ final class OnboardingViewController: BaseViewController {
     }
     
     override func configureLayout() {
-        titleImageView.snp.makeConstraints {
+        titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(40)
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(120)
         }
         
         logoImageView.snp.makeConstraints {
-            $0.top.equalTo(titleImageView.snp.bottom).offset(20)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(logoImageView.snp.width)
         }

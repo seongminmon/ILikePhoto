@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2408158C2C5DC04900886D1E /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 240815892C5DC04900886D1E /* GmarketSansBold.otf */; };
+		2408158D2C5DC04900886D1E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158A2C5DC04900886D1E /* GmarketSansLight.otf */; };
+		2408158E2C5DC04900886D1E /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */; };
 		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
 		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
 		24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */; };
@@ -85,6 +88,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		240815892C5DC04900886D1E /* GmarketSansBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansBold.otf; sourceTree = "<group>"; };
+		2408158A2C5DC04900886D1E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
+		2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
 		24647B732C5361EF00D9D9A4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		24647B752C53620800D9D9A4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -160,6 +166,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		240815882C5DC02000886D1E /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				240815892C5DC04900886D1E /* GmarketSansBold.otf */,
+				2408158A2C5DC04900886D1E /* GmarketSansLight.otf */,
+				2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		24647B712C5361C800D9D9A4 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +387,7 @@
 		24EC747B2C50866C008F403D /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				240815882C5DC02000886D1E /* Font */,
 				24EC745A2C5082CB008F403D /* MyFont.swift */,
 				24EC745C2C508337008F403D /* MyColor.swift */,
 				24EC745E2C508365008F403D /* MyImage.swift */,
@@ -476,7 +493,10 @@
 			files = (
 				24BB36C82C4E261D00B40E9C /* .gitignore in Resources */,
 				24BB36BD2C4E25D900B40E9C /* Assets.xcassets in Resources */,
+				2408158D2C5DC04900886D1E /* GmarketSansLight.otf in Resources */,
+				2408158E2C5DC04900886D1E /* GmarketSansMedium.otf in Resources */,
 				24BB36C02C4E25D900B40E9C /* Base in Resources */,
+				2408158C2C5DC04900886D1E /* GmarketSansBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

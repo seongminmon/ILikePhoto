@@ -8,16 +8,20 @@
 import UIKit
 
 enum MyFont {
-    static let title = UIFont.boldSystemFont(ofSize: 30)
+//    "GmarketSansMedium"
+//    "GmarketSansLight"
+//    "GmarketSansBold"
     
-    static let bold20 = UIFont.boldSystemFont(ofSize: 20)
-    static let bold16 = UIFont.boldSystemFont(ofSize: 16)
-    static let bold15 = UIFont.boldSystemFont(ofSize: 15)
-    static let bold14 = UIFont.boldSystemFont(ofSize: 14)
-    static let bold13 = UIFont.boldSystemFont(ofSize: 13)
+    static let title = UIFont(name: "GmarketSansBold", size: 40)
     
-    static let regular16 = UIFont.systemFont(ofSize: 16, weight: .regular)
-    static let regular15 = UIFont.systemFont(ofSize: 15, weight: .regular)
-    static let regular14 = UIFont.systemFont(ofSize: 14, weight: .regular)
-    static let regular13 = UIFont.systemFont(ofSize: 13, weight: .regular)
+    static let bold20 = UIFont(name: "GmarketSansBold", size: 20)
+    static let bold16 = UIFont(name: "GmarketSansBold", size: 16)
+    static let bold15 = UIFont(name: "GmarketSansBold", size: 15)
+    static let bold14 = UIFont(name: "GmarketSansBold", size: 14)
+    static let bold13 = UIFont(name: "GmarketSansBold", size: 13)
+    
+    static let regular16 = UIFont(name: "GmarketSansMedium", size: 16)
+    static let regular15 = UIFont(name: "GmarketSansMedium", size: 15)
+    static let regular14 = UIFont(name: "GmarketSansMedium", size: 14)
+    static let regular13 = UIFont(name: "GmarketSansMedium", size: 13)
 }
