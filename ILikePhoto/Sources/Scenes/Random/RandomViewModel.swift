@@ -55,7 +55,7 @@ final class RandomViewModel: BaseViewModel {
                         case .success(let imageResult):
                             let profileImage = imageResult.image
                             ImageFileManager.shared.saveImageFile(image: profileImage, filename: photo.id + "user")
-                        case .failure(let error):
+                        case .failure(_):
                             print("작가 이미지 변환 실패")
                         }
                     }

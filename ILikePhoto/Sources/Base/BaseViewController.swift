@@ -31,7 +31,6 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-    
     func changeWindowToTabBarController() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let sceneDelegate = windowScene.delegate as? SceneDelegate,
@@ -80,12 +79,12 @@ extension BaseViewController {
         completionHandler: @escaping (UIAlertAction) -> Void
     ) {
         let alert = UIAlertController(
-            title: "탈퇴하기",
-            message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴하시겠습니까?",
+            title: Literal.alertTitle,
+            message: Literal.alertMessage,
             preferredStyle: .alert
         )
-        let delete = UIAlertAction(title: "탈퇴", style: .destructive, handler: completionHandler)
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let delete = UIAlertAction(title: Literal.alertActionTitle, style: .destructive, handler: completionHandler)
+        let cancel = UIAlertAction(title: Literal.alertCancelTitle, style: .cancel)
         alert.addAction(delete)
         alert.addAction(cancel)
         present(alert, animated: true)
@@ -93,13 +92,25 @@ extension BaseViewController {
     
     func makeRealmToast(_ flag: Bool) {
         if flag {
-            view.makeToast("저장되었습니다.", duration: 1)
+            view.makeToast(Literal.saveRealm, duration: 1)
         } else {
-            view.makeToast("삭제되었습니다.", duration: 1)
+            view.makeToast(Literal.deleteRealm, duration: 1)
         }
     }
     
     func makeNetworkFailureToast() {
-        view.makeToast("네트워크 통신에 실패하였습니다.", duration: 1, position: .center)
+        view.makeToast(Literal.failNetwork, duration: 1, position: .center)
+    }
+}
+
+extension BaseViewController {
+    private enum Literal {
+        static let alertTitle = "탈퇴하기"
+        static let alertMessage = "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴하시겠습니까?"
+        static let alertActionTitle = "탈퇴"
+        static let alertCancelTitle = "취소"
+        static let saveRealm = "저장되었습니다."
+        static let deleteRealm = "삭제되었습니다."
+        static let failNetwork = "네트워크 통신에 실패하였습니다."
     }
 }

@@ -13,7 +13,7 @@ import Then
 final class OnboardingViewController: BaseViewController {
     
     let titleLabel = UILabel().then {
-        $0.text = "I Like Photo"
+        $0.text = Literal.appName
         $0.font = MyFont.title
         $0.textColor = MyColor.blue
         $0.textAlignment = .center
@@ -24,11 +24,11 @@ final class OnboardingViewController: BaseViewController {
     }
     
     let nameLabel = UILabel().then {
-        $0.text = "김성민"
+        $0.text = Literal.name
         $0.font = MyFont.title
     }
     
-    lazy var startButton = BlueButton(title: "시작하기").then {
+    lazy var startButton = BlueButton(title: Literal.start).then {
         $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
     
@@ -72,5 +72,13 @@ final class OnboardingViewController: BaseViewController {
         let vc = SettingNicknameViewController()
         vc.option = .create
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension OnboardingViewController {
+    private enum Literal {
+        static let appName = "I Like Photo"
+        static let name = "김성민"
+        static let start = "시작하기"
     }
 }
