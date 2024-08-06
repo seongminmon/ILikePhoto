@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -20,13 +22,13 @@ final class SettingImageViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .createLayout(spacing: 10, cellCount: 4, aspectRatio: 1)
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(
             SettingImageCollectionViewCell.self, 
             forCellWithReuseIdentifier: SettingImageCollectionViewCell.description()
         )
     }
+    
+//    private let viewModel = SettingImageViewModel()
     
     // 이전 화면에서 전달
     var option: SettingOption?
@@ -70,27 +72,26 @@ final class SettingImageViewController: BaseViewController {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-}
-
-extension SettingImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MyImage.profileImageList.count
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SettingImageCollectionViewCell.description(),
-            for: indexPath
-        ) as? SettingImageCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(index: indexPath.item, selectedIndex: selectedIndex ?? 0)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.item
-        selectedImageView.image = MyImage.profileImageList[indexPath.item]
-        collectionView.reloadData()
+    override func bindData() {
+//        let input = SettingImageViewModel.Input()
+//        let output = viewModel.transform(input: input)
+        
+        BehaviorRelay(value: MyImage.profileImageList)
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: SettingImageCollectionViewCell.description(),
+                cellType: SettingImageCollectionViewCell.self
+            )) { item, element, cell in
+                cell.configureCell(index: item, selectedIndex: self.selectedIndex ?? 0)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.selectedIndex = indexPath.item
+                owner.selectedImageView.image = MyImage.profileImageList[indexPath.item]
+                owner.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
     }
 }
