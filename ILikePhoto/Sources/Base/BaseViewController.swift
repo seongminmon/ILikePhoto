@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import Toast
 
 class BaseViewController: UIViewController {
@@ -23,6 +24,7 @@ class BaseViewController: UIViewController {
         bindData()
     }
     
+    let disposeBag = DisposeBag()
     func configureNavigationBar() {}
     func configureHierarchy() {}
     func configureLayout() {}

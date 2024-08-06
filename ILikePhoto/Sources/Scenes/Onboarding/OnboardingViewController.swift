@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -28,9 +29,7 @@ final class OnboardingViewController: BaseViewController {
         $0.font = MyFont.title
     }
     
-    lazy var startButton = BlueButton(title: Literal.start).then {
-        $0.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
-    }
+    lazy var startButton = BlueButton(title: Literal.start)
     
     override func configureHierarchy() {
         [
@@ -68,10 +67,14 @@ final class OnboardingViewController: BaseViewController {
         }
     }
     
-    @objc func startButtonTapped() {
-        let vc = SettingNicknameViewController()
-        vc.option = .create
-        navigationController?.pushViewController(vc, animated: true)
+    override func bindData() {
+        startButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let vc = SettingNicknameViewController()
+                vc.option = .create
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

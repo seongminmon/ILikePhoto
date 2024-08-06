@@ -10,6 +10,8 @@
 		2408158C2C5DC04900886D1E /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 240815892C5DC04900886D1E /* GmarketSansBold.otf */; };
 		2408158D2C5DC04900886D1E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158A2C5DC04900886D1E /* GmarketSansLight.otf */; };
 		2408158E2C5DC04900886D1E /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */; };
+		2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC782C6227BF00C37320 /* RxCocoa */; };
+		2414BC7B2C6227BF00C37320 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC7A2C6227BF00C37320 /* RxSwift */; };
 		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
 		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
 		24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B772C53635800D9D9A4 /* DetailTableViewCell.swift */; };
@@ -153,12 +155,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2414BC7B2C6227BF00C37320 /* RxSwift in Frameworks */,
 				24EC740E2C4E8471008F403D /* Kingfisher in Frameworks */,
 				24EC740B2C4E8463008F403D /* Alamofire in Frameworks */,
 				24EC73D22C4E3011008F403D /* Then in Frameworks */,
 				24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */,
 				248B84012C568ACD004C9422 /* DGCharts in Frameworks */,
 				248B84062C576C84004C9422 /* Toast in Frameworks */,
+				2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */,
 				24EC73D52C4E301C008F403D /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,6 +443,8 @@
 				24EC74A52C520DC0008F403D /* RealmSwift */,
 				248B84002C568ACD004C9422 /* DGCharts */,
 				248B84052C576C84004C9422 /* Toast */,
+				2414BC782C6227BF00C37320 /* RxCocoa */,
+				2414BC7A2C6227BF00C37320 /* RxSwift */,
 			);
 			productName = ILikePhoto;
 			productReference = 24BB36B02C4E25D700B40E9C /* ILikePhoto.app */;
@@ -476,6 +482,7 @@
 				24EC74A42C520DC0008F403D /* XCRemoteSwiftPackageReference "realm-swift" */,
 				248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */,
 				248B84042C576C84004C9422 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 24BB36B12C4E25D700B40E9C /* Products */;
 			projectDirPath = "";
@@ -785,6 +792,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
 		248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
@@ -844,6 +859,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2414BC782C6227BF00C37320 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		2414BC7A2C6227BF00C37320 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		248B84002C568ACD004C9422 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */;
