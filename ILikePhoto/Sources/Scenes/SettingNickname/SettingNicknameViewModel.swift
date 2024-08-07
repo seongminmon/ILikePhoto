@@ -23,6 +23,7 @@ final class SettingNicknameViewModel {
         let confirmButtonTap: ControlEvent<Void>
         let saveButtonTap: ControlEvent<Void>
         let withdrawButtonTap: ControlEvent<Void>
+        let deleteAlertAction: PublishSubject<Void>
     }
     
     struct Output {
@@ -114,6 +115,13 @@ final class SettingNicknameViewModel {
                 if UserDefaultsManager.signUpDate == nil {
                     UserDefaultsManager.signUpDate = Date()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        input.deleteAlertAction
+            .bind(with: self) { owner, _ in
+                RealmRepository.shared.deleteAll()
+                UserDefaultsManager.removeAll()
             }
             .disposed(by: disposeBag)
         

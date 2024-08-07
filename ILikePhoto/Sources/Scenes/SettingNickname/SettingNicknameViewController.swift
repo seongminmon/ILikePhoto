@@ -73,13 +73,17 @@ final class SettingNicknameViewController: BaseViewController {
     }
     
     func bindRefactoring() {
+        
+        let deleteAlertAction = PublishSubject<Void>()
+        
         let input = SettingNicknameViewModel.Input(
             settingOption: BehaviorSubject(value: option ?? .create),
             nickname: nicknameTextField.rx.text.orEmpty,
             mbtiSelected: collectionView.rx.itemSelected,
             confirmButtonTap: confirmButton.rx.tap,
             saveButtonTap: saveButton.rx.tap,
-            withdrawButtonTap: withdrawButton.rx.tap
+            withdrawButtonTap: withdrawButton.rx.tap,
+            deleteAlertAction: deleteAlertAction
         )
         let output = viewModel.transform(input: input)
         
@@ -132,11 +136,12 @@ final class SettingNicknameViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        // TODO: - alert action -> viewModel로 보내기
         output.withdrawButtonTap
             .bind(with: self) { owner, value in
                 owner.showDeleteAlert { _ in
                     print("Alert Delete Action")
+                    deleteAlertAction.onNext(())
+                    owner.changeWindowToOnboarding()
                 }
             }
             .disposed(by: disposeBag)
