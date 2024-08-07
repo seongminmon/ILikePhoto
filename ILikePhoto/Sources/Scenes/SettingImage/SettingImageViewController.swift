@@ -28,7 +28,7 @@ final class SettingImageViewController: BaseViewController {
         )
     }
     
-//    private let viewModel = SettingImageViewModel()
+    private let viewModel = SettingImageViewModel()
     
     // 이전 화면에서 전달
     var option: SettingOption?
@@ -74,19 +74,21 @@ final class SettingImageViewController: BaseViewController {
     }
     
     override func bindData() {
-//        let input = SettingImageViewModel.Input()
-//        let output = viewModel.transform(input: input)
+        let input = SettingImageViewModel.Input(
+            itemSelected: collectionView.rx.itemSelected
+        )
+        let output = viewModel.transform(input: input)
         
-        BehaviorRelay(value: MyImage.profileImageList)
+        output.imageList
             .bind(to: collectionView.rx.items(
                 cellIdentifier: SettingImageCollectionViewCell.description(),
                 cellType: SettingImageCollectionViewCell.self
-            )) { item, element, cell in
-                cell.configureCell(index: item, selectedIndex: self.selectedIndex ?? 0)
+            )) { [weak self] item, element, cell in
+                cell.configureCell(index: item, selectedIndex: self?.selectedIndex ?? 0)
             }
             .disposed(by: disposeBag)
         
-        collectionView.rx.itemSelected
+        output.itemSelected
             .bind(with: self) { owner, indexPath in
                 owner.selectedIndex = indexPath.item
                 owner.selectedImageView.image = MyImage.profileImageList[indexPath.item]
