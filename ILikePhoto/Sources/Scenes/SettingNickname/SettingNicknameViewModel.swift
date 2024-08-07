@@ -9,7 +9,149 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class SettingNicknameViewModel: BaseViewModel {
+final class SettingNicknameViewModel {
+    
+    struct Input {
+        // 1. 이미지뷰 탭 -> 이미지 선택뷰로 이동 (rx 미적용)
+        // 2. 닉네임 입력 -> 유효성 검사, description, 완료 버튼 검사
+        // 3. mbti 셀 선택 -> 데이터 업데이트, 뷰에 세팅, 완료 버튼 검사
+        // 4. 완료 버튼 탭 -> UD에 저장, 화면 이동
+        
+        let settingOption: BehaviorSubject<SettingOption>
+        let nickname: ControlProperty<String>
+        let mbtiSelected: ControlEvent<IndexPath>
+        let confirmButtonTap: ControlEvent<Void>
+        let saveButtonTap: ControlEvent<Void>
+        let withdrawButtonTap: ControlEvent<Void>
+    }
+    
+    struct Output {
+        // 1. 선택된 이미지 -> 이미지뷰에 표시
+        // 2. 닉네임 유효성 검사 -> description 표시
+        // 3. mbti -> 데이터 변경 -> 셀에 표시
+        // 4. 완료 버튼 유효성 - 닉네임 유효성 && mbti 유효성
+        // 5. Edit일때 텍스트필드 채워주기
+        
+        let imageIndex: BehaviorSubject<Int>
+        let mbtiList: BehaviorSubject<[Bool]>
+        let savedNickname: BehaviorSubject<String>
+        let nickNameValid: BehaviorSubject<Bool>
+        let description: PublishSubject<String>
+        let confirmButtonEnabled: BehaviorSubject<Bool>
+        let confirmButtonTap: ControlEvent<Void>
+        let saveButtonTap: ControlEvent<Void>
+        let withdrawButtonTap: ControlEvent<Void>
+    }
+    
+    private var nicknameValid: NicknameValidationError?
+    private var mbtiValid: Bool {
+        return mbtiList.filter { $0 }.count == 4
+    }
+    private var totalValid: Bool {
+        return nicknameValid == nil && mbtiValid
+    }
+    
+    private var mbtiList = [Bool](repeating: false, count: MBTI.list.count)
+    
+    let disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
+        
+        let imageIndex = BehaviorSubject(value: 0)
+        let mbtiList = BehaviorSubject<[Bool]>(value: [])
+        let savedNickname = BehaviorSubject(value: "")
+        let nickNameValid = BehaviorSubject(value: false)
+        let description = PublishSubject<String>()
+        let confirmButtonEnabled = BehaviorSubject(value: false)
+        
+        input.settingOption
+            .subscribe(with: self) { owner, option in
+                print("input.settingOption", option)
+                switch option {
+                case .create:
+                    imageIndex.onNext(Int.random(in: 0..<MyImage.profileImageList.count))
+                case .edit:
+                    imageIndex.onNext(UserDefaultsManager.profileImageIndex)
+                    owner.mbtiList = UserDefaultsManager.mbti
+                    savedNickname.onNext(UserDefaultsManager.nickname)
+                }
+                mbtiList.onNext(owner.mbtiList)
+                confirmButtonEnabled.onNext(owner.totalValid)
+            }
+            .disposed(by: disposeBag)
+        
+        input.nickname
+            .subscribe(with: self) { owner, value in
+                print("input.nickname", value)
+                description.onNext(owner.nicknameValidationResult(value))
+                nickNameValid.onNext(owner.nicknameValid == nil)
+                confirmButtonEnabled.onNext(owner.totalValid)
+            }
+            .disposed(by: disposeBag)
+        
+        input.mbtiSelected
+            .subscribe(with: self) { owner, indexPath in
+                print("input.mbtiSelected", indexPath)
+                if owner.mbtiList[indexPath.item] {
+                    owner.mbtiList[indexPath.item] = false
+                } else {
+                    owner.mbtiList[indexPath.item] = true
+                    owner.mbtiList[(indexPath.item + 4) % 8] = false
+                }
+                mbtiList.onNext(owner.mbtiList)
+                confirmButtonEnabled.onNext(owner.totalValid)
+            }
+            .disposed(by: disposeBag)
+        
+        input.confirmButtonTap
+            .withLatestFrom(input.nickname)
+            .subscribe(with: self) { owner, value in
+                print("input.confirmButtonTap", value)
+                UserDefaultsManager.nickname = value
+                let imageIndex = try? imageIndex.value()
+                UserDefaultsManager.profileImageIndex = imageIndex ?? 0
+                UserDefaultsManager.mbti = owner.mbtiList
+                if UserDefaultsManager.signUpDate == nil {
+                    UserDefaultsManager.signUpDate = Date()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        input.saveButtonTap
+            .withLatestFrom(input.nickname)
+            .subscribe(with: self) { owner, value in
+                print("input.saveButtonTap", value)
+                UserDefaultsManager.nickname = value
+                let imageIndex = try? imageIndex.value()
+                UserDefaultsManager.profileImageIndex = imageIndex ?? 0
+                UserDefaultsManager.mbti = owner.mbtiList
+                if UserDefaultsManager.signUpDate == nil {
+                    UserDefaultsManager.signUpDate = Date()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            imageIndex: imageIndex,
+            mbtiList: mbtiList,
+            savedNickname: savedNickname, 
+            nickNameValid: nickNameValid,
+            description: description,
+            confirmButtonEnabled: confirmButtonEnabled, 
+            confirmButtonTap: input.confirmButtonTap,
+            saveButtonTap: input.saveButtonTap,
+            withdrawButtonTap: input.withdrawButtonTap
+        )
+    }
+    
+//    override func transform() {
+//        inputDeleteButtonTap.bind { [weak self] _ in
+//            guard let self else { return }
+//            RealmRepository.shared.deleteAll()
+//            UserDefaultsManager.removeAll()
+//            outputDeleteAll.value = ()
+//        }
+//    }
     
     enum NicknameValidationError: Error, LocalizedError {
         case length
@@ -27,93 +169,19 @@ final class SettingNicknameViewModel: BaseViewModel {
         }
     }
     
-    var nicknameValid: NicknameValidationError?
-    
-    // Input
-    var inputViewDidLoad = Observable<SettingOption?>(nil)
-    var inputProfileImageTap = Observable<Void?>(nil)
-    var inputTextChange = Observable("")
-    var inputCellSelected = Observable(0)
-    var inputConfirmButtonTap = Observable<String>("")
-    var inputDeleteButtonTap = Observable<Void?>(nil)
-    
-    // Output
-    var outputImageIndex = Observable<Int?>(nil)
-    var outputMbtiList = Observable<[Bool]>([])
-    var outputNickname = Observable("")
-    var outputDescriptionText = Observable("")
-    var outputConfirmButtonEnabled = Observable(false)
-    var outputPushSelectImageVC = Observable<Void?>(nil)
-    var outputDeleteAll = Observable<Void?>(nil)
-    
-    override func transform() {
-        inputViewDidLoad.bind { [weak self] option in
-            guard let self, let option else { return }
-            switch option {
-            case .create:
-                outputImageIndex.value = Int.random(in: 0..<MyImage.profileImageList.count)
-                outputMbtiList.value = [Bool](repeating: false, count: MBTI.list.count)
-            case .edit:
-                outputImageIndex.value = UserDefaultsManager.profileImageIndex
-                outputMbtiList.value = UserDefaultsManager.mbti
-                outputNickname.value = UserDefaultsManager.nickname
-            }
-            nicknameValidationResult(outputNickname.value)
-            outputConfirmButtonEnabled.value = checkConfirmEnabled()
-        }
-        
-        inputProfileImageTap.bind { [weak self] _ in
-            guard let self else { return }
-            outputPushSelectImageVC.value = ()
-        }
-        
-        inputTextChange.bind { [weak self] text in
-            guard let self else { return }
-            nicknameValidationResult(text)
-            outputConfirmButtonEnabled.value = checkConfirmEnabled()
-        }
-        
-        inputCellSelected.bind { [weak self] index in
-            guard let self else { return }
-            if outputMbtiList.value[index] {
-                outputMbtiList.value[index] = false
-            } else {
-                outputMbtiList.value[index] = true
-                outputMbtiList.value[(index + 4) % 8] = false
-            }
-            outputConfirmButtonEnabled.value = checkConfirmEnabled()
-        }
-        
-        inputConfirmButtonTap.bind { [weak self] nickname in
-            guard let self else { return }
-            UserDefaultsManager.nickname = nickname
-            UserDefaultsManager.profileImageIndex = outputImageIndex.value ?? 0
-            UserDefaultsManager.mbti = outputMbtiList.value
-            if UserDefaultsManager.signUpDate == nil {
-                UserDefaultsManager.signUpDate = Date()
-            }
-        }
-        
-        inputDeleteButtonTap.bind { [weak self] _ in
-            guard let self else { return }
-            RealmRepository.shared.deleteAll()
-            UserDefaultsManager.removeAll()
-            outputDeleteAll.value = ()
-        }
-    }
-    
-    private func nicknameValidationResult(_ text: String) {
+    private func nicknameValidationResult(_ text: String) -> String {
         do {
             if try checkNickname(text) {
                 nicknameValid = nil
-                outputDescriptionText.value = "사용할 수 있는 닉네임이에요"
+                return "사용할 수 있는 닉네임이에요"
             }
         } catch let error as NicknameValidationError {
             nicknameValid = error
-            outputDescriptionText.value = error.errorDescription
+            return error.errorDescription
         } catch {
             print("알 수 없는 에러!")
         }
+        return "알 수 없는 에러!"
     }
     
     private func checkNickname(_ text: String) throws -> Bool {
@@ -135,13 +203,5 @@ final class SettingNicknameViewModel: BaseViewModel {
             throw NicknameValidationError.whitespace
         }
         return true
-    }
-    
-    private func checkMBTI() -> Bool {
-        return outputMbtiList.value.filter { $0 }.count == 4
-    }
-    
-    private func checkConfirmEnabled() -> Bool {
-        return nicknameValid == nil && checkMBTI()
     }
 }

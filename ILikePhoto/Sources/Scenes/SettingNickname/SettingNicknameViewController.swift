@@ -64,7 +64,6 @@ final class SettingNicknameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.inputViewDidLoad.value = option ?? .create
         bindRefactoring()
     }
     
@@ -74,109 +73,130 @@ final class SettingNicknameViewController: BaseViewController {
     }
     
     func bindRefactoring() {
-        nicknameTextField.rx.text.orEmpty
-            .subscribe(with: self) { owner, value in
-                owner.viewModel.inputTextChange.value = value
-            }
+        let input = SettingNicknameViewModel.Input(
+            settingOption: BehaviorSubject(value: option ?? .create),
+            nickname: nicknameTextField.rx.text.orEmpty,
+            mbtiSelected: collectionView.rx.itemSelected,
+            confirmButtonTap: confirmButton.rx.tap,
+            saveButtonTap: saveButton.rx.tap,
+            withdrawButtonTap: withdrawButton.rx.tap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.imageIndex
+            .map { MyImage.profileImageList[$0] }
+            .bind(to: profileImageView.rx.image)
             .disposed(by: disposeBag)
         
-        nicknameTextField.rx.controlProperty(editingEvents: [.editingDidEndOnExit]) {
-            $0.text
-        } setter: { _, _ in }
-        .bind(with: self) { owner, value in
-            owner.view.endEditing(true)
-        }
-        .disposed(by: disposeBag)
-        
-        confirmButton.rx.tap
-            .bind(with: self) { owner, value in
-                owner.viewModel.inputConfirmButtonTap.value = owner.nicknameTextField.text ?? ""
-                owner.changeWindowToTabBarController()
-            }
-            .disposed(by: disposeBag)
-        
-        saveButton.rx.tap
-            .bind(with: self) { owner, value in
-                owner.viewModel.inputConfirmButtonTap.value = owner.nicknameTextField.text ?? ""
-                owner.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        withdrawButton.rx.tap
-            .bind(with: self) { owner, value in
-                owner.showDeleteAlert { _ in
-                    owner.viewModel.inputDeleteButtonTap.value = ()
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        BehaviorSubject(value: MBTI.list)
+        output.mbtiList
             .bind(to: collectionView.rx.items(
                 cellIdentifier: MBTICollectionViewCell.description(),
                 cellType: MBTICollectionViewCell.self
             )) { row, element, cell in
                 cell.configureCell(text: MBTI.list[row])
-                cell.toggleSelected(isSelect: self.viewModel.outputMbtiList.value[row])
+                cell.toggleSelected(isSelect: element)
             }
             .disposed(by: disposeBag)
         
-        collectionView.rx.itemSelected
-            .bind(with: self) { owner, indexPath in
-                owner.viewModel.inputCellSelected.value = indexPath.item
+        output.savedNickname
+            .bind(to: nicknameTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.nickNameValid
+            .map { $0 ? MyColor.blue : MyColor.red }
+            .bind(to: descriptionLabel.rx.textColor)
+            .disposed(by: disposeBag)
+        
+        output.description
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.confirmButtonEnabled
+            .bind(to: confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.confirmButtonEnabled
+            .map { $0 ? MyColor.blue : MyColor.gray }
+            .bind(to: confirmButton.rx.backgroundColor)
+            .disposed(by: disposeBag)
+        
+        output.confirmButtonTap
+            .bind(with: self) { owner, value in
+                owner.changeWindowToTabBarController()
+            }
+            .disposed(by: disposeBag)
+        
+        output.saveButtonTap
+            .bind(with: self) { owner, value in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: - alert action -> viewModel로 보내기
+        output.withdrawButtonTap
+            .bind(with: self) { owner, value in
+                owner.showDeleteAlert { _ in
+                    print("Alert Delete Action")
+                }
             }
             .disposed(by: disposeBag)
     }
     
-    override func bindData() {
-        viewModel.outputImageIndex.bind { [weak self] index in
-            guard let self, let index else { return }
-            profileImageView.image = MyImage.profileImageList[index]
-        }
-        
-        viewModel.outputNickname.bind { [weak self] nickname in
-            guard let self else { return }
-            nicknameTextField.text = nickname
-        }
-        
-        viewModel.outputMbtiList.bind { [weak self] list in
-            guard let self else { return }
-            collectionView.reloadData()
-        }
-        
-        viewModel.outputDescriptionText.bind { [weak self] text in
-            guard let self else { return }
-            descriptionLabel.text = text
-            if viewModel.nicknameValid == nil {
-                descriptionLabel.textColor = MyColor.blue
-            } else {
-                descriptionLabel.textColor = MyColor.red
-            }
-        }
-        
-        viewModel.outputConfirmButtonEnabled.bind { [weak self] flag in
-            guard let self else { return }
-            saveButton.isEnabled = flag
-            confirmButton.isEnabled = flag
-            confirmButton.backgroundColor = flag ? MyColor.blue : MyColor.gray
-        }
-        
-        viewModel.outputPushSelectImageVC.bind { [weak self] _ in
-            guard let self else { return }
-            let vc = SettingImageViewController()
-            vc.option = option
-            vc.selectedIndex = viewModel.outputImageIndex.value
-            vc.sendSelectedIndex = { [weak self] index in
-                guard let self else { return }
-                viewModel.outputImageIndex.value = index
-            }
-            navigationController?.pushViewController(vc, animated: true)
-        }
-        
-        viewModel.outputDeleteAll.bind { [weak self] _ in
-            guard let self else { return }
-            changeWindowToOnboarding()
-        }
+    @objc private func profileImageViewTapped() {
+        print(#function)
+//        viewModel.inputProfileImageTap.value = ()
     }
+    
+//    override func bindData() {
+//        viewModel.outputImageIndex.bind { [weak self] index in
+//            guard let self, let index else { return }
+//            profileImageView.image = MyImage.profileImageList[index]
+//        }
+//        
+//        viewModel.outputNickname.bind { [weak self] nickname in
+//            guard let self else { return }
+//            nicknameTextField.text = nickname
+//        }
+//        
+//        viewModel.outputMbtiList.bind { [weak self] list in
+//            guard let self else { return }
+//            collectionView.reloadData()
+//        }
+//        
+//        viewModel.outputDescriptionText.bind { [weak self] text in
+//            guard let self else { return }
+//            descriptionLabel.text = text
+//            if viewModel.nicknameValid == nil {
+//                descriptionLabel.textColor = MyColor.blue
+//            } else {
+//                descriptionLabel.textColor = MyColor.red
+//            }
+//        }
+//        
+//        viewModel.outputConfirmButtonEnabled.bind { [weak self] flag in
+//            guard let self else { return }
+//            saveButton.isEnabled = flag
+//            confirmButton.isEnabled = flag
+//            confirmButton.backgroundColor = flag ? MyColor.blue : MyColor.gray
+//        }
+//        
+//        viewModel.outputPushSelectImageVC.bind { [weak self] _ in
+//            guard let self else { return }
+//            let vc = SettingImageViewController()
+//            vc.option = option
+//            vc.selectedIndex = viewModel.outputImageIndex.value
+//            vc.sendSelectedIndex = { [weak self] index in
+//                guard let self else { return }
+//                viewModel.outputImageIndex.value = index
+//            }
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
+//        
+//        viewModel.outputDeleteAll.bind { [weak self] _ in
+//            guard let self else { return }
+//            changeWindowToOnboarding()
+//        }
+//    }
     
     override func configureNavigationBar() {
         navigationItem.title = option?.rawValue
@@ -249,10 +269,6 @@ final class SettingNicknameViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(50)
         }
-    }
-    
-    @objc private func profileImageViewTapped() {
-        viewModel.inputProfileImageTap.value = ()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
