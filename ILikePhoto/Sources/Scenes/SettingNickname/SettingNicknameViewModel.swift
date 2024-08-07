@@ -6,24 +6,26 @@
 //
 
 import Foundation
-
-enum NicknameValidationError: Error, LocalizedError {
-    case length
-    case invalidCharacter
-    case number
-    case whitespace
-    
-    var errorDescription: String {
-        switch self {
-        case .length: "2글자 이상 10글자 미만으로 설정해주세요"
-        case .invalidCharacter: "닉네임에 @, #, $, % 는 포함할 수 없어요"
-        case .number: "닉네임에 숫자는 포함할 수 없어요"
-        case .whitespace: "닉네임에 공백은 포함할 수 없어요"
-        }
-    }
-}
+import RxSwift
+import RxCocoa
 
 final class SettingNicknameViewModel: BaseViewModel {
+    
+    enum NicknameValidationError: Error, LocalizedError {
+        case length
+        case invalidCharacter
+        case number
+        case whitespace
+        
+        var errorDescription: String {
+            switch self {
+            case .length: "2글자 이상 10글자 미만으로 설정해주세요"
+            case .invalidCharacter: "닉네임에 @, #, $, % 는 포함할 수 없어요"
+            case .number: "닉네임에 숫자는 포함할 수 없어요"
+            case .whitespace: "닉네임에 공백은 포함할 수 없어요"
+            }
+        }
+    }
     
     var nicknameValid: NicknameValidationError?
     

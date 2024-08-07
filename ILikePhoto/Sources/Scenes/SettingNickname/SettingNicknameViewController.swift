@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -27,8 +29,6 @@ final class SettingNicknameViewController: BaseViewController {
         $0.placeholder = "닉네임을 입력해주세요 :)"
         $0.font = MyFont.regular14
         $0.clearButtonMode = .whileEditing
-        $0.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        $0.addTarget(self, action: #selector(textFieldDidEndEditing), for: .editingDidEndOnExit)
     }
     private let separator = UIView().then {
         $0.backgroundColor = MyColor.gray
@@ -44,14 +44,10 @@ final class SettingNicknameViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: .createMBTILayout()
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(MBTICollectionViewCell.self, forCellWithReuseIdentifier: MBTICollectionViewCell.description())
     }
-    private lazy var confirmButton = BlueButton(title: "완료").then {
-        $0.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-    }
-    private lazy var saveButton = UIBarButtonItem(title: "저장", style: .done, target: self, action: #selector(saveButtonTapped))
+    private lazy var confirmButton = BlueButton(title: "완료")
+    private lazy var saveButton = UIBarButtonItem(title: "저장")
     private lazy var withdrawButton = UIButton().then {
         let attributeString = NSAttributedString(
             string: "회원탈퇴",
@@ -60,22 +56,75 @@ final class SettingNicknameViewController: BaseViewController {
             ])
         $0.setAttributedTitle(attributeString, for: .normal)
         $0.setTitleColor(MyColor.blue, for: .normal)
-        $0.addTarget(self, action: #selector(withdrawButtonTapped), for: .touchUpInside)
     }
     
     // 이전 화면에서 전달
     var option: SettingOption?
-    
     private let viewModel = SettingNicknameViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.inputViewDidLoad.value = option ?? .create
+        bindRefactoring()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    func bindRefactoring() {
+        nicknameTextField.rx.text.orEmpty
+            .subscribe(with: self) { owner, value in
+                owner.viewModel.inputTextChange.value = value
+            }
+            .disposed(by: disposeBag)
+        
+        nicknameTextField.rx.controlProperty(editingEvents: [.editingDidEndOnExit]) {
+            $0.text
+        } setter: { _, _ in }
+        .bind(with: self) { owner, value in
+            owner.view.endEditing(true)
+        }
+        .disposed(by: disposeBag)
+        
+        confirmButton.rx.tap
+            .bind(with: self) { owner, value in
+                owner.viewModel.inputConfirmButtonTap.value = owner.nicknameTextField.text ?? ""
+                owner.changeWindowToTabBarController()
+            }
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tap
+            .bind(with: self) { owner, value in
+                owner.viewModel.inputConfirmButtonTap.value = owner.nicknameTextField.text ?? ""
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
+        withdrawButton.rx.tap
+            .bind(with: self) { owner, value in
+                owner.showDeleteAlert { _ in
+                    owner.viewModel.inputDeleteButtonTap.value = ()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        BehaviorSubject(value: MBTI.list)
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: MBTICollectionViewCell.description(),
+                cellType: MBTICollectionViewCell.self
+            )) { row, element, cell in
+                cell.configureCell(text: MBTI.list[row])
+                cell.toggleSelected(isSelect: self.viewModel.outputMbtiList.value[row])
+            }
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.viewModel.inputCellSelected.value = indexPath.item
+            }
+            .disposed(by: disposeBag)
     }
     
     override func bindData() {
@@ -206,54 +255,7 @@ final class SettingNicknameViewController: BaseViewController {
         viewModel.inputProfileImageTap.value = ()
     }
     
-    @objc private func textFieldDidChange() {
-        viewModel.inputTextChange.value = nicknameTextField.text ?? ""
-    }
-    
-    @objc private func confirmButtonTapped() {
-        viewModel.inputConfirmButtonTap.value = nicknameTextField.text ?? ""
-        changeWindowToTabBarController()
-    }
-    
-    @objc private func saveButtonTapped() {
-        viewModel.inputConfirmButtonTap.value = nicknameTextField.text ?? ""
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func withdrawButtonTapped() {
-        showDeleteAlert { [weak self] _ in
-            guard let self else { return }
-            viewModel.inputDeleteButtonTap.value = ()
-        }
-    }
-    
-    @objc func textFieldDidEndEditing() {
-        view.endEditing(true)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-    }
-}
-
-extension SettingNicknameViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MBTI.list.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MBTICollectionViewCell.description(),
-            for: indexPath
-        ) as? MBTICollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(text: MBTI.list[indexPath.item])
-        cell.toggleSelected(isSelect: viewModel.outputMbtiList.value[indexPath.item])
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.inputCellSelected.value = indexPath.item
     }
 }
