@@ -9,14 +9,9 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class SettingNicknameViewModel {
+final class SettingNicknameViewModel: ViewModelType {
     
     struct Input {
-        // 1. 이미지뷰 탭 -> 이미지 선택뷰로 이동 (rx 미적용)
-        // 2. 닉네임 입력 -> 유효성 검사, description, 완료 버튼 검사
-        // 3. mbti 셀 선택 -> 데이터 업데이트, 뷰에 세팅, 완료 버튼 검사
-        // 4. 완료 버튼 탭 -> UD에 저장, 화면 이동
-        
         let settingOption: BehaviorSubject<SettingOption>
         let nickname: ControlProperty<String>
         let mbtiSelected: ControlEvent<IndexPath>
@@ -27,12 +22,6 @@ final class SettingNicknameViewModel {
     }
     
     struct Output {
-        // 1. 선택된 이미지 -> 이미지뷰에 표시
-        // 2. 닉네임 유효성 검사 -> description 표시
-        // 3. mbti -> 데이터 변경 -> 셀에 표시
-        // 4. 완료 버튼 유효성 - 닉네임 유효성 && mbti 유효성
-        // 5. Edit일때 텍스트필드 채워주기
-        
         let imageIndex: BehaviorSubject<Int>
         let mbtiList: BehaviorSubject<[Bool]>
         let savedNickname: BehaviorSubject<String>
@@ -51,10 +40,8 @@ final class SettingNicknameViewModel {
     private var totalValid: Bool {
         return nicknameValid == nil && mbtiValid
     }
-    
     private var mbtiList = [Bool](repeating: false, count: MBTI.list.count)
-    
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
@@ -118,13 +105,6 @@ final class SettingNicknameViewModel {
             }
             .disposed(by: disposeBag)
         
-        input.deleteAlertAction
-            .bind(with: self) { owner, _ in
-                RealmRepository.shared.deleteAll()
-                UserDefaultsManager.removeAll()
-            }
-            .disposed(by: disposeBag)
-        
         input.saveButtonTap
             .withLatestFrom(input.nickname)
             .subscribe(with: self) { owner, value in
@@ -136,6 +116,14 @@ final class SettingNicknameViewModel {
                 if UserDefaultsManager.signUpDate == nil {
                     UserDefaultsManager.signUpDate = Date()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        input.deleteAlertAction
+            .bind(with: self) { owner, _ in
+                print("input.deleteAlertAction")
+                RealmRepository.shared.deleteAll()
+                UserDefaultsManager.removeAll()
             }
             .disposed(by: disposeBag)
         
@@ -152,16 +140,7 @@ final class SettingNicknameViewModel {
         )
     }
     
-//    override func transform() {
-//        inputDeleteButtonTap.bind { [weak self] _ in
-//            guard let self else { return }
-//            RealmRepository.shared.deleteAll()
-//            UserDefaultsManager.removeAll()
-//            outputDeleteAll.value = ()
-//        }
-//    }
-    
-    enum NicknameValidationError: Error, LocalizedError {
+    private enum NicknameValidationError: Error, LocalizedError {
         case length
         case invalidCharacter
         case number

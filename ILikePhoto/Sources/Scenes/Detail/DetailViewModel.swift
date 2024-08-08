@@ -11,17 +11,17 @@ import Kingfisher
 final class DetailViewModel: BaseViewModel {
     
     // Input
-    var inputViewDidLoad = Observable<Void?>(nil)
-    var inputLikeButtonTapped = Observable<UIImage?>(nil)
+    var inputViewDidLoad = CustomObservable<Void?>(nil)
+    var inputLikeButtonTapped = CustomObservable<UIImage?>(nil)
     
     // Output
     // 이전 화면에서 전달
-    var outputPhoto = Observable<PhotoResponse?>(nil)
+    var outputPhoto = CustomObservable<PhotoResponse?>(nil)
     // 네트워크 통신
-    var outputStatistics = Observable<StatisticsResponse?>(nil)
-    var outputButtonToggle = Observable(false)
-    var outputToast = Observable(false)
-    var outputFailure = Observable<Void?>(nil)
+    var outputStatistics = CustomObservable<StatisticsResponse?>(nil)
+    var outputButtonToggle = CustomObservable(false)
+    var outputToast = CustomObservable(false)
+    var outputFailure = CustomObservable<Void?>(nil)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] _ in

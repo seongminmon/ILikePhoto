@@ -11,13 +11,13 @@ import Kingfisher
 final class RandomViewModel: BaseViewModel {
     
     // Input
-    var inputViewDidLoad = Observable<Void?>(nil)
-    var inputLikeButtonTap = Observable<(Int?, UIImage?)>((nil, nil))
+    var inputViewDidLoad = CustomObservable<Void?>(nil)
+    var inputLikeButtonTap = CustomObservable<(Int?, UIImage?)>((nil, nil))
     
     // Output
-    var outputList = Observable<[PhotoResponse]>([])
-    var outputButtonToggle = Observable<Bool>(false)
-    var outputFailure = Observable<Void?>(nil)
+    var outputList = CustomObservable<[PhotoResponse]>([])
+    var outputButtonToggle = CustomObservable<Bool>(false)
+    var outputFailure = CustomObservable<Void?>(nil)
     
     override func transform() {
         inputViewDidLoad.bind { [weak self] _ in

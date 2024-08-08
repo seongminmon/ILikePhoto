@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SettingImageViewModel {
+final class SettingImageViewModel: ViewModelType {
     
     struct Input {
         let itemSelected: ControlEvent<IndexPath>

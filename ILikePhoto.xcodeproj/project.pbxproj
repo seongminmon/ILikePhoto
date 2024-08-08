@@ -13,6 +13,7 @@
 		2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC782C6227BF00C37320 /* RxCocoa */; };
 		2414BC7B2C6227BF00C37320 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC7A2C6227BF00C37320 /* RxSwift */; };
 		2414BC7D2C62291800C37320 /* SettingImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */; };
+		241E4F2A2C64EF740001621A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241E4F292C64EF740001621A /* ViewModelType.swift */; };
 		2438DF042C63A0AA006B70FE /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438DF032C63A0AA006B70FE /* Reactive+.swift */; };
 		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
 		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
@@ -46,7 +47,7 @@
 		24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F02C4E3E4F008F403D /* CameraImageView.swift */; };
 		24EC73F52C4E4B1E008F403D /* UICollectionViewLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F42C4E4B1E008F403D /* UICollectionViewLayout+.swift */; };
 		24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */; };
-		24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FB2C4E51F9008F403D /* Observable.swift */; };
+		24EC73FC2C4E51F9008F403D /* CustomObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FB2C4E51F9008F403D /* CustomObservable.swift */; };
 		24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */; };
 		24EC74002C4E593F008F403D /* MBTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FF2C4E593F008F403D /* MBTI.swift */; };
 		24EC74082C4E8453008F403D /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74072C4E8453008F403D /* NetworkRouter.swift */; };
@@ -96,6 +97,7 @@
 		2408158A2C5DC04900886D1E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
 		2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
 		2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingImageViewModel.swift; sourceTree = "<group>"; };
+		241E4F292C64EF740001621A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		2438DF032C63A0AA006B70FE /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		24647B732C5361EF00D9D9A4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		24647B752C53620800D9D9A4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
@@ -127,7 +129,7 @@
 		24EC73F02C4E3E4F008F403D /* CameraImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraImageView.swift; sourceTree = "<group>"; };
 		24EC73F42C4E4B1E008F403D /* UICollectionViewLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewLayout+.swift"; sourceTree = "<group>"; };
 		24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
-		24EC73FB2C4E51F9008F403D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		24EC73FB2C4E51F9008F403D /* CustomObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomObservable.swift; sourceTree = "<group>"; };
 		24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		24EC73FF2C4E593F008F403D /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
 		24EC74072C4E8453008F403D /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
@@ -182,6 +184,14 @@
 				2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		241E4F282C64EF6F0001621A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				241E4F292C64EF740001621A /* ViewModelType.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		24647B712C5361C800D9D9A4 /* Detail */ = {
@@ -385,8 +395,9 @@
 				24EC740F2C4E847F008F403D /* APIKey.swift */,
 				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
 				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
-				24EC73FB2C4E51F9008F403D /* Observable.swift */,
+				24EC73FB2C4E51F9008F403D /* CustomObservable.swift */,
 				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
+				241E4F282C64EF6F0001621A /* Protocol */,
 				24BB36BE2C4E25D900B40E9C /* LaunchScreen.storyboard */,
 				24EC747B2C50866C008F403D /* Design */,
 				24EC73DB2C4E37BE008F403D /* Extension */,
@@ -524,7 +535,7 @@
 				24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */,
 				24EC74512C4FD0F7008F403D /* SettingImageCollectionViewCell.swift in Sources */,
 				24EC745F2C508365008F403D /* MyImage.swift in Sources */,
-				24EC73FC2C4E51F9008F403D /* Observable.swift in Sources */,
+				24EC73FC2C4E51F9008F403D /* CustomObservable.swift in Sources */,
 				24BB36B82C4E25D700B40E9C /* OnboardingViewController.swift in Sources */,
 				24EC74562C500B4E008F403D /* TopicViewController.swift in Sources */,
 				24EC73F52C4E4B1E008F403D /* UICollectionViewLayout+.swift in Sources */,
@@ -570,6 +581,7 @@
 				24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */,
 				24EC73E02C4E388B008F403D /* BaseView.swift in Sources */,
 				24EC73E22C4E389A008F403D /* BaseViewModel.swift in Sources */,
+				241E4F2A2C64EF740001621A /* ViewModelType.swift in Sources */,
 				24EC73D92C4E3636008F403D /* UIColor+.swift in Sources */,
 				24EC73DE2C4E387B008F403D /* BaseViewController.swift in Sources */,
 			);

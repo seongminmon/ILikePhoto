@@ -1,5 +1,5 @@
 //
-//  Observable.swift
+//  CustomObservable.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/22/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Observable<T> {
+final class CustomObservable<T> {
     var closure: ((T) -> Void)?
     
     var value: T {

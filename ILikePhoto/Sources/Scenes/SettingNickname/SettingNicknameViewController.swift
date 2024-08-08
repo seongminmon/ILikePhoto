@@ -149,59 +149,15 @@ final class SettingNicknameViewController: BaseViewController {
     
     @objc private func profileImageViewTapped() {
         print(#function)
-//        viewModel.inputProfileImageTap.value = ()
+        let vc = SettingImageViewController()
+        vc.option = option
+//        vc.selectedIndex = viewModel.outputImageIndex.value
+//        vc.sendSelectedIndex = { [weak self] index in
+//            guard let self else { return }
+//            viewModel.outputImageIndex.value = index
+//        }
+        navigationController?.pushViewController(vc, animated: true)
     }
-    
-//    override func bindData() {
-//        viewModel.outputImageIndex.bind { [weak self] index in
-//            guard let self, let index else { return }
-//            profileImageView.image = MyImage.profileImageList[index]
-//        }
-//        
-//        viewModel.outputNickname.bind { [weak self] nickname in
-//            guard let self else { return }
-//            nicknameTextField.text = nickname
-//        }
-//        
-//        viewModel.outputMbtiList.bind { [weak self] list in
-//            guard let self else { return }
-//            collectionView.reloadData()
-//        }
-//        
-//        viewModel.outputDescriptionText.bind { [weak self] text in
-//            guard let self else { return }
-//            descriptionLabel.text = text
-//            if viewModel.nicknameValid == nil {
-//                descriptionLabel.textColor = MyColor.blue
-//            } else {
-//                descriptionLabel.textColor = MyColor.red
-//            }
-//        }
-//        
-//        viewModel.outputConfirmButtonEnabled.bind { [weak self] flag in
-//            guard let self else { return }
-//            saveButton.isEnabled = flag
-//            confirmButton.isEnabled = flag
-//            confirmButton.backgroundColor = flag ? MyColor.blue : MyColor.gray
-//        }
-//        
-//        viewModel.outputPushSelectImageVC.bind { [weak self] _ in
-//            guard let self else { return }
-//            let vc = SettingImageViewController()
-//            vc.option = option
-//            vc.selectedIndex = viewModel.outputImageIndex.value
-//            vc.sendSelectedIndex = { [weak self] index in
-//                guard let self else { return }
-//                viewModel.outputImageIndex.value = index
-//            }
-//            navigationController?.pushViewController(vc, animated: true)
-//        }
-//        
-//        viewModel.outputDeleteAll.bind { [weak self] _ in
-//            guard let self else { return }
-//            changeWindowToOnboarding()
-//        }
-//    }
     
     override func configureNavigationBar() {
         navigationItem.title = option?.rawValue
