@@ -10,10 +10,10 @@ import RxSwift
 import RxCocoa
 
 final class SettingNicknameViewModel: ViewModelType {
-    // TODO: - edit일때 처음 닉네임 세팅 안 되는 문제
     
     struct Input {
-        let settingOption: BehaviorSubject<SettingOption>
+        let settingOption: Observable<SettingOption>
+        let viewWillAppear: ControlEvent<Bool>
         let nickname: ControlProperty<String>
         let mbtiSelected: ControlEvent<IndexPath>
         let confirmButtonTap: ControlEvent<Void>
@@ -41,12 +41,13 @@ final class SettingNicknameViewModel: ViewModelType {
     private var totalValid: Bool {
         return nicknameValid == nil && mbtiValid
     }
-    private var mbtiList = [Bool](repeating: false, count: MBTI.list.count)
+    var imageIndex: Int = 0
+    private var mbtiList = [Bool]()
     private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
-        let imageIndex = BehaviorSubject(value: 0)
+        let imageIndex = BehaviorSubject(value: imageIndex)
         let mbtiList = BehaviorSubject<[Bool]>(value: [])
         let savedNickname = BehaviorSubject(value: "")
         let nickNameValid = BehaviorSubject(value: false)
@@ -55,23 +56,35 @@ final class SettingNicknameViewModel: ViewModelType {
         
         input.settingOption
             .subscribe(with: self) { owner, option in
-                print("input.settingOption", option)
+                print("옵션에 따라 초기 세팅", option)
                 switch option {
                 case .create:
-                    imageIndex.onNext(Int.random(in: 0..<MyImage.profileImageList.count))
+                    owner.imageIndex = Int.random(in: 0..<MyImage.profileImageList.count)
+                    owner.mbtiList = [Bool](repeating: false, count: MBTI.list.count)
                 case .edit:
-                    imageIndex.onNext(UserDefaultsManager.profileImageIndex)
+                    owner.imageIndex = UserDefaultsManager.profileImageIndex
                     owner.mbtiList = UserDefaultsManager.mbti
                     savedNickname.onNext(UserDefaultsManager.nickname)
                 }
+                imageIndex.onNext(owner.imageIndex)
                 mbtiList.onNext(owner.mbtiList)
                 confirmButtonEnabled.onNext(owner.totalValid)
             }
             .disposed(by: disposeBag)
         
+        input.viewWillAppear
+            .subscribe(with: self) { owner, value in
+                if value {
+                    imageIndex.onNext(owner.imageIndex)
+                } else {
+                    
+                }
+            }
+            .disposed(by: disposeBag)
+        
         input.nickname
             .subscribe(with: self) { owner, value in
-                print("input.nickname", value)
+                print("닉네임 입력", value)
                 description.onNext(owner.nicknameValidationResult(value))
                 nickNameValid.onNext(owner.nicknameValid == nil)
                 confirmButtonEnabled.onNext(owner.totalValid)
@@ -80,7 +93,7 @@ final class SettingNicknameViewModel: ViewModelType {
         
         input.mbtiSelected
             .subscribe(with: self) { owner, indexPath in
-                print("input.mbtiSelected", indexPath)
+                print("mbti셀 선택", indexPath)
                 if owner.mbtiList[indexPath.item] {
                     owner.mbtiList[indexPath.item] = false
                 } else {
@@ -92,37 +105,26 @@ final class SettingNicknameViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        input.confirmButtonTap
-            .withLatestFrom(input.nickname)
-            .subscribe(with: self) { owner, value in
-                print("input.confirmButtonTap", value)
-                UserDefaultsManager.nickname = value
-                let imageIndex = try? imageIndex.value()
-                UserDefaultsManager.profileImageIndex = imageIndex ?? 0
-                UserDefaultsManager.mbti = owner.mbtiList
-                if UserDefaultsManager.signUpDate == nil {
-                    UserDefaultsManager.signUpDate = Date()
-                }
+        Observable.merge(
+            input.confirmButtonTap.asObservable(),
+            input.saveButtonTap.asObservable()
+        )
+        .withLatestFrom(input.nickname)
+        .subscribe(with: self) { owner, value in
+            print("확인 or 저장 버튼 탭", value)
+            UserDefaultsManager.nickname = value
+            UserDefaultsManager.profileImageIndex = owner.imageIndex
+            UserDefaultsManager.mbti = owner.mbtiList
+            // 여기서 분기 처리가 되어 있어서 merge를 해도 됨
+            if UserDefaultsManager.signUpDate == nil {
+                UserDefaultsManager.signUpDate = Date()
             }
-            .disposed(by: disposeBag)
-        
-        input.saveButtonTap
-            .withLatestFrom(input.nickname)
-            .subscribe(with: self) { owner, value in
-                print("input.saveButtonTap", value)
-                UserDefaultsManager.nickname = value
-                let imageIndex = try? imageIndex.value()
-                UserDefaultsManager.profileImageIndex = imageIndex ?? 0
-                UserDefaultsManager.mbti = owner.mbtiList
-                if UserDefaultsManager.signUpDate == nil {
-                    UserDefaultsManager.signUpDate = Date()
-                }
-            }
-            .disposed(by: disposeBag)
+        }
+        .disposed(by: disposeBag)
         
         input.deleteAlertAction
             .bind(with: self) { owner, _ in
-                print("input.deleteAlertAction")
+                print("회원탈퇴 얼럿 액션 -> 지우기")
                 RealmRepository.shared.deleteAll()
                 UserDefaultsManager.removeAll()
             }

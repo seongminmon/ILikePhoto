@@ -64,7 +64,6 @@ final class SettingNicknameViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindRefactoring()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,12 +71,13 @@ final class SettingNicknameViewController: BaseViewController {
         navigationItem.largeTitleDisplayMode = .never
     }
     
-    func bindRefactoring() {
+    override func bindData() {
         
         let deleteAlertAction = PublishSubject<Void>()
         
         let input = SettingNicknameViewModel.Input(
-            settingOption: BehaviorSubject(value: option ?? .create),
+            settingOption: Observable.just(option ?? .create),
+            viewWillAppear: rx.viewWillAppear,
             nickname: nicknameTextField.rx.text.orEmpty,
             mbtiSelected: collectionView.rx.itemSelected,
             confirmButtonTap: confirmButton.rx.tap,
@@ -87,11 +87,31 @@ final class SettingNicknameViewController: BaseViewController {
         )
         let output = viewModel.transform(input: input)
         
+        // 이미지뷰
         output.imageIndex
             .map { MyImage.profileImageList[$0] }
             .bind(to: profileImageView.rx.image)
             .disposed(by: disposeBag)
         
+        // 닉네임(edit일때)
+        output.savedNickname
+            .bind(with: self, onNext: { owner, value in
+                owner.nicknameTextField.text = value
+                owner.nicknameTextField.sendActions(for: .editingChanged)
+            })
+            .disposed(by: disposeBag)
+        
+        // 닉네임 유효성
+        output.nickNameValid
+            .map { $0 ? MyColor.blue : MyColor.red }
+            .bind(to: descriptionLabel.rx.textColor)
+            .disposed(by: disposeBag)
+        
+        output.description
+            .bind(to: descriptionLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // mbti
         output.mbtiList
             .bind(to: collectionView.rx.items(
                 cellIdentifier: MBTICollectionViewCell.description(),
@@ -100,19 +120,6 @@ final class SettingNicknameViewController: BaseViewController {
                 cell.configureCell(text: MBTI.list[row])
                 cell.toggleSelected(isSelect: element)
             }
-            .disposed(by: disposeBag)
-        
-        output.savedNickname
-            .bind(to: nicknameTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        output.nickNameValid
-            .map { $0 ? MyColor.blue : MyColor.red }
-            .bind(to: descriptionLabel.rx.textColor)
-            .disposed(by: disposeBag)
-        
-        output.description
-            .bind(to: descriptionLabel.rx.text)
             .disposed(by: disposeBag)
         
         output.confirmButtonEnabled
@@ -152,11 +159,11 @@ final class SettingNicknameViewController: BaseViewController {
         print(#function)
         let vc = SettingImageViewController()
         vc.option = option
-//        vc.selectedIndex = viewModel.outputImageIndex.value
-//        vc.sendSelectedIndex = { [weak self] index in
-//            guard let self else { return }
-//            viewModel.outputImageIndex.value = index
-//        }
+        vc.selectedIndex = viewModel.imageIndex
+        vc.sendSelectedIndex = { [weak self] index in
+            guard let self else { return }
+            viewModel.imageIndex = index
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     
