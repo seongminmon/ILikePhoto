@@ -72,7 +72,7 @@ extension BaseViewController {
     
     func pushDetailViewController(_ data: PhotoResponse?) {
         let vc = DetailViewController()
-        vc.viewModel.outputPhoto.value = data
+        vc.viewModel.photo = data
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }

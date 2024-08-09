@@ -37,6 +37,10 @@ final class DetailTableViewCell: BaseTableViewCell {
         }
     }
     
+    override func configureView() {
+        selectionStyle = .none
+    }
+    
     func configureCell(title: String, description: String) {
         titleLabel.text = title
         descriptionLabel.text = description

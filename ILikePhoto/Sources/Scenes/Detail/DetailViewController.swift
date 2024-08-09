@@ -8,6 +8,8 @@
 import UIKit
 import DGCharts
 import Kingfisher
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import Toast
@@ -32,9 +34,8 @@ final class DetailViewController: BaseViewController {
     private let createAtLabel = UILabel().then {
         $0.font = MyFont.bold14
     }
-    private lazy var likeButton = LikeButton().then {
+    private let likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
-        $0.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     }
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
@@ -44,9 +45,7 @@ final class DetailViewController: BaseViewController {
         $0.text = "정보"
         $0.font = MyFont.bold16
     }
-    private lazy var tableView = UITableView().then {
-        $0.delegate = self
-        $0.dataSource = self
+    private let tableView = UITableView().then {
         $0.register(
             DetailTableViewCell.self,
             forCellReuseIdentifier: DetailTableViewCell.description()
@@ -59,12 +58,10 @@ final class DetailViewController: BaseViewController {
         $0.text = "차트"
         $0.font = MyFont.bold16
     }
-    private lazy var segmentControl = UISegmentedControl(items: ["조회", "다운로드"]).then {
-        $0.addTarget(self, action: #selector(segmentValueChanged), for: .valueChanged)
+    private let segmentControl = UISegmentedControl(items: ["조회", "다운로드"]).then {
         $0.selectedSegmentIndex = 0
     }
-    private lazy var chartView = LineChartView().then {
-        // grediant fill
+    private let chartView = LineChartView().then {
         $0.noDataText = "출력 데이터가 없습니다."
         $0.noDataFont = .systemFont(ofSize: 20)
         $0.noDataTextColor = .lightGray
@@ -80,60 +77,71 @@ final class DetailViewController: BaseViewController {
         $0.highlightPerDragEnabled = false
     }
     
-    private enum Info: String, CaseIterable {
-        case size = "크기"
-        case viewCount = "조회수"
-        case downloadCount = "다운로드"
-    }
-    
     let viewModel = DetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.inputViewDidLoad.value = ()
+        bindRefactoring()
     }
     
-    override func bindData() {
-        viewModel.outputPhoto.bindEarly { [weak self] photo in
-            guard let self, let photo else { return }
-            
-            if RealmRepository.shared.fetchItem(photo.id) == nil {
-                // url로 불러오기
-                let photographerURL = URL(string: photo.user.profileImage.medium)
-                self.photographerImageView.kf.setImage(with: photographerURL)
-                let mainURL = URL(string: photo.urls.small)
-                self.mainImageView.kf.setImage(with: mainURL)
-            } else {
-                // 파일로 불러오기
-                self.photographerImageView.image = ImageFileManager.shared.loadImageFile(filename: photo.id + "user")
-                self.mainImageView.image = ImageFileManager.shared.loadImageFile(filename: photo.id)
+    func bindRefactoring() {
+        let input = DetailViewModel.Input(
+            viewDidLoad: Observable.just(()),
+            likeTap: likeButton.rx.tap,
+            segmentIndex: segmentControl.rx.selectedSegmentIndex
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.photographerImage
+            .bind(to: photographerImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        output.photographerName
+            .bind(to: photographerNameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.createAt
+            .bind(to: createAtLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.mainImage
+            .bind(to: mainImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+        output.likeButtonState
+            .bind(with: self) { owner, value in
+                owner.likeButton.toggleButton(isLike: value)
             }
-            
-            self.photographerNameLabel.text = photo.user.name
-            self.createAtLabel.text = photo.createdAt
-            self.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(photo.id) != nil)
-        }
+            .disposed(by: disposeBag)
         
-        viewModel.outputStatistics.bind { [weak self] _ in
-            guard let self else { return }
-            setChartData(index: segmentControl.selectedSegmentIndex)
-            tableView.reloadData()
-        }
+        output.list
+            .bind(to: tableView.rx.items(
+                cellIdentifier: DetailTableViewCell.description(),
+                cellType: DetailTableViewCell.self
+            )) { (row, element, cell) in
+                cell.configureCell(title: element.title, description: element.description)
+            }
+            .disposed(by: disposeBag)
         
-        viewModel.outputButtonToggle.bind { [weak self] value in
-            guard let self else { return }
-            likeButton.toggleButton(isLike: value)
-        }
+        output.networkFailure
+            .bind(with: self) { owner, _ in
+                owner.makeNetworkFailureToast()
+            }
+            .disposed(by: disposeBag)
         
-        viewModel.outputToast.bind { [weak self] value in
-            guard let self else { return }
-            makeRealmToast(value)
-        }
+        output.realmToast
+            .bind(with: self) { owner, value in
+                owner.makeRealmToast(value)
+            }
+            .disposed(by: disposeBag)
         
-        viewModel.outputFailure.bind { [weak self] _ in
-            guard let self else { return }
-            makeNetworkFailureToast()
+        Observable.combineLatest(
+            output.segmentIndex,
+            output.chartData
+        ).subscribe(with: self) { owner, value in
+            owner.setChartData(index: value.0, value: value.1)
         }
+        .disposed(by: disposeBag)
     }
     
     override func configureNavigationBar() {
@@ -201,9 +209,12 @@ final class DetailViewController: BaseViewController {
             $0.top.equalTo(headerView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             // width height 비율에 맞게 조정
-            let data = viewModel.outputPhoto.value!
-            let ratio = CGFloat(data.height) / CGFloat(data.width)
-            $0.height.equalTo(mainImageView.snp.width ).multipliedBy(ratio)
+            if let data = viewModel.photo {
+                let ratio = CGFloat(data.height) / CGFloat(data.width)
+                $0.height.equalTo(mainImageView.snp.width ).multipliedBy(ratio)
+            } else {
+                $0.height.equalTo(mainImageView.snp.width ).multipliedBy(1)
+            }
         }
         infoLabel.snp.makeConstraints {
             $0.top.equalTo(mainImageView.snp.bottom).offset(24)
@@ -232,16 +243,7 @@ final class DetailViewController: BaseViewController {
         }
     }
     
-    @objc private func likeButtonTapped() {
-        viewModel.inputLikeButtonTapped.value = mainImageView.image
-    }
-    
-    @objc private func segmentValueChanged() {
-        setChartData(index: segmentControl.selectedSegmentIndex)
-    }
-    
-    private func entryData(index: Int) -> [BarChartDataEntry] {
-        guard let value = viewModel.outputStatistics.value else { return [] }
+    private func entryData(index: Int, value: StatisticsResponse) -> [BarChartDataEntry] {
         var barDataEntries = [BarChartDataEntry]()
         switch index {
         case 0: // 조회
@@ -262,8 +264,8 @@ final class DetailViewController: BaseViewController {
         return barDataEntries
     }
     
-    private func setChartData(index: Int) {
-        let dataEntries = entryData(index: index)
+    private func setChartData(index: Int, value: StatisticsResponse) {
+        let dataEntries = entryData(index: index, value: value)
         
         let dataSet = LineChartDataSet(entries: dataEntries)
         dataSet.drawValuesEnabled = false
@@ -282,40 +284,6 @@ final class DetailViewController: BaseViewController {
         dataSet.fill = LinearGradientFill(gradient: gradient, angle: 80.0)
         dataSet.drawFilledEnabled = true
         
-        let lineChartData = LineChartData(dataSet: dataSet)
-        chartView.data = lineChartData
-    }
-}
-
-extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Info.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: DetailTableViewCell.description(),
-            for: indexPath
-        ) as? DetailTableViewCell,
-              let photo = viewModel.outputPhoto.value else {
-            return UITableViewCell()
-        }
-        
-        let statistics = viewModel.outputStatistics.value
-        let title = Info.allCases[indexPath.row].rawValue
-        var description = ""
-        switch indexPath.row {
-        case 0:
-            description = "\(photo.width) x \(photo.height)"
-        case 1:
-            description = statistics?.views.total.formatted() ?? ""
-        case 2:
-            description = statistics?.downloads.total.formatted() ?? ""
-        default:
-            break
-        }
-        cell.configureCell(title: title, description: description)
-        cell.selectionStyle = .none
-        return cell
+        chartView.data = LineChartData(dataSet: dataSet)
     }
 }

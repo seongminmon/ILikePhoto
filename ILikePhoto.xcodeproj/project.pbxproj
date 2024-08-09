@@ -15,6 +15,8 @@
 		2414BC7D2C62291800C37320 /* SettingImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */; };
 		241E4F2A2C64EF740001621A /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241E4F292C64EF740001621A /* ViewModelType.swift */; };
 		241E4F2C2C64EFC40001621A /* TopicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241E4F2B2C64EFC40001621A /* TopicViewModel.swift */; };
+		241E4F302C65E89D0001621A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241E4F2F2C65E89D0001621A /* SearchViewModel.swift */; };
+		241E4F322C6641AD0001621A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241E4F312C6641AD0001621A /* String+.swift */; };
 		2438DF042C63A0AA006B70FE /* Reactive+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2438DF032C63A0AA006B70FE /* Reactive+.swift */; };
 		24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B732C5361EF00D9D9A4 /* DetailViewController.swift */; };
 		24647B762C53620800D9D9A4 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24647B752C53620800D9D9A4 /* DetailViewModel.swift */; };
@@ -100,6 +102,8 @@
 		2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingImageViewModel.swift; sourceTree = "<group>"; };
 		241E4F292C64EF740001621A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		241E4F2B2C64EFC40001621A /* TopicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewModel.swift; sourceTree = "<group>"; };
+		241E4F2F2C65E89D0001621A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		241E4F312C6641AD0001621A /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		2438DF032C63A0AA006B70FE /* Reactive+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+.swift"; sourceTree = "<group>"; };
 		24647B732C5361EF00D9D9A4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		24647B752C53620800D9D9A4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC73D82C4E3636008F403D /* UIColor+.swift */,
+				241E4F312C6641AD0001621A /* String+.swift */,
 				24EC73F42C4E4B1E008F403D /* UICollectionViewLayout+.swift */,
 				2438DF032C63A0AA006B70FE /* Reactive+.swift */,
 			);
@@ -423,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				24EC74882C512F61008F403D /* SearchViewController.swift */,
+				241E4F2F2C65E89D0001621A /* SearchViewModel.swift */,
 				24DE0A702C5538460053FCF3 /* ColorCollectionViewCell.swift */,
 				24EC74AE2C52512E008F403D /* SearchCollectionViewCell.swift */,
 			);
@@ -545,6 +551,7 @@
 				24BB36B42C4E25D700B40E9C /* AppDelegate.swift in Sources */,
 				24647B742C5361EF00D9D9A4 /* DetailViewController.swift in Sources */,
 				24647B782C53635800D9D9A4 /* DetailTableViewCell.swift in Sources */,
+				241E4F302C65E89D0001621A /* SearchViewModel.swift in Sources */,
 				24EC74B22C52526B008F403D /* LikeViewController.swift in Sources */,
 				24DE0A6F2C54F62D0053FCF3 /* RandomViewModel.swift in Sources */,
 				24EC74862C51075D008F403D /* TopicCollectionHeaderView.swift in Sources */,
@@ -559,6 +566,7 @@
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* TabBarController.swift in Sources */,
 				24DE0A712C5538460053FCF3 /* ColorCollectionViewCell.swift in Sources */,
+				241E4F322C6641AD0001621A /* String+.swift in Sources */,
 				24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */,
 				24EC74B62C526D22008F403D /* ImageFileManager.swift in Sources */,
 				24EC74B82C533E02008F403D /* TargetType.swift in Sources */,

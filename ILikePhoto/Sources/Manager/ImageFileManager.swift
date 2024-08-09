@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 
 final class ImageFileManager {
     static let shared = ImageFileManager()
@@ -33,14 +34,9 @@ final class ImageFileManager {
     
     // urlString으로 저장
     func saveImageFile(url: String, filename: String) {
-        guard let url = URL(string: url) else { return }
-        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
-            switch result {
-            case .success(let imageResult):
-                self?.saveImageFile(image: imageResult.image, filename: filename)
-            case .failure(_):
-                print("이미지 변환 실패")
-            }
+        url.urlToUIImage { [weak self] image in
+            guard let image = image else { return }
+            self?.saveImageFile(image: image, filename: filename)
         }
     }
     
