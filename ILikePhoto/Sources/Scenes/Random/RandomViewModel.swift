@@ -6,62 +6,82 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Kingfisher
 
-final class RandomViewModel: BaseViewModel {
+final class RandomViewModel: ViewModelType {
     
-    // Input
-    var inputViewDidLoad = CustomObservable<Void?>(nil)
-    var inputLikeButtonTap = CustomObservable<(Int?, UIImage?)>((nil, nil))
+    struct Input {
+        let viewDidLoad: Observable<Void>
+        let cellTap: ControlEvent<IndexPath>
+        let likeTap: PublishSubject<Int>
+    }
     
-    // Output
-    var outputList = CustomObservable<[PhotoResponse]>([])
-    var outputButtonToggle = CustomObservable<Bool>(false)
-    var outputFailure = CustomObservable<Void?>(nil)
+    struct Output {
+        let list: PublishSubject<[PhotoResponse]>
+        let networkFailure: PublishSubject<Void>
+        let cellTap: Observable<PhotoResponse>
+        let likeTap: Observable<Bool>
+    }
     
-    override func transform() {
-        inputViewDidLoad.bind { [weak self] _ in
-            guard let self else { return }
-            NetworkManager.shared.request(
-                api: .random,
-                model: [PhotoResponse].self
-            ) { [weak self] response in
-                guard let self else { return }
-                switch response {
-                case .success(let data):
-                    outputList.value = data
-                case .failure(_):
-                    outputFailure.value = ()
-                }
-            }
-        }
+    var list = [PhotoResponse]()
+    let disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
         
-        inputLikeButtonTap.bind { [weak self] index, image in
-            guard let self, let index else { return }
-            let photo = outputList.value[index]
-            if RealmRepository.shared.fetchItem(photo.id) != nil {
-                ImageFileManager.shared.deleteImageFile(filename: photo.id)
-                ImageFileManager.shared.deleteImageFile(filename: photo.id + "user")
-                RealmRepository.shared.deleteItem(photo.id)
-                outputButtonToggle.value = false
-            } else {
-                let item = photo.toLikedPhoto()
-                RealmRepository.shared.addItem(item)
-                let image = image ?? MyImage.star
-                ImageFileManager.shared.saveImageFile(image: image, filename: photo.id)
-                if let url = URL(string: item.photographerImage) {
-                    KingfisherManager.shared.retrieveImage(with: url) { result in
-                        switch result {
-                        case .success(let imageResult):
-                            let profileImage = imageResult.image
-                            ImageFileManager.shared.saveImageFile(image: profileImage, filename: photo.id + "user")
-                        case .failure(_):
-                            print("작가 이미지 변환 실패")
-                        }
+        let list = PublishSubject<[PhotoResponse]>()
+        let networkFailure = PublishSubject<Void>()
+        let cellTap = PublishSubject<PhotoResponse>()
+        let likeTap = PublishSubject<Bool>()
+        
+        input.viewDidLoad
+            .subscribe(with: self) { owner, _ in
+                NetworkManager.shared.request(
+                    api: .random,
+                    model: [PhotoResponse].self
+                ) { response in
+                    switch response {
+                    case .success(let data):
+                        owner.list = data
+                        list.onNext(owner.list)
+                    case .failure(_):
+                        networkFailure.onNext(())
                     }
                 }
-                outputButtonToggle.value = true
             }
-        }
+            .disposed(by: disposeBag)
+        
+        input.cellTap
+            .subscribe(with: self) { owner, indexPath in
+                let data = owner.list[indexPath.row]
+                cellTap.onNext(data)
+            }
+            .disposed(by: disposeBag)
+        
+        input.likeTap
+            .subscribe(with: self) { owner, indexPath in
+                let photo = owner.list[indexPath]
+                if RealmRepository.shared.fetchItem(photo.id) != nil {
+                    ImageFileManager.shared.deleteImageFile(filename: photo.id)
+                    ImageFileManager.shared.deleteImageFile(filename: photo.id + "user")
+                    RealmRepository.shared.deleteItem(photo.id)
+                    likeTap.onNext(false)
+                } else {
+                    let item = photo.toLikedPhoto()
+                    RealmRepository.shared.addItem(item)
+                    ImageFileManager.shared.saveImageFile(url: item.smallURL, filename: photo.id)
+                    ImageFileManager.shared.saveImageFile(url: item.photographerImage, filename: photo.id + "user")
+                    likeTap.onNext(true)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        return Output(
+            list: list,
+            networkFailure: networkFailure, 
+            cellTap: cellTap, 
+            likeTap: likeTap
+        )
     }
 }

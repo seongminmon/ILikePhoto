@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImageFileManager {
     static let shared = ImageFileManager()
@@ -27,6 +28,19 @@ final class ImageFileManager {
             try data.write(to: fileURL)
         } catch {
             print("file save error", error)
+        }
+    }
+    
+    // urlString으로 저장
+    func saveImageFile(url: String, filename: String) {
+        guard let url = URL(string: url) else { return }
+        KingfisherManager.shared.retrieveImage(with: url) { [weak self] result in
+            switch result {
+            case .success(let imageResult):
+                self?.saveImageFile(image: imageResult.image, filename: filename)
+            case .failure(_):
+                print("이미지 변환 실패")
+            }
         }
     }
     

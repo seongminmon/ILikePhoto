@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import Toast
@@ -19,8 +21,6 @@ final class RandomViewController: BaseViewController {
             cellCount: 1,
             height: view.bounds.height)
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(
             RandomCollectionViewCell.self,
             forCellWithReuseIdentifier: RandomCollectionViewCell.description()
@@ -36,28 +36,55 @@ final class RandomViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.inputViewDidLoad.value = ()
     }
     
     override func bindData() {
-        viewModel.outputList.bind { [weak self] list in
-            guard let self else { return }
-            collectionView.reloadData()
-        }
         
-        viewModel.outputButtonToggle.bind { [weak self] value in
-            guard let self else { return }
-            makeRealmToast(value)
-            collectionView.reloadData()
-        }
+        let likeTap = PublishSubject<Int>()
         
-        viewModel.outputFailure.bind { [weak self] _ in
-            guard let self else { return }
-            makeNetworkFailureToast()
-        }
+        let input = RandomViewModel.Input(
+            viewDidLoad: Observable.just(()),
+            cellTap: collectionView.rx.itemSelected,
+            likeTap: likeTap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.list
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: RandomCollectionViewCell.description(),
+                cellType: RandomCollectionViewCell.self
+            )) { (row, element, cell) in
+                cell.configureCell(element, page: row)
+                cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(element.id) != nil)
+                
+                cell.likeButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        likeTap.onNext(row)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.cellTap
+            .subscribe(with: self) { owner, value in
+                owner.pushDetailViewController(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.likeTap
+            .subscribe(with: self) { owner, value in
+                owner.makeRealmToast(value)
+                owner.collectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkFailure
+            .subscribe(with: self) { owner, value in
+                owner.makeNetworkFailureToast()
+            }
+            .disposed(by: disposeBag)
     }
     
-    // 네비게이션바 숨기기
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -77,37 +104,5 @@ final class RandomViewController: BaseViewController {
         collectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-    }
-}
-
-extension RandomViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.outputList.value.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: RandomCollectionViewCell.description(),
-            for: indexPath
-        ) as? RandomCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        let data = viewModel.outputList.value[indexPath.row]
-        cell.configureCell(data, page: indexPath.row)
-        
-        cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
-        cell.likeButton.tag = indexPath.row
-        cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-        return cell
-    }
-    
-    @objc private func likeButtonTapped(sender: UIButton) {
-        guard let cell = collectionView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as? RandomCollectionViewCell else { return }
-        viewModel.inputLikeButtonTap.value = (sender.tag, cell.mainImageView.image)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = viewModel.outputList.value[indexPath.item]
-        pushDetailViewController(data)
     }
 }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 import SnapKit
 import Then
 
@@ -40,6 +41,13 @@ final class RandomCollectionViewCell: BaseCollectionViewCell {
     }
     lazy var likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
+    }
+    
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     override func configureHierarchy() {
