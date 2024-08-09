@@ -147,6 +147,7 @@ final class SettingNicknameViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
+    // TODO: - RxGesture로 바꾸기
     @objc private func profileImageViewTapped() {
         print(#function)
         let vc = SettingImageViewController()

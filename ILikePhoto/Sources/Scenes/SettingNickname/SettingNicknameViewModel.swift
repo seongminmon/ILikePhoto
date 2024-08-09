@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class SettingNicknameViewModel: ViewModelType {
+    // TODO: - edit일때 처음 닉네임 세팅 안 되는 문제
     
     struct Input {
         let settingOption: BehaviorSubject<SettingOption>

@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
     // TODO: - refresh control이 애니메이션 중 깜박거리는 문제 해결하기
     
-    private lazy var refreshControl = UIRefreshControl().then {
-        $0.addTarget(self, action: #selector(refresh), for: .valueChanged)
-    }
+    private lazy var refreshControl = UIRefreshControl()
+    
     private lazy var profileImageView = ProfileImageView().then {
         $0.setImageView(isSelect: true)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(settingButtonTapped))
@@ -22,7 +23,6 @@ final class TopicViewController: BaseViewController {
         $0.isUserInteractionEnabled = true
     }
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createTopicLayout()).then {
-        $0.delegate = self
         $0.register(
             TopicCollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -37,14 +37,47 @@ final class TopicViewController: BaseViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, PhotoResponse>!
     
-    private var headerTitles = [String](repeating: "", count: Section.allCases.count)
-    private var list = [[PhotoResponse]](repeating: [], count: Section.allCases.count)
-    private var recentNetworkTime: DispatchTime?
+    private let viewModel = TopicViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
-        fetchTopic()
+    }
+    
+    override func bindData() {
+        let input = TopicViewModel.Input(
+            viewDidLoad: Observable.just(()),
+            refreshEvent: refreshControl.rx.controlEvent(.valueChanged),
+            cellSelected: collectionView.rx.itemSelected
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.cellSelected
+            .bind(with: self) { owner, value in
+                owner.pushDetailViewController(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.remainTime
+            .bind(with: self) { owner, value in
+                owner.view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
+                owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
+        output.networkSuccess
+            .bind(with: self) { owner, _ in
+                owner.updateSnapshot()
+                owner.refreshControl.endRefreshing()
+            }
+            .disposed(by: disposeBag)
+        
+        
+        output.networkFailure
+            .bind(with: self) { owner, value in
+                owner.makeNetworkFailureToast()
+            }
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +104,7 @@ final class TopicViewController: BaseViewController {
         }
     }
     
+    // TODO: - RxGesture로 바꾸기
     @objc private func settingButtonTapped() {
         let vc = SettingNicknameViewController()
         vc.option = .edit
@@ -89,7 +123,7 @@ final class TopicViewController: BaseViewController {
             elementKind: UICollectionView.elementKindSectionHeader
         ) { [weak self] supplementaryView, elementKind, indexPath in
             guard let self else { return }
-            supplementaryView.configureLabel(headerTitles[indexPath.section])
+            supplementaryView.configureLabel(viewModel.headerTitles[indexPath.section])
         }
     }
     
@@ -120,72 +154,14 @@ final class TopicViewController: BaseViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, PhotoResponse>()
         snapshot.appendSections(Section.allCases)
         snapshot.reloadSections(Section.allCases)
-        snapshot.appendItems(list[0], toSection: .first)
-        snapshot.appendItems(list[1], toSection: .second)
-        snapshot.appendItems(list[2], toSection: .third)
+        Section.allCases.enumerated().forEach { value in
+            snapshot.appendItems(viewModel.list[value.offset], toSection: value.element)
+        }
         if #available(iOS 17.0, *) {
             dataSource.apply(snapshot)
         } else {
             dataSource.apply(snapshot, animatingDifferences: false)
         }
 //        dataSource.applySnapshotUsingReloadData(snapshot)
-    }
-    
-    private func fetchTopic() {
-        // 1분이 안 지났으면 통신 X
-        if let recentNetworkTime, recentNetworkTime + 60 > .now() {
-            view.makeToast("잠시 후 시도해주세요!", duration: 1, position: .center)
-            refreshControl.endRefreshing()
-            return
-        }
-        
-        // 토픽 3개 뽑기 (랜덤, 중복 X)
-        var topicIDList = [String]()
-        while topicIDList.count < Section.allCases.count {
-            let topicID = TopicIDQuery.list.keys.randomElement() ?? "golden-hour"
-            if !topicIDList.contains(topicID) {
-                topicIDList.append(topicID)
-            }
-        }
-        
-        let dispatchGroup = DispatchGroup()
-        
-        // 3번 통신하기
-        for i in 0..<Section.allCases.count {
-            let topicID = topicIDList[i]
-            dispatchGroup.enter()
-            NetworkManager.shared.request(
-                api: .topic(topicID: topicID), model: [PhotoResponse].self
-            ) { [weak self] response in
-                guard let self else { return }
-                switch response {
-                case .success(let data):
-                    headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
-                    list[i] = data
-                case .failure(_):
-                    makeNetworkFailureToast()
-                }
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.recentNetworkTime = .now()
-                self.updateSnapshot()
-                self.refreshControl.endRefreshing()
-            }
-        }
-    }
-    
-    @objc private func refresh() {
-        fetchTopic()
-    }
-}
-
-extension TopicViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = list[indexPath.section][indexPath.item]
-        pushDetailViewController(data)
     }
 }
