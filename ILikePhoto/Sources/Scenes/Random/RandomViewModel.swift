@@ -36,18 +36,14 @@ final class RandomViewModel: ViewModelType {
         let likeTap = PublishSubject<Bool>()
         
         input.viewDidLoad
-            .subscribe(with: self) { owner, _ in
-                NetworkManager.shared.request(
-                    api: .random,
-                    model: [PhotoResponse].self
-                ) { response in
-                    switch response {
-                    case .success(let data):
-                        owner.list = data
-                        list.onNext(owner.list)
-                    case .failure(_):
-                        networkFailure.onNext(())
-                    }
+            .flatMap { NetworkManager.shared.requestRx(api: .random, model: [PhotoResponse].self) }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    owner.list = data
+                    list.onNext(owner.list)
+                case .failure(_):
+                    networkFailure.onNext(())
                 }
             }
             .disposed(by: disposeBag)

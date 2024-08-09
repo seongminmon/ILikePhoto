@@ -13,23 +13,23 @@ import Then
 
 final class OnboardingViewController: BaseViewController {
     
-    let titleLabel = UILabel().then {
+    private let titleLabel = UILabel().then {
         $0.text = Literal.appName
         $0.font = MyFont.title
         $0.textColor = MyColor.blue
         $0.textAlignment = .center
     }
     
-    let logoImageView = UIImageView().then {
+    private let logoImageView = UIImageView().then {
         $0.image = MyImage.launchLogoImage
     }
     
-    let nameLabel = UILabel().then {
+    private let nameLabel = UILabel().then {
         $0.text = Literal.name
         $0.font = MyFont.title
     }
     
-    lazy var startButton = BlueButton(title: Literal.start)
+    private lazy var startButton = BlueButton(title: Literal.start)
     
     override func configureHierarchy() {
         [

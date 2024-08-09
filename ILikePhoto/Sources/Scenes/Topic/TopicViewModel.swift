@@ -75,19 +75,18 @@ final class TopicViewModel: ViewModelType {
             for i in 0..<3 {
                 let topicID = topicIDList[i]
                 dispatchGroup.enter()
-                NetworkManager.shared.request(
-                    api: .topic(topicID: topicID), model: [PhotoResponse].self
-                ) { [weak self] response in
-                    guard let self else { return }
-                    switch response {
-                    case .success(let data):
-                        headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
-                        list[i] = data
-                    case .failure(_):
-                        networkFailure.onNext(())
+                NetworkManager.shared.requestRx(api: .topic(topicID: topicID), model: [PhotoResponse].self)
+                    .bind(with: self) { owner, result in
+                        switch result {
+                        case .success(let data):
+                            owner.headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
+                            owner.list[i] = data
+                        case .failure(_):
+                            networkFailure.onNext(())
+                        }
+                        dispatchGroup.leave()
                     }
-                    dispatchGroup.leave()
-                }
+                    .disposed(by: disposeBag)
             }
             
             dispatchGroup.notify(queue: .main) {

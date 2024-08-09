@@ -79,21 +79,21 @@ final class DetailViewModel: ViewModelType {
                 photographerName.onNext(photo.user.name)
                 createAt.onNext(photo.createdAt)
                 likeButtonState.onNext(RealmRepository.shared.fetchItem(photo.id) != nil)
-                
-                NetworkManager.shared.request(
-                    api: .statistics(imageID: photo.id),
-                    model: StatisticsResponse.self
-                ) { [weak self] response in
-                    guard let self else { return }
-                    switch response {
-                    case .success(let data):
-                        list.onNext(changeData(data))
-                        chartData.onNext(data)
-                    case .failure(_):
-                        networkFailure.onNext(())
-                    }
+            }
+            .disposed(by: disposeBag)
+        
+        input.viewDidLoad
+            .withUnretained(self)
+            .compactMap { _ in self.photo?.id }
+            .flatMap { NetworkManager.shared.requestRx(api: .statistics(imageID: $0), model: StatisticsResponse.self) }
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let data):
+                    list.onNext(owner.changeData(data))
+                    chartData.onNext(data)
+                case .failure(_):
+                    networkFailure.onNext(())
                 }
-                
             }
             .disposed(by: disposeBag)
         

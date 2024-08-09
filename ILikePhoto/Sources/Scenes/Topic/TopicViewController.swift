@@ -72,7 +72,6 @@ final class TopicViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        
         output.networkFailure
             .bind(with: self) { owner, value in
                 owner.makeNetworkFailureToast()
