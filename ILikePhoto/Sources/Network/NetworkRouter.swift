@@ -8,14 +8,22 @@
 import Foundation
 import Alamofire
 
+struct SearchParameter {
+    var order: SearchOrder = .relevant
+    var color: SearchColor?
+    var query: String = ""
+    var page: Int = 1
+}
+
 enum NetworkRouter {
     case topic(topicID: String)
-    case search(query: String, page: Int, order: SearchOrder, color: SearchColor?)
+    case search(searchParameter: SearchParameter)
     case statistics(imageID: String)
     case random
 }
 
 extension NetworkRouter: TargetType {
+    
     var baseURL: String {
         return APIURL.baseURL
     }
@@ -48,15 +56,15 @@ extension NetworkRouter: TargetType {
                 "page": 1,
                 "client_id": APIKey.Key
             ]
-        case .search(let query, let page, let order, let color):
+        case .search(let searchParameter):
             var ret: Parameters = [
-                "query": query,
-                "page": page,
+                "query": searchParameter.query,
+                "page": searchParameter.page,
                 "per_page": 20,
-                "order_by": order.rawValue,
+                "order_by": searchParameter.order.rawValue,
                 "client_id": APIKey.Key
             ]
-            if let color {
+            if let color = searchParameter.color {
                 ret["color"] = color.rawValue
             }
             return ret
