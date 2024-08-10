@@ -34,6 +34,12 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
     private lazy var starButton = UIButton(configuration: starButtonConfig())
     let likeButton = LikeButton()
     
+    // MARK: - cell 재사용 전에 이미지뷰 초기화 해주기
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mainImageView.image = nil
+    }
+    
     override func configureHierarchy() {
         [
             mainImageView,
