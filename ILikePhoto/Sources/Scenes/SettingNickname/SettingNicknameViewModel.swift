@@ -73,12 +73,8 @@ final class SettingNicknameViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.viewWillAppear
-            .subscribe(with: self) { owner, value in
-                if value {
-                    imageIndex.onNext(owner.imageIndex)
-                } else {
-                    
-                }
+            .subscribe(with: self) { owner, _ in
+                imageIndex.onNext(owner.imageIndex)
             }
             .disposed(by: disposeBag)
         

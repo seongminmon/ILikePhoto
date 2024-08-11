@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 import SnapKit
 import Then
 
@@ -17,6 +18,13 @@ final class LikeCollectionViewCell: BaseCollectionViewCell {
         $0.layer.cornerRadius = 20
     }
     let likeButton = LikeButton()
+    
+    var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
     
     override func configureHierarchy() {
         [
