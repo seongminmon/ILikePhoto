@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import RxSwift
 
 final class ImageFileManager {

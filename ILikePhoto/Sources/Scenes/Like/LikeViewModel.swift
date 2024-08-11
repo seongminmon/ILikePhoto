@@ -6,3 +6,21 @@
 //
 
 import Foundation
+import RxSwift
+
+final class LikeViewModel: ViewModelType {
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
+    let disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
+        return Output()
+    }
+}

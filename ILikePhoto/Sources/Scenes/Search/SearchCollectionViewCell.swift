@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
 import SnapKit
 import Then
 
@@ -33,11 +34,13 @@ final class SearchCollectionViewCell: BaseCollectionViewCell {
     }
     private lazy var starButton = UIButton(configuration: starButtonConfig())
     let likeButton = LikeButton()
+    var disposeBag = DisposeBag()
     
-    // MARK: - cell 재사용 전에 이미지뷰 초기화 해주기
+    // MARK: - cell 재사용 전에 이미지뷰 초기화 해주기, 구독 중첩 막기
     override func prepareForReuse() {
         super.prepareForReuse()
         mainImageView.image = nil
+        disposeBag = DisposeBag()
     }
     
     override func configureHierarchy() {

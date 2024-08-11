@@ -7,6 +7,8 @@
 
 import UIKit
 import Kingfisher
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import Toast
@@ -15,14 +17,11 @@ final class SearchViewController: BaseViewController {
     
     private lazy var searchBar = UISearchBar().then {
         $0.placeholder = "키워드 검색"
-        $0.delegate = self
     }
     private lazy var colorCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: .createColorButtonsLayout()
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
         $0.register(
             ColorCollectionViewCell.self,
             forCellWithReuseIdentifier: ColorCollectionViewCell.description()
@@ -34,7 +33,6 @@ final class SearchViewController: BaseViewController {
         var config = UIButton.Configuration.plain()
         config.imagePadding = 8
         $0.configuration = config
-        $0.setTitle(searchOrder.title, for: .normal)
         $0.setTitleColor(MyColor.black, for: .normal)
         $0.titleLabel?.font = MyFont.bold14
         $0.tintColor = MyColor.black
@@ -44,7 +42,6 @@ final class SearchViewController: BaseViewController {
         $0.layer.cornerRadius = 15
         $0.layer.borderWidth = 1
         $0.layer.borderColor = MyColor.gray.cgColor
-        $0.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     }
     private lazy var pinterestLayout = PinterestLayout().then {
         $0.delegate = self
@@ -53,9 +50,6 @@ final class SearchViewController: BaseViewController {
         frame: .zero,
         collectionViewLayout: pinterestLayout
     ).then {
-        $0.delegate = self
-        $0.dataSource = self
-        $0.prefetchDataSource = self
         $0.register(
             SearchCollectionViewCell.self,
             forCellWithReuseIdentifier: SearchCollectionViewCell.description()
@@ -63,20 +57,99 @@ final class SearchViewController: BaseViewController {
         $0.keyboardDismissMode = .onDrag
     }
     private let emptyLabel = UILabel().then {
-        $0.text = "사진을 검색해보세요."
         $0.font = MyFont.bold20
         $0.textColor = MyColor.black
     }
     
-    var list: SearchResponse?
-    var query: String?
-    var page = 1
-    var searchOrder = SearchOrder.relevant
-    var searchColor: SearchColor?
+    private let viewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        toggleHideView()
+    }
+    
+    override func bindData() {
+        
+        let likeButtonTap = PublishSubject<PhotoResponse>()
+        
+        let input = SearchViewModel.Input(
+            searchButtonTap: searchBar.rx.searchButtonClicked.asObservable(),
+            searchText: searchBar.rx.text.asObservable(),
+            sortButtonTap: sortButton.rx.tap.asObservable(),
+            colorCellTap: colorCollectionView.rx.itemSelected.asObservable(),
+            prefetchItems: mainCollectionView.rx.prefetchItems.asObservable(),
+            searchCellTap: mainCollectionView.rx.itemSelected.asObservable(),
+            likeButtonTap: likeButtonTap
+        )
+        let output = viewModel.transform(input: input)
+        
+        output.searchOrder
+            .map { $0.title }
+            .bind(to: sortButton.rx.title())
+            .disposed(by: disposeBag)
+        
+        output.colorList
+            .bind(to: colorCollectionView.rx.items(
+                cellIdentifier: ColorCollectionViewCell.description(),
+                cellType: ColorCollectionViewCell.self
+            )) { [weak self] index, color, cell in
+                cell.configureCell(color: color)
+                cell.toggleSelected(isSelect: color == self?.viewModel.searchParameter.color)
+            }
+            .disposed(by: disposeBag)
+        
+        output.searchList
+            .bind(to: mainCollectionView.rx.items(
+                cellIdentifier: SearchCollectionViewCell.description(),
+                cellType: SearchCollectionViewCell.self
+            )) { index, element, cell in
+                cell.configureCell(data: element)
+                cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(element.id) != nil)
+                
+                cell.likeButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        likeButtonTap.onNext(element)
+                        cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(element.id) != nil)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        output.emptyText
+            .bind(to: emptyLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.emptyQuery
+            .bind(with: self) { owner, _ in
+                owner.view.makeToast("쿼리가 비었습니다!", duration: 1, position: .center)
+            }
+            .disposed(by: disposeBag)
+        
+        output.emptyResponse
+            .bind(to: mainCollectionView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.emptyResponse
+            .map { !$0 }
+            .bind(to: emptyLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        output.scrollToTop
+            .subscribe(with: self) { owner, _ in
+                owner.mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            }
+            .disposed(by: disposeBag)
+        
+        output.searchCellTap
+            .bind(with: self) { owner, data in
+                owner.pushDetailViewController(data)
+            }
+            .disposed(by: disposeBag)
+        
+        output.likeButtonTap
+            .bind(with: self) { owner, isLike in
+                owner.makeRealmToast(isLike)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,190 +197,13 @@ final class SearchViewController: BaseViewController {
             $0.center.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    private func toggleHideView() {
-        if let list, !list.photoResponse.isEmpty {
-            emptyLabel.isHidden = true
-            mainCollectionView.isHidden = false
-        } else {
-            emptyLabel.isHidden = false
-            mainCollectionView.isHidden = true
-        }
-    }
-    
-    @objc private func sortButtonTapped() {
-        guard let query = validateQuery(query) else { return }
-        page = 1
-        searchOrder = searchOrder == .relevant ? .latest : .relevant
-        sortButton.setTitle(searchOrder.title, for: .normal)
-        fetchSearch(query)
-    }
-    
-    private func validateQuery(_ query: String?) -> String? {
-        if let query = query, !query.trimmingCharacters(in: .whitespaces).isEmpty {
-            return query.trimmingCharacters(in: .whitespaces)
-        } else {
-            view.makeToast("쿼리가 비었습니다!", duration: 1, position: .center)
-            return nil
-        }
-    }
-    
-    private func fetchSearch(_ query: String) {
-        // 통신 이후
-        emptyLabel.text = "검색 결과가 없습니다."
-        
-        NetworkManager.shared.request(
-            api: .search(query: query, page: page, order: searchOrder, color: searchColor),
-            model: SearchResponse.self
-        ) { [weak self] response in
-            guard let self else { return }
-            switch response {
-            case .success(let data):
-                if page == 1 {
-                    // 첫 검색
-                    list = data
-                } else {
-                    // 페이지 네이션
-                    list?.photoResponse.append(contentsOf: data.photoResponse)
-                }
-                
-                toggleHideView()
-                mainCollectionView.reloadData()
-                
-                if page == 1, let list, !list.photoResponse.isEmpty {
-                    mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-                }
-                
-            case .failure(_):
-                makeNetworkFailureToast()
-            }
-        }
-    }
-}
-
-extension SearchViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        query = validateQuery(searchBar.text)
-        guard let query = query else { return }
-        page = 1
-        fetchSearch(query)
-        view.endEditing(true)
-    }
-}
-
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == colorCollectionView {
-            return SearchColor.allCases.count
-        } else {
-            return list?.photoResponse.count ?? 0
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == colorCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: ColorCollectionViewCell.description(),
-                for: indexPath
-            ) as? ColorCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            let color = SearchColor.allCases[indexPath.item]
-            cell.configureCell(color: color)
-            cell.toggleSelected(isSelect: color == searchColor)
-            return cell
-        } else {
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: SearchCollectionViewCell.description(),
-                for: indexPath
-            ) as? SearchCollectionViewCell,
-                  let data = list?.photoResponse[indexPath.item] else {
-                return UICollectionViewCell()
-            }
-            cell.configureCell(data: data)
-            cell.likeButton.toggleButton(isLike: RealmRepository.shared.fetchItem(data.id) != nil)
-            cell.likeButton.tag = indexPath.item
-            cell.likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
-            return cell
-        }
-    }
-    
-    @objc private func likeButtonTapped(sender: UIButton) {
-        guard let cell = mainCollectionView.cellForItem(
-            at: IndexPath(item: sender.tag, section: 0)
-        ) as? SearchCollectionViewCell,
-              let data = list?.photoResponse[sender.tag] else {
-            return
-        }
-        
-        if RealmRepository.shared.fetchItem(data.id) != nil {
-            // 1. 이미지 파일 삭제
-            ImageFileManager.shared.deleteImageFile(filename: data.id)
-            ImageFileManager.shared.deleteImageFile(filename: data.id + "user")
-            // 2. Realm 삭제
-            RealmRepository.shared.deleteItem(data.id)
-            // 3. 버튼 업데이트
-            cell.likeButton.toggleButton(isLike: false)
-            makeRealmToast(false)
-        } else {
-            // 1. Realm 추가
-            let item = data.toLikedPhoto()
-            RealmRepository.shared.addItem(item)
-            // 2. 이미지 파일 추가
-            let image = cell.mainImageView.image ?? MyImage.star
-            ImageFileManager.shared.saveImageFile(image: image, filename: data.id)
-            
-            if let url = URL(string: item.photographerImage) {
-                KingfisherManager.shared.retrieveImage(with: url) { result in
-                    switch result {
-                    case .success(let imageResult):
-                        let profileImage = imageResult.image
-                        ImageFileManager.shared.saveImageFile(image: profileImage, filename: data.id + "user")
-                    case .failure(_):
-                        print("작가 이미지 변환 실패")
-                    }
-                }
-            }
-            // 3. 버튼 업데이트
-            cell.likeButton.toggleButton(isLike: true)
-            makeRealmToast(true)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == colorCollectionView {
-            if searchColor != SearchColor.allCases[indexPath.item] {
-                searchColor = SearchColor.allCases[indexPath.item]
-            } else {
-                searchColor = nil
-            }
-            colorCollectionView.reloadData()
-            guard let query = validateQuery(query) else { return }
-            page = 1
-            fetchSearch(query)
-        } else {
-            let data = list?.photoResponse[indexPath.item]
-            pushDetailViewController(data)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        // 페이지네이션
-        guard let query = validateQuery(query), let list else { return }
-        for indexPath in indexPaths {
-            if indexPath.item == list.photoResponse.count - 4 && page < list.totalPages {
-                page += 1
-                fetchSearch(query)
-            }
-        }
-    }
 }
 
 extension SearchViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        guard let data = list?.photoResponse[indexPath.item] else { return 0 }
+        guard let data = viewModel.searchResponse?.photoResponse[indexPath.item] else { return 180 }
         let ratio = CGFloat(data.height) / CGFloat(data.width)
-        let width = UIScreen.main.bounds.width / 2
+        let width = view.frame.width / 2
         return width * ratio
     }
 }
