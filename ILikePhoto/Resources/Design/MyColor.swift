@@ -8,11 +8,11 @@
 import UIKit
 
 enum MyColor {
-    static let blue = UIColor.hexStringToUIColor("186FF2")
-    static let gray = UIColor.hexStringToUIColor("8C8C8C")
-    static let darkgray = UIColor.hexStringToUIColor("4D5652")
-    static let black = UIColor.hexStringToUIColor("000000")
-    static let lightgray = UIColor.hexStringToUIColor("F2F2F2")
-    static let white = UIColor.hexStringToUIColor("FFFFFF")
-    static let red = UIColor.hexStringToUIColor("F04452")
+    static let blue = UIColor(resource: .myBlue)
+    static let gray = UIColor(resource: .myGray)
+    static let darkgray = UIColor(resource: .myDarkgray)
+    static let black = UIColor(resource: .myBlack)
+    static let lightgray = UIColor(resource: .myLightgray)
+    static let white = UIColor(resource: .myWhite)
+    static let red = UIColor(resource: .myRed)
 }
