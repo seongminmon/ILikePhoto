@@ -1,5 +1,5 @@
 //
-//  NetworkRouter.swift
+//  UnsplashRouter.swift
 //  ILikePhoto
 //
 //  Created by 김성민 on 7/22/24.
@@ -15,14 +15,16 @@ struct SearchParameter {
     var page: Int = 1
 }
 
-enum NetworkRouter {
+// TODO: - 쿼리 파라미터 객체화
+
+enum UnsplashRouter {
     case topic(topicID: String)
     case search(searchParameter: SearchParameter)
     case statistics(imageID: String)
     case random
 }
 
-extension NetworkRouter: TargetType {
+extension UnsplashRouter: TargetType {
     
     var baseURL: String {
         return APIURL.baseURL

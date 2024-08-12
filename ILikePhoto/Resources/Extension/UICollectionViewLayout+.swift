@@ -114,6 +114,7 @@ class PinterestLayout: UICollectionViewFlowLayout {
     // 이 메서드에서 레이아웃을 미리 계산하여 메모리에 적재하고, 필요할 때마다 효율적으로 접근할 수 있도록 구현해야 합니다.
     override func prepare() {
         // TODO: - cache 사용해서 성능 개선하기
+        // TODO: - 한쪽 열에 높이가 큰 이미지들이 배치될 경우 한쪽 열에서만 이미지가 보이는 문제
 //        guard let collectionView = collectionView, cache.isEmpty else { return }
         guard let collectionView = collectionView else { return }
         

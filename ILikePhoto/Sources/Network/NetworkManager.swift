@@ -14,7 +14,7 @@ final class NetworkManager {
     private init() {}
     
     func requestWithSingle<T: Decodable>(
-        api: NetworkRouter,
+        api: UnsplashRouter,
         model: T.Type
     ) -> Single<Result<T, AFError>> {
         let result = Single<Result<T, AFError>>.create { observer in
@@ -41,7 +41,7 @@ final class NetworkManager {
     }
     
 //    func requestWithObservable<T: Decodable>(
-//        api: NetworkRouter,
+//        api: UnsplashRouter,
 //        model: T.Type
 //    ) -> Observable<Result<T, AFError>> {
 //        let result = Observable<Result<T, AFError>>.create { observer in

@@ -9,10 +9,22 @@ import Foundation
 import RealmSwift
 
 final class RealmRepository {
+    
     static let shared = RealmRepository()
     private init() {}
     
     private let realm = try! Realm()
+    
+//    private let realm: Realm
+//    init() throws {
+//        self.realm = try Realm()
+//    }
+    
+//    do {
+//        let realm = try Realm()
+//    } catch {
+//        print("Realm 초기화 실패!")
+//    }
     
     var fileURL: URL? {
         return realm.configuration.fileURL
@@ -25,9 +37,13 @@ final class RealmRepository {
     
     // MARK: - Create
     func addItem(_ item: LikedPhoto) {
-        try! realm.write {
-            realm.add(item)
-            print("Realm Create!")
+        do {
+            try realm.write {
+                realm.add(item)
+                print("Realm Create!")
+            }
+        } catch {
+            print("Realm Create Failed")
         }
     }
     
@@ -55,22 +71,30 @@ final class RealmRepository {
     // MARK: - Delete
     func deleteItem(_ id: String) {
         if let item = fetchItem(id) {
-            try! realm.write {
-                realm.delete(item)
-                print("Realm Delete!")
+            do {
+                try realm.write {
+                    realm.delete(item)
+                    print("Realm Delete!")
+                }
+            } catch {
+                print("Realm Delete Failed")
             }
         }
     }
     
     func deleteAll() {
-        try! realm.write {
-            let photos = realm.objects(LikedPhoto.self)
-            for item in photos {
-                ImageFileManager.shared.deleteImageFile(filename: item.id)
-                ImageFileManager.shared.deleteImageFile(filename: item.id + "user")
+        do {
+            try realm.write {
+                let photos = realm.objects(LikedPhoto.self)
+                for item in photos {
+                    ImageFileManager.shared.deleteImageFile(filename: item.id)
+                    ImageFileManager.shared.deleteImageFile(filename: item.id + "user")
+                }
+                realm.delete(photos)
+                print("Realm Delete All!")
             }
-            realm.delete(photos)
-            print("Realm Delete All!")
+        } catch {
+            print("Realm Delete All Failed")
         }
     }
 }

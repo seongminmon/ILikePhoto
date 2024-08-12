@@ -10,6 +10,7 @@
 		2408158C2C5DC04900886D1E /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 240815892C5DC04900886D1E /* GmarketSansBold.otf */; };
 		2408158D2C5DC04900886D1E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158A2C5DC04900886D1E /* GmarketSansLight.otf */; };
 		2408158E2C5DC04900886D1E /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */; };
+		240E0A402C6A460E003A212B /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240E0A3F2C6A460E003A212B /* UIColor+.swift */; };
 		2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC782C6227BF00C37320 /* RxCocoa */; };
 		2414BC7B2C6227BF00C37320 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC7A2C6227BF00C37320 /* RxSwift */; };
 		2414BC7D2C62291800C37320 /* SettingImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */; };
@@ -52,10 +53,10 @@
 		24EC73F92C4E4BE0008F403D /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */; };
 		24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */; };
 		24EC74002C4E593F008F403D /* MBTI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC73FF2C4E593F008F403D /* MBTI.swift */; };
-		24EC74082C4E8453008F403D /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74072C4E8453008F403D /* NetworkRouter.swift */; };
+		24EC74082C4E8453008F403D /* UnsplashRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74072C4E8453008F403D /* UnsplashRouter.swift */; };
 		24EC740B2C4E8463008F403D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC740A2C4E8463008F403D /* Alamofire */; };
 		24EC740E2C4E8471008F403D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 24EC740D2C4E8471008F403D /* Kingfisher */; };
-		24EC74102C4E847F008F403D /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC740F2C4E847F008F403D /* APIKey.swift */; };
+		24EC74102C4E847F008F403D /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC740F2C4E847F008F403D /* APIInfo.swift */; };
 		24EC74122C4E860F008F403D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74112C4E860F008F403D /* NetworkManager.swift */; };
 		24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74162C4E8C0F008F403D /* PhotoResponse.swift */; };
 		24EC74192C4F374E008F403D /* StatisticsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EC74182C4F374E008F403D /* StatisticsResponse.swift */; };
@@ -98,6 +99,7 @@
 		240815892C5DC04900886D1E /* GmarketSansBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansBold.otf; sourceTree = "<group>"; };
 		2408158A2C5DC04900886D1E /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
 		2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
+		240E0A3F2C6A460E003A212B /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingImageViewModel.swift; sourceTree = "<group>"; };
 		241E4F292C64EF740001621A /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		241E4F2B2C64EFC40001621A /* TopicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicViewModel.swift; sourceTree = "<group>"; };
@@ -136,8 +138,8 @@
 		24EC73F82C4E4BE0008F403D /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		24EC73FD2C4E5292008F403D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		24EC73FF2C4E593F008F403D /* MBTI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBTI.swift; sourceTree = "<group>"; };
-		24EC74072C4E8453008F403D /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
-		24EC740F2C4E847F008F403D /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		24EC74072C4E8453008F403D /* UnsplashRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashRouter.swift; sourceTree = "<group>"; };
+		24EC740F2C4E847F008F403D /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
 		24EC74112C4E860F008F403D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		24EC74162C4E8C0F008F403D /* PhotoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResponse.swift; sourceTree = "<group>"; };
 		24EC74182C4F374E008F403D /* StatisticsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsResponse.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				241E4F312C6641AD0001621A /* String+.swift */,
+				240E0A3F2C6A460E003A212B /* UIColor+.swift */,
 				24EC73F42C4E4B1E008F403D /* UICollectionViewLayout+.swift */,
 				2438DF032C63A0AA006B70FE /* Reactive+.swift */,
 			);
@@ -343,7 +346,7 @@
 			children = (
 				24EC74B72C533E02008F403D /* TargetType.swift */,
 				248B84092C578E2F004C9422 /* SearchOption.swift */,
-				24EC74072C4E8453008F403D /* NetworkRouter.swift */,
+				24EC74072C4E8453008F403D /* UnsplashRouter.swift */,
 				24EC74112C4E860F008F403D /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -397,7 +400,7 @@
 		24EC74592C50166C008F403D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				24EC740F2C4E847F008F403D /* APIKey.swift */,
+				24EC740F2C4E847F008F403D /* APIInfo.swift */,
 				24BB36B32C4E25D700B40E9C /* AppDelegate.swift */,
 				24BB36B52C4E25D700B40E9C /* SceneDelegate.swift */,
 				24BB36BC2C4E25D900B40E9C /* Assets.xcassets */,
@@ -558,7 +561,7 @@
 				24EC74892C512F61008F403D /* SearchViewController.swift in Sources */,
 				2414BC7D2C62291800C37320 /* SettingImageViewModel.swift in Sources */,
 				2438DF042C63A0AA006B70FE /* Reactive+.swift in Sources */,
-				24EC74102C4E847F008F403D /* APIKey.swift in Sources */,
+				24EC74102C4E847F008F403D /* APIInfo.swift in Sources */,
 				24EC73F12C4E3E4F008F403D /* CameraImageView.swift in Sources */,
 				24EC74532C500AB0008F403D /* TabBarController.swift in Sources */,
 				24DE0A712C5538460053FCF3 /* ColorCollectionViewCell.swift in Sources */,
@@ -566,7 +569,7 @@
 				24EC74842C50E003008F403D /* TopicCollectionViewCell.swift in Sources */,
 				24EC74B62C526D22008F403D /* ImageFileManager.swift in Sources */,
 				24EC74B82C533E02008F403D /* TargetType.swift in Sources */,
-				24EC74082C4E8453008F403D /* NetworkRouter.swift in Sources */,
+				24EC74082C4E8453008F403D /* UnsplashRouter.swift in Sources */,
 				24EC73FE2C4E5292008F403D /* UserDefaultsManager.swift in Sources */,
 				24EC73E52C4E398D008F403D /* BlueButton.swift in Sources */,
 				24EC73EF2C4E3C25008F403D /* ProfileImageView.swift in Sources */,
@@ -578,6 +581,7 @@
 				24EC74172C4E8C0F008F403D /* PhotoResponse.swift in Sources */,
 				24DE0A6D2C53D9C10053FCF3 /* RandomCollectionViewCell.swift in Sources */,
 				24EC74B42C526AAB008F403D /* LikeCollectionViewCell.swift in Sources */,
+				240E0A402C6A460E003A212B /* UIColor+.swift in Sources */,
 				24EC74AF2C52512E008F403D /* SearchCollectionViewCell.swift in Sources */,
 				24DE0A6B2C53D7BE0053FCF3 /* RandomViewController.swift in Sources */,
 				24EC73ED2C4E3B80008F403D /* SettingNicknameViewModel.swift in Sources */,

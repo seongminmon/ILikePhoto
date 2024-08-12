@@ -55,7 +55,7 @@ final class ColorCollectionViewCell: BaseCollectionViewCell {
     
     func configureCell(color: SearchColor?) {
         guard let color else { return }
-        colorImageView.tintColor = UIColor.hexStringToUIColor(color.colorValue)
+        colorImageView.tintColor = UIColor(hex: color.colorValue)
         colorLabel.text = color.description
     }
     
