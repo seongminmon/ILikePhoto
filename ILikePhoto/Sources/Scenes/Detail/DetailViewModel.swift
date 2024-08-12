@@ -85,7 +85,7 @@ final class DetailViewModel: ViewModelType {
         input.viewDidLoad
             .withUnretained(self)
             .compactMap { _ in self.photo?.id }
-            .flatMap { NetworkManager.shared.requestRx(api: .statistics(imageID: $0), model: StatisticsResponse.self) }
+            .flatMap { NetworkManager.shared.requestWithSingle(api: .statistics(imageID: $0), model: StatisticsResponse.self) }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):

@@ -25,8 +25,8 @@ final class RandomViewModel: ViewModelType {
         let likeTap: Observable<Bool>
     }
     
-    var list = [PhotoResponse]()
-    let disposeBag = DisposeBag()
+    private var list = [PhotoResponse]()
+    private let disposeBag = DisposeBag()
     
     func transform(input: Input) -> Output {
         
@@ -36,7 +36,7 @@ final class RandomViewModel: ViewModelType {
         let likeTap = PublishSubject<Bool>()
         
         input.viewDidLoad
-            .flatMap { NetworkManager.shared.requestRx(api: .random, model: [PhotoResponse].self) }
+            .flatMap { NetworkManager.shared.requestWithSingle(api: .random, model: [PhotoResponse].self) }
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):

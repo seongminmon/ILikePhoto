@@ -51,39 +51,47 @@ final class SearchViewModel: ViewModelType {
         let searchCellTap = PublishSubject<PhotoResponse?>()
         let likeButtonTap = PublishSubject<Bool>()
         
-        func fetchSearch() {
-            NetworkManager.shared.requestRx(
+        func fetchSearch(_ searchParameter: SearchParameter) {
+            NetworkManager.shared.requestWithSingle(
                 api: .search(searchParameter: searchParameter),
                 model: SearchResponse.self
             )
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let data):
-                    // 새 통신과 페이지네이션 분기 처리, 데이터 변경
-                    if owner.searchParameter.page == 1 {
-                        owner.searchResponse = data
-                    } else {
-                        owner.searchResponse?.photoResponse.append(contentsOf: data.photoResponse)
-                    }
-                    
-                    // list가 비어있다는 신호 보내기 -> toggleHideView
-                    guard let list = owner.searchResponse?.photoResponse, !list.isEmpty else {
-                        emptyResponse.onNext(true)
-                        return
-                    }
-                    
-                    emptyResponse.onNext(false)
-                    searchList.onNext(list)
-
-                    // 첫 통신이었다면 스크롤 올리기
-                    if owner.searchParameter.page == 1 {
-                        scrollToTop.onNext(())
-                    }
+                    successAction(data, searchParameter.page)
                 case .failure(_):
-                    networkFailure.onNext(())
+                    failureAction()
                 }
             }
             .disposed(by: disposeBag)
+        }
+        
+        func successAction(_ data: SearchResponse, _ page: Int) {
+            // 새 통신과 페이지네이션 분기 처리, 데이터 변경
+            if page == 1 {
+                searchResponse = data
+            } else {
+                searchResponse?.photoResponse.append(contentsOf: data.photoResponse)
+            }
+            
+            // list가 비어있다는 신호 보내기
+            guard let list = searchResponse?.photoResponse, !list.isEmpty else {
+                emptyResponse.onNext(true)
+                return
+            }
+            
+            emptyResponse.onNext(false)
+            searchList.onNext(list)
+
+            // 첫 통신이었다면 스크롤 올리기
+            if page == 1 {
+                scrollToTop.onNext(())
+            }
+        }
+        
+        func failureAction() {
+            networkFailure.onNext(())
         }
         
         input.searchButtonTap
@@ -100,7 +108,7 @@ final class SearchViewModel: ViewModelType {
                 emptyText.onNext("검색 결과가 없습니다.")
                 owner.searchParameter.query = query
                 owner.searchParameter.page = 1
-                fetchSearch()
+                fetchSearch(owner.searchParameter)
             }
             .disposed(by: disposeBag)
         
@@ -109,7 +117,7 @@ final class SearchViewModel: ViewModelType {
                 owner.searchParameter.order = owner.searchParameter.order == .relevant ? .latest : .relevant
                 owner.searchParameter.page = 1
                 searchOrder.onNext(owner.searchParameter.order)
-                fetchSearch()
+                fetchSearch(owner.searchParameter)
             }
             .disposed(by: disposeBag)
         
@@ -120,7 +128,7 @@ final class SearchViewModel: ViewModelType {
                 owner.searchParameter.page = 1
                 // 데이터 리로드를 위해 고정 값 보내기
                 colorList.onNext(SearchColor.allCases)
-                fetchSearch()
+                fetchSearch(owner.searchParameter)
             }
             .disposed(by: disposeBag)
         
@@ -130,7 +138,7 @@ final class SearchViewModel: ViewModelType {
                 for indexPath in indexPaths {
                     if indexPath.item == list.photoResponse.count - 4 && owner.searchParameter.page < list.totalPages {
                         owner.searchParameter.page += 1
-                        fetchSearch()
+                        fetchSearch(owner.searchParameter)
                     }
                 }
             }
@@ -179,50 +187,4 @@ final class SearchViewModel: ViewModelType {
         let trimmedQuery = query.trimmingCharacters(in: .whitespaces)
         return trimmedQuery.isEmpty ? nil : trimmedQuery
     }
-    
-//    private func fetchSearch(_ query: String) {
-        // 통신 이후
-//        emptyLabel.text = "검색 결과가 없습니다."
-        
-//        NetworkManager.shared.requestRx(
-//            api: .search(query: query, page: page, order: searchOrder, color: searchColor),
-//            model: SearchResponse.self
-//        )
-//        .subscribe(with: self) { owner, result in
-//            switch result {
-//            case .success(let data):
-//                print(data)
-//            case .failure(let error):
-//                print("Network Failed")
-//            }
-//        }
-//        .disposed(by: disposeBag)
-        
-//        NetworkManager.shared.request(
-//            api: .search(query: query, page: page, order: searchOrder, color: searchColor),
-//            model: SearchResponse.self
-//        ) { [weak self] response in
-//            guard let self else { return }
-//            switch response {
-//            case .success(let data):
-//                if page == 1 {
-//                    // 첫 검색
-//                    list = data
-//                } else {
-//                    // 페이지 네이션
-//                    list?.photoResponse.append(contentsOf: data.photoResponse)
-//                }
-//                
-//                toggleHideView()
-//                mainCollectionView.reloadData()
-//                
-//                if page == 1, let list, !list.photoResponse.isEmpty {
-//                    mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-//                }
-//                
-//            case .failure(_):
-//                makeNetworkFailureToast()
-//            }
-//        }
-//    }
 }

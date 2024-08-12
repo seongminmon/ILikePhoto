@@ -6,38 +6,39 @@
 //
 
 import UIKit
+import SwiftUI
 
 enum MyImage {
     static let profileImageList: [UIImage] = [
-        UIImage(named: "profile_0")!,
-        UIImage(named: "profile_1")!,
-        UIImage(named: "profile_2")!,
-        UIImage(named: "profile_3")!,
-        UIImage(named: "profile_4")!,
-        UIImage(named: "profile_5")!,
-        UIImage(named: "profile_6")!,
-        UIImage(named: "profile_7")!,
-        UIImage(named: "profile_8")!,
-        UIImage(named: "profile_9")!,
-        UIImage(named: "profile_10")!,
-        UIImage(named: "profile_11")!,
+        UIImage(resource: .profile0),
+        UIImage(resource: .profile1),
+        UIImage(resource: .profile2),
+        UIImage(resource: .profile3),
+        UIImage(resource: .profile4),
+        UIImage(resource: .profile5),
+        UIImage(resource: .profile6),
+        UIImage(resource: .profile7),
+        UIImage(resource: .profile8),
+        UIImage(resource: .profile9),
+        UIImage(resource: .profile10),
+        UIImage(resource: .profile11)
     ]
     
-    static let launch = UIImage(named: "launch")!
-    static let launchLogoImage = UIImage(named: "launchLogoImage")!
-    static let likeCircleInactive = UIImage(named: "like_circle_inactive")!
-    static let likeCircle = UIImage(named: "like_circle")!
-    static let likeInactive = UIImage(named: "like_inactive")!
-    static let like = UIImage(named: "like")!
-    static let sort = UIImage(named: "sort")!
-    static let tabLikeInactive = UIImage(named: "tab_like_inactive")!
-    static let tabLike = UIImage(named: "tab_like")!
-    static let tabRandomInactive = UIImage(named: "tab_random_inactive")!
-    static let tabRandom = UIImage(named: "tab_random")!
-    static let tabSearchInactive = UIImage(named: "tab_search_inactive")!
-    static let tabSearch = UIImage(named: "tab_search")!
-    static let tabTrend = UIImage(named: "tab_trend")!
-    static let tapTrendInactive = UIImage(named: "tap_trend_inactive")!
+    static let launch = UIImage(resource: .launch)
+    static let launchLogoImage = UIImage(resource: .launchLogo)
+    static let likeCircleInactive = UIImage(resource: .likeCircleInactive)
+    static let likeCircle = UIImage(resource: .likeCircle)
+    static let likeInactive = UIImage(resource: .likeInactive)
+    static let like = UIImage(resource: .like)
+    static let sort = UIImage(resource: .sort)
+    static let tabLikeInactive = UIImage(resource: .tabLikeInactive)
+    static let tabLike = UIImage(resource: .tabLike)
+    static let tabRandomInactive = UIImage(resource: .tabRandomInactive)
+    static let tabRandom = UIImage(resource: .tabRandom)
+    static let tabSearchInactive = UIImage(resource: .tabSearchInactive)
+    static let tabSearch = UIImage(resource: .tabSearch)
+    static let tabTrend = UIImage(resource: .tabTrend)
+    static let tapTrendInactive = UIImage(resource: .tapTrendInactive)
     
     static let camera = UIImage(systemName: "camera.fill")!
     static let star = UIImage(systemName: "star.fill")!

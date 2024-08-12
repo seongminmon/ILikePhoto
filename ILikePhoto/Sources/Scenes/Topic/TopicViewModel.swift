@@ -75,8 +75,8 @@ final class TopicViewModel: ViewModelType {
             for i in 0..<3 {
                 let topicID = topicIDList[i]
                 dispatchGroup.enter()
-                NetworkManager.shared.requestRx(api: .topic(topicID: topicID), model: [PhotoResponse].self)
-                    .bind(with: self) { owner, result in
+                NetworkManager.shared.requestWithSingle(api: .topic(topicID: topicID), model: [PhotoResponse].self)
+                    .subscribe(with: self) { owner, result in
                         switch result {
                         case .success(let data):
                             owner.headerTitles[i] = TopicIDQuery.list[topicID] ?? "골든 아워"
