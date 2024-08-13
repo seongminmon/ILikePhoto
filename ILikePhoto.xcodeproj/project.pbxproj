@@ -11,6 +11,8 @@
 		2408158D2C5DC04900886D1E /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158A2C5DC04900886D1E /* GmarketSansLight.otf */; };
 		2408158E2C5DC04900886D1E /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2408158B2C5DC04900886D1E /* GmarketSansMedium.otf */; };
 		240E0A402C6A460E003A212B /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240E0A3F2C6A460E003A212B /* UIColor+.swift */; };
+		240E0A442C6B1D8E003A212B /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 240E0A432C6B1D8E003A212B /* Differentiator */; };
+		240E0A462C6B1D8E003A212B /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 240E0A452C6B1D8E003A212B /* RxDataSources */; };
 		2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC782C6227BF00C37320 /* RxCocoa */; };
 		2414BC7B2C6227BF00C37320 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2414BC7A2C6227BF00C37320 /* RxSwift */; };
 		2414BC7D2C62291800C37320 /* SettingImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2414BC7C2C62291800C37320 /* SettingImageViewModel.swift */; };
@@ -172,7 +174,9 @@
 				24EC740B2C4E8463008F403D /* Alamofire in Frameworks */,
 				24EC73D22C4E3011008F403D /* Then in Frameworks */,
 				24EC74A62C520DC0008F403D /* RealmSwift in Frameworks */,
+				240E0A462C6B1D8E003A212B /* RxDataSources in Frameworks */,
 				248B84012C568ACD004C9422 /* DGCharts in Frameworks */,
+				240E0A442C6B1D8E003A212B /* Differentiator in Frameworks */,
 				248B84062C576C84004C9422 /* Toast in Frameworks */,
 				2414BC792C6227BF00C37320 /* RxCocoa in Frameworks */,
 				24EC73D52C4E301C008F403D /* SnapKit in Frameworks */,
@@ -471,6 +475,8 @@
 				248B84052C576C84004C9422 /* Toast */,
 				2414BC782C6227BF00C37320 /* RxCocoa */,
 				2414BC7A2C6227BF00C37320 /* RxSwift */,
+				240E0A432C6B1D8E003A212B /* Differentiator */,
+				240E0A452C6B1D8E003A212B /* RxDataSources */,
 			);
 			productName = ILikePhoto;
 			productReference = 24BB36B02C4E25D700B40E9C /* ILikePhoto.app */;
@@ -509,6 +515,7 @@
 				248B83FF2C568ACD004C9422 /* XCRemoteSwiftPackageReference "Charts" */,
 				248B84042C576C84004C9422 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				240E0A422C6B1D8E003A212B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 24BB36B12C4E25D700B40E9C /* Products */;
 			projectDirPath = "";
@@ -824,6 +831,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		240E0A422C6B1D8E003A212B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -891,6 +906,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		240E0A432C6B1D8E003A212B /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 240E0A422C6B1D8E003A212B /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		240E0A452C6B1D8E003A212B /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 240E0A422C6B1D8E003A212B /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
 		2414BC782C6227BF00C37320 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2414BC772C6227BF00C37320 /* XCRemoteSwiftPackageReference "RxSwift" */;
