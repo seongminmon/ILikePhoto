@@ -24,11 +24,11 @@ final class TopicCollectionViewCell: BaseCollectionViewCell {
         config.image = MyImage.star.withRenderingMode(.alwaysOriginal)
         config.imagePlacement = .leading
         config.imagePadding = 8
-        config.baseBackgroundColor = MyColor.darkgray
+        config.baseBackgroundColor = MyColor.black.withAlphaComponent(0.3)
         config.baseForegroundColor = MyColor.white
         config.cornerStyle = .capsule
         config.buttonSize = .small
-        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         return config
     }
     private lazy var starButton = UIButton(configuration: starButtonConfig())

@@ -77,7 +77,7 @@ final class DetailViewModel: ViewModelType {
                     mainImage.onNext(ImageFileManager.shared.loadImageFile(filename: photo.id) ?? MyImage.star)
                 }
                 photographerName.onNext(photo.user.name)
-                createAt.onNext(photo.createdAt)
+                createAt.onNext(photo.createdAt.dateToString())
                 likeButtonState.onNext(RealmRepository.shared.fetchItem(photo.id) != nil)
             }
             .disposed(by: disposeBag)

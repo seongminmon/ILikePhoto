@@ -13,10 +13,10 @@ import Then
 
 final class SearchCollectionViewCell: BaseCollectionViewCell {
     
-    let mainImageView = UIImageView().then {
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 20
-    }
+    let mainImageView = UIImageView()//.then {
+//        $0.clipsToBounds = true
+//        $0.layer.cornerRadius = 20
+//    }
     private func starButtonConfig() -> UIButton.Configuration {
         var config = UIButton.Configuration.filled()
         var titleAttr = AttributedString()

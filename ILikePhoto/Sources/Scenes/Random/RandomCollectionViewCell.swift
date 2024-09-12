@@ -26,17 +26,19 @@ final class RandomCollectionViewCell: BaseCollectionViewCell {
         $0.font = MyFont.regular14
         $0.textColor = MyColor.white
     }
-    private let footerView = UIView()
+    private let footerView = UIView().then {
+        $0.backgroundColor = MyColor.black.withAlphaComponent(0.3)
+    }
     private let photographerImageView = UIImageView().then {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 20
     }
     private let photographerNameLabel = UILabel().then {
-        $0.font = MyFont.regular15
+        $0.font = MyFont.bold15
         $0.textColor = MyColor.white
     }
     private let createAtLabel = UILabel().then {
-        $0.font = MyFont.bold14
+        $0.font = MyFont.regular14
         $0.textColor = MyColor.white
     }
     lazy var likeButton = LikeButton().then {
@@ -117,6 +119,6 @@ final class RandomCollectionViewCell: BaseCollectionViewCell {
         let photographerURL = URL(string: data.user.profileImage.medium)
         photographerImageView.kf.setImage(with: photographerURL)
         photographerNameLabel.text = data.user.name
-        createAtLabel.text = data.createdAt
+        createAtLabel.text = data.createdAt.dateToString()
     }
 }

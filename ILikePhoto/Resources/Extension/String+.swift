@@ -21,4 +21,13 @@ extension String {
             }
         }
     }
+    
+    func dateToString() -> String {
+        let formatter = ISO8601DateFormatter()
+        if let date = formatter.date(from: self) {
+            return date.formatted(date: .numeric, time: .omitted)
+        } else {
+            return ""
+        }
+    }
 }

@@ -29,10 +29,12 @@ final class DetailViewController: BaseViewController {
         $0.layer.cornerRadius = 20
     }
     private let photographerNameLabel = UILabel().then {
-        $0.font = MyFont.regular15
+        $0.font = MyFont.bold15
+        $0.textColor = MyColor.white
     }
     private let createAtLabel = UILabel().then {
-        $0.font = MyFont.bold14
+        $0.font = MyFont.regular14
+        $0.textColor = MyColor.white
     }
     private let likeButton = LikeButton().then {
         $0.toggleButton(isLike: false)
@@ -65,16 +67,12 @@ final class DetailViewController: BaseViewController {
         $0.noDataText = "출력 데이터가 없습니다."
         $0.noDataFont = .systemFont(ofSize: 20)
         $0.noDataTextColor = .lightGray
+        
         $0.rightAxis.enabled = false
         $0.leftAxis.enabled = false
         $0.xAxis.enabled = false
         $0.legend.enabled = false
         $0.isUserInteractionEnabled = false
-        $0.dragEnabled = false
-        $0.pinchZoomEnabled = false
-        $0.doubleTapToZoomEnabled = false
-        $0.highlightPerTapEnabled = false
-        $0.highlightPerDragEnabled = false
     }
     
     let viewModel = DetailViewModel()
@@ -206,8 +204,7 @@ final class DetailViewController: BaseViewController {
             $0.size.equalTo(40)
         }
         mainImageView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview()
+            $0.top.horizontalEdges.equalToSuperview()
             // width height 비율에 맞게 조정
             if let data = viewModel.photo {
                 let ratio = CGFloat(data.height) / CGFloat(data.width)
@@ -273,6 +270,7 @@ final class DetailViewController: BaseViewController {
         dataSet.drawCircleHoleEnabled = false
         dataSet.circleRadius = 0
         dataSet.colors = [MyColor.blue]
+//        dataSet.lineWidth = 2
         
         let gradientColors = [MyColor.blue.cgColor] as CFArray
         let colorLocations: [CGFloat] = [0.0]

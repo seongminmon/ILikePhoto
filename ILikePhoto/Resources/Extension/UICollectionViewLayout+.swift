@@ -94,7 +94,7 @@ class PinterestLayout: UICollectionViewFlowLayout {
     weak var delegate: PinterestLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 4
+    private let cellPadding: CGFloat = 1
     
     private var cache: [UICollectionViewLayoutAttributes] = []
     
