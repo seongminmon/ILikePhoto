@@ -72,7 +72,6 @@ final class DetailViewController: BaseViewController {
         $0.leftAxis.enabled = false
         $0.xAxis.enabled = false
         $0.legend.enabled = false
-        $0.isUserInteractionEnabled = false
     }
     
     let viewModel = DetailViewModel()
@@ -266,21 +265,15 @@ final class DetailViewController: BaseViewController {
         
         let dataSet = LineChartDataSet(entries: dataEntries)
         dataSet.drawValuesEnabled = false
-        dataSet.setCircleColor(MyColor.blue)
+        dataSet.setCircleColor(MyColor.chart)
         dataSet.drawCircleHoleEnabled = false
-        dataSet.circleRadius = 0
-        dataSet.colors = [MyColor.blue]
-//        dataSet.lineWidth = 2
+        dataSet.drawValuesEnabled = false
+        dataSet.circleRadius = 4
+        dataSet.colors = [MyColor.chart]
         
-        let gradientColors = [MyColor.blue.cgColor] as CFArray
-        let colorLocations: [CGFloat] = [0.0]
-        guard let gradient = CGGradient(
-            colorsSpace: CGColorSpaceCreateDeviceRGB(),
-            colors: gradientColors,
-            locations: colorLocations
-        ) else { return }
-        dataSet.fill = LinearGradientFill(gradient: gradient, angle: 80.0)
-        dataSet.drawFilledEnabled = true
+        chartView.setVisibleXRangeMaximum(5)
+        chartView.setVisibleXRangeMinimum(5)
+        dataSet.lineWidth = 2
         
         chartView.data = LineChartData(dataSet: dataSet)
     }

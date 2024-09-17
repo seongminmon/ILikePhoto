@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 enum MyImage {
     static let profileImageList: [UIImage] = [

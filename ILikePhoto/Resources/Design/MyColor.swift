@@ -15,4 +15,5 @@ enum MyColor {
     static let lightgray = UIColor(resource: .myLightgray)
     static let white = UIColor(resource: .myWhite)
     static let red = UIColor(resource: .myRed)
+    static let chart = UIColor(resource: .chart)
 }
