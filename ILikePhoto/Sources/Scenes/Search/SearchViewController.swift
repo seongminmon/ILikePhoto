@@ -200,7 +200,7 @@ final class SearchViewController: BaseViewController {
 }
 
 extension SearchViewController: PinterestLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         guard let data = viewModel.searchResponse?.photoResponse[indexPath.item] else { return 180 }
         let ratio = CGFloat(data.height) / CGFloat(data.width)
         let width = view.frame.width / 2

@@ -14,7 +14,6 @@ import Toast
 
 final class LikeViewController: BaseViewController {
     // TODO: - 통신에서 오는 hex가 enum값과 다른 문제
-    // TODO: - 스크롤 위아래로 반복하면 레이아웃 겹치는 문제
     // TODO: - 삭제시 스크롤이 남아있는 문제
     
     private let colorCollectionView = UICollectionView(
@@ -170,20 +169,10 @@ final class LikeViewController: BaseViewController {
             $0.center.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-//    @objc private func sortButtonTapped() {
-//        searchOrder = searchOrder == .ascending ? .descending : .ascending
-//        sortButton.setTitle(searchOrder.title, for: .normal)
-//        list = RealmRepository.shared.fetchAll(order: searchOrder, color: searchColor)
-//        updateView()
-//        if !list.isEmpty {
-//            mainCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-//        }
-//    }
 }
 
 extension LikeViewController: PinterestLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         let data = viewModel.list[indexPath.item]
         let ratio = CGFloat(data.height) / CGFloat(data.width)
         let width = view.frame.width / 2

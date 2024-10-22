@@ -59,13 +59,13 @@ extension UICollectionViewLayout {
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.45),
             heightDimension: .fractionalWidth(0.45 * 4 / 3)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
@@ -86,22 +86,19 @@ extension UICollectionViewLayout {
 }
 
 protocol PinterestLayoutDelegate: AnyObject {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class PinterestLayout: UICollectionViewFlowLayout {
-    
+class PinterestLayout: UICollectionViewLayout {
     weak var delegate: PinterestLayoutDelegate?
     
-    private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 1
-    
+    private var numberOfColumns: Int = 2
+    private var cellPadding: CGFloat = 1.0
     private var cache: [UICollectionViewLayoutAttributes] = []
-    
-    private var contentHeight: CGFloat = 0
+    private var contentHeight: CGFloat = 0.0
     
     private var contentWidth: CGFloat {
-        guard let collectionView = collectionView else { return 0 }
+        guard let collectionView = collectionView else { return 0.0 }
         let insets = collectionView.contentInset
         return collectionView.bounds.width - (insets.left + insets.right)
     }
@@ -110,71 +107,52 @@ class PinterestLayout: UICollectionViewFlowLayout {
         return CGSize(width: contentWidth, height: contentHeight)
     }
     
-    // 2. 콜렉션 뷰가 처음 초기화되거나 뷰가 변경될 떄 실행됩니다.
-    // 이 메서드에서 레이아웃을 미리 계산하여 메모리에 적재하고, 필요할 때마다 효율적으로 접근할 수 있도록 구현해야 합니다.
     override func prepare() {
-        // TODO: - cache 사용해서 성능 개선하기
-        // TODO: - 한쪽 열에 높이가 큰 이미지들이 배치될 경우 한쪽 열에서만 이미지가 보이는 문제
-//        guard let collectionView = collectionView, cache.isEmpty else { return }
-        guard let collectionView = collectionView else { return }
+        print(#function)
+        print("캐시 카운트", cache.count)
         
-        let width = contentWidth / CGFloat(numberOfColumns)
-        // cell 의 x 위치를 나타내는 배열
+        super.prepare()
+        guard let collectionView = collectionView else { return }
+        cache.removeAll()
+        
+        // xOffset 계산
+        let width: CGFloat = contentWidth / CGFloat(numberOfColumns)
         var xOffset: [CGFloat] = []
         for column in 0..<numberOfColumns {
-            xOffset.append(CGFloat(column) * width)
+            let offset = CGFloat(column) * width
+            xOffset.append(offset)
         }
-        // cell 의 y 위치를 나타내는 배열
-        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
-        // 현재 행의 위치
-        var column = 0
         
+        // yOffset 계산
+        var column = 0
+        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
-            // IndexPath 에 맞는 셀의 크기, 위치를 계산합니다.
             let indexPath = IndexPath(item: item, section: 0)
             
-            let photoHeight = delegate?.collectionView(
-                collectionView,
-                heightForPhotoAtIndexPath: indexPath) ?? 180
-            let height = cellPadding * 2 + photoHeight
-            
-            let frame = CGRect(
-                x: xOffset[column],
-                y: yOffset[column],
-                width: width,
-                height: height
-            )
+            let imageHeight = delegate?.collectionView(collectionView, heightForImageAtIndexPath: indexPath) ?? 0
+            let height = cellPadding * 2 + imageHeight
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: width, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
-            // 위에서 계산한 Frame 을 기반으로 cache 에 들어갈 레이아웃 정보를 추가합니다.
+            // cache 저장
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
             cache.append(attributes)
             
-            // 콜렉션 뷰의 contentHeight 를 다시 지정합니다.
+            // 새로 계산된 항목의 프레임을 설명하도록 확장
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
             
-            // 다른 이미지 크기로 인해서, 한쪽 열에만 이미지가 추가되는 것을 방지합니다.
-            column = column < (numberOfColumns - 1) ? column + 1 : 0
+            // 다음 항목이 다음 열에 배치되도록 설정
+            column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
     }
     
-    // 3. 모든 셀과 보충 뷰의 레이아웃 정보를 리턴합니다. 화면 표시 영역 기반(Rect)의 요청이 들어올 때 사용합니다.
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
-        for attributes in cache {
-            // 셀 frame 과 요청 Rect 가 교차한다면, 리턴 값에 추가합니다.
-            if attributes.frame.intersects(rect) {
-                visibleLayoutAttributes.append(attributes)
-            }
-        }
-        return visibleLayoutAttributes
+        return cache.filter { rect.intersects( $0.frame) }
     }
     
-    // 4. 모든 셀의 레이아웃 정보를 리턴합니다. IndexPath 로 요청이 들어올 때 이 메서드를 사용합니다.
-    override func layoutAttributesForItem(at indexPath: IndexPath)
-    -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
     }
 }
