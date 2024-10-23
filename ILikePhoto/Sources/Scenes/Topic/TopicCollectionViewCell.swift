@@ -14,29 +14,23 @@ final class TopicCollectionViewCell: BaseCollectionViewCell {
     
     private let mainImageView = UIImageView().then {
         $0.clipsToBounds = true
-        $0.layer.cornerRadius = 20
+        $0.layer.cornerRadius = 10
     }
-    private func starButtonConfig() -> UIButton.Configuration {
-        var config = UIButton.Configuration.filled()
-        var titleAttr = AttributedString()
-        titleAttr.font = MyFont.regular14
-        config.attributedTitle = titleAttr
-        config.image = MyImage.star.withRenderingMode(.alwaysOriginal)
-        config.imagePlacement = .leading
-        config.imagePadding = 8
-        config.baseBackgroundColor = MyColor.black.withAlphaComponent(0.3)
-        config.baseForegroundColor = MyColor.white
-        config.cornerStyle = .capsule
-        config.buttonSize = .small
-        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        return config
+    private let logoImageView = UIImageView().then {
+        $0.image = MyImage.likeInactive
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = .white
     }
-    private lazy var starButton = UIButton(configuration: starButtonConfig())
+    private let countLabel = UILabel().then {
+        $0.font = MyFont.regular14
+        $0.textColor = .myWhite
+    }
     
     override func configureHierarchy() {
         [
             mainImageView,
-            starButton
+            logoImageView,
+            countLabel
         ].forEach {
             contentView.addSubview($0)
         }
@@ -46,8 +40,13 @@ final class TopicCollectionViewCell: BaseCollectionViewCell {
         mainImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        starButton.snp.makeConstraints {
-            $0.leading.bottom.equalTo(mainImageView).inset(8)
+        countLabel.snp.makeConstraints {
+            $0.trailing.bottom.equalTo(mainImageView).inset(8)
+        }
+        logoImageView.snp.makeConstraints {
+            $0.verticalEdges.equalTo(countLabel)
+            $0.trailing.equalTo(countLabel.snp.leading).offset(-8)
+            $0.width.equalTo(logoImageView.snp.height)
         }
     }
     
@@ -55,6 +54,6 @@ final class TopicCollectionViewCell: BaseCollectionViewCell {
         guard let data else { return }
         let url = URL(string: data.urls.small)
         mainImageView.kf.setImage(with: url)
-        starButton.configuration?.title = data.likes.formatted()
+        countLabel.text = data.likes.formatted()
     }
 }

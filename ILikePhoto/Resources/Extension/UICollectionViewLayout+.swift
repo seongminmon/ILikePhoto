@@ -61,16 +61,16 @@ extension UICollectionViewLayout {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.45),
-            heightDimension: .fractionalWidth(0.45 * 4 / 3)
+            widthDimension: .fractionalWidth(0.8),
+            heightDimension: .fractionalWidth(0.8 * 3 / 4)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
+        section.interGroupSpacing = 20
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
         section.supplementariesFollowContentInsets = false
-        section.orthogonalScrollingBehavior = .continuous
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
         let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
