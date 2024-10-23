@@ -13,16 +13,8 @@ import SnapKit
 import Then
 
 final class TopicViewController: BaseViewController {
-    // TODO: - refresh control이 애니메이션 중 깜박거리는 문제 해결하기
     
     private lazy var refreshControl = UIRefreshControl()
-    
-    private lazy var profileImageView = ProfileImageView().then {
-        $0.setImageView(isSelect: true)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(settingButtonTapped))
-        $0.addGestureRecognizer(tapGesture)
-        $0.isUserInteractionEnabled = true
-    }
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: .createTopicLayout()).then {
         $0.register(
             TopicCollectionHeaderView.self,
@@ -80,15 +72,8 @@ final class TopicViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        profileImageView.image = MyImage.profileImageList[UserDefaultsManager.profileImageIndex]
-    }
-    
     override func configureNavigationBar() {
-        navigationItem.title = "OUR TOPIC"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileImageView)
+        navigationItem.title = "TOPIC"
     }
     
     override func configureHierarchy() {
@@ -96,20 +81,9 @@ final class TopicViewController: BaseViewController {
     }
     
     override func configureLayout() {
-        profileImageView.snp.makeConstraints {
-            $0.size.equalTo(40)
-        }
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-    }
-    
-    // TODO: - RxGesture로 바꾸기
-    @objc private func settingButtonTapped() {
-        let vc = SettingNicknameViewController()
-        vc.option = .edit
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     private func cellRegistration() -> UICollectionView.CellRegistration<TopicCollectionViewCell, PhotoResponse> {

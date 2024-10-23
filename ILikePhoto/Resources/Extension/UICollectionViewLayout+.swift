@@ -69,7 +69,7 @@ extension UICollectionViewLayout {
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 10
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20)
-        // 수평 스크롤
+        section.supplementariesFollowContentInsets = false
         section.orthogonalScrollingBehavior = .continuous
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
@@ -78,6 +78,7 @@ extension UICollectionViewLayout {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        headerSupplementary.pinToVisibleBounds = true
         section.boundarySupplementaryItems = [headerSupplementary]
         
         let layout = UICollectionViewCompositionalLayout(section: section)
@@ -89,7 +90,8 @@ protocol PinterestLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class PinterestLayout: UICollectionViewLayout {
+final class PinterestLayout: UICollectionViewLayout {
+    
     weak var delegate: PinterestLayoutDelegate?
     
     private var numberOfColumns: Int = 2
@@ -144,12 +146,12 @@ class PinterestLayout: UICollectionViewLayout {
             yOffset[column] = yOffset[column] + height
             
             // 다음 항목이 다음 열에 배치되도록 설정
-            column = column < (numberOfColumns - 1) ? (column + 1) : 0
+            column = column < numberOfColumns - 1 ? column + 1 : 0
         }
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return cache.filter { rect.intersects( $0.frame) }
+        return cache.filter { rect.intersects($0.frame) }
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

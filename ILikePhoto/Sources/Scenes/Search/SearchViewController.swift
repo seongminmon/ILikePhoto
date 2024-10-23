@@ -158,7 +158,7 @@ final class SearchViewController: BaseViewController {
     }
     
     override func configureNavigationBar() {
-        navigationItem.title = "SEARCH PHOTO"
+        navigationItem.title = "SEARCH"
     }
     
     override func configureHierarchy() {

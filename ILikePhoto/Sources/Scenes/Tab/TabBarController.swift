@@ -21,7 +21,7 @@ final class TabBarController: UITabBarController {
         
         let random = RandomViewController()
         let nav2 = UINavigationController(rootViewController: random)
-        nav2.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabLikeInactive, selectedImage: MyImage.tabLike)
+        nav2.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabRandomInactive, selectedImage: MyImage.tabRandom)
         
         let search = SearchViewController()
         let nav3 = UINavigationController(rootViewController: search)
@@ -29,7 +29,7 @@ final class TabBarController: UITabBarController {
         
         let like = LikeViewController()
         let nav4 = UINavigationController(rootViewController: like)
-        nav4.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabRandomInactive, selectedImage: MyImage.tabRandom)
+        nav4.tabBarItem = UITabBarItem(title: nil, image: MyImage.tabLikeInactive, selectedImage: MyImage.tabLike)
  
         setViewControllers([nav1, nav2, nav3, nav4], animated: true)
         

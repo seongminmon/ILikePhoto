@@ -135,7 +135,7 @@ final class LikeViewController: BaseViewController {
     }
     
     override func configureNavigationBar() {
-        navigationItem.title = "MY POLAROID"
+        navigationItem.title = "MY PHOTO"
     }
     
     override func configureHierarchy() {
