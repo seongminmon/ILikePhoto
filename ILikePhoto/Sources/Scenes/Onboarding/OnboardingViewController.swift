@@ -24,18 +24,12 @@ final class OnboardingViewController: BaseViewController {
         $0.image = MyImage.launchLogoImage
     }
     
-    private let nameLabel = UILabel().then {
-        $0.text = Literal.name
-        $0.font = MyFont.title
-    }
-    
     private lazy var startButton = BlueButton(title: Literal.start)
     
     override func configureHierarchy() {
         [
             titleLabel,
             logoImageView,
-            nameLabel,
             startButton
         ].forEach {
             view.addSubview($0)
@@ -53,11 +47,6 @@ final class OnboardingViewController: BaseViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.height.equalTo(logoImageView.snp.width)
-        }
-        
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(logoImageView.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
         }
         
         startButton.snp.makeConstraints {
@@ -81,7 +70,6 @@ final class OnboardingViewController: BaseViewController {
 extension OnboardingViewController {
     private enum Literal {
         static let appName = "I Like Photo"
-        static let name = "김성민"
         static let start = "시작하기"
     }
 }
